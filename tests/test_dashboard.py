@@ -3,7 +3,7 @@ import os
 import subprocess
 from html.parser import HTMLParser
 
-ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+ROOT_DIR = os.path.abspath(os.path.dirname(__file__)) if os.path.isdir(os.path.join(os.path.dirname(__file__), "dashboard")) else os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_PATH = os.path.join(ROOT_DIR, "dashboard", "data.json")
 HTML_PATH = os.path.join(ROOT_DIR, "dashboard", "index.html")
 
@@ -203,3 +203,137 @@ def test_auction_board_strict_exclusion():
     for name in disallowed_names:
         assert not any(p['name'] == name for p in actionable_targets), f"{name} should NOT be in auction board!"
 
+
+
+def test_all_rounders_category_loaded_and_rendered():
+    with open(DATA_PATH, "r", encoding="utf-8") as f:
+        d = json.load(f)
+    assert "all_rounders" in d, "data.json must contain 'all_rounders' key"
+    assert len(d["all_rounders"]) == 48, f"Expected 48 all-rounders, got {len(d['all_rounders'])}"
+
+    with open(HTML_PATH, "r", encoding="utf-8") as f:
+        html = f.read()
+    assert 'id="btn-all_rounders"' in html, "index.html missing 'btn-all_rounders' toggle button"
+    assert "All-Rounders (48)" in html, "index.html missing 'All-Rounders (48)' button label"
+    assert "Composite RPCS" in html, "index.html missing 'Composite RPCS' column header"
+
+
+def test_confirmed_trades_tagged_and_excluded():
+    with open(DATA_PATH, "r", encoding="utf-8") as f:
+        d = json.load(f)
+    assert "confirmed_trades" in d, "data.json must contain 'confirmed_trades' key"
+
+    # Verify key trade players
+    hardik = next(x for x in d["bowlers"] if x["name"] == "Hardik Pandya")
+    assert hardik["badge_type"] == "traded"
+    assert hardik["team_2026"] == "Mumbai Indians"
+
+    shami = next(x for x in d["bowlers"] if x["name"] == "Mohammed Shami")
+    assert shami["badge_type"] == "retention"
+    assert shami["team_2026"] == "Lucknow Super Giants"
+
+    arshdeep = next(x for x in d["bowlers"] if x["name"] == "Arshdeep Singh")
+    assert arshdeep["badge_type"] == "retention"
+    assert arshdeep["team_2026"] == "Punjab Kings"
+
+    cameron = next(x for x in d["batters"] if x["name"] == "Cameron Green")
+    assert cameron["badge_type"] == "traded"
+    assert cameron["team_2026"] == "Royal Challengers Bengaluru"
+
+    avesh = next(x for x in d["bowlers"] if x["name"] == "Avesh Khan")
+    assert avesh["badge_type"] == "traded"
+    assert avesh["team_2026"] == "Rajasthan Royals"
+
+    padikkal = next(x for x in d["batters"] if x["name"] == "Devdutt Padikkal")
+    assert padikkal["badge_type"] == "traded"
+    assert padikkal["team_2026"] == "Lucknow Super Giants"
+
+    # Ensure none appear in actionable auction board
+    all_players = d["batters"] + d["bowlers"]
+    actionable_targets = [
+        p for p in all_players
+        if p.get("badge_type") not in ["retention", "ineligible", "rr_core", "traded"]
+    ]
+    for traded_name in ["Hardik Pandya", "Mohammed Shami", "Arshdeep Singh", "Cameron Green", "Avesh Khan", "Devdutt Padikkal"]:
+        assert not any(p["name"] == traded_name for p in actionable_targets), f"{traded_name} must NOT be on auction board!"
+
+
+def test_redesigned_selection_panel_and_positional_slots():
+    with open(HTML_PATH, "r", encoding="utf-8") as f:
+        html = f.read()
+
+    # Clean Positional Categories
+    for pos in ["Openers", "Middle Order", "Finisher", "All-Rounders", "Spinners", "Pacers", "WK"]:
+        assert pos in html, f"Missing positional slot category '{pos}' in index.html"
+
+    # 1-Click Slot Assignment Modal
+    assert 'id="slotModal"' in html, "Missing '#slotModal' element in index.html"
+    assert "openSlotModal" in html, "Missing 'openSlotModal' function in index.html"
+    assert "closeSlotModal" in html, "Missing 'closeSlotModal' function in index.html"
+    assert "assignCandidateToSlot" in html, "Missing 'assignCandidateToSlot' function in index.html"
+
+    # Real-time Purse Tracking Elements
+    assert 'id="allocatedSpend"' in html, "Missing '#allocatedSpend' element"
+    assert 'id="purseRemaining"' in html, "Missing '#purseRemaining' element"
+    assert 'id="teamClutchIndex"' in html, "Missing '#teamClutchIndex' element"
+    assert 'id="purseProgressFill"' in html, "Missing '#purseProgressFill' element"
+
+    # Node.js VM execution test with 0 errors
+    node_cmd = """
+const fs = require('fs');
+const vm = require('vm');
+const html = fs.readFileSync('dashboard/index.html', 'utf8');
+const scripts = [...html.matchAll(/<script[\\s\\S]*?>([\\s\\S]*?)<\\/script>/gi)];
+const target = scripts.find(s => s[1].includes('const DATA')) || scripts[scripts.length - 1];
+if (!target) process.exit(1);
+const code = target[1];
+
+let errors = [];
+const mockEl = () => ({
+    innerHTML: '', textContent: '', value: '', style: {},
+    classList: { add: ()=>{}, remove: ()=>{}, contains: ()=>false, toggle: ()=>{} },
+    getContext: () => ({ clearRect: ()=>{}, beginPath: ()=>{}, arc: ()=>{}, fill: ()=>{}, stroke: ()=>{}, fillText: ()=>{}, moveTo: ()=>{}, lineTo: ()=>{}, measureText: ()=>({width:10}), setLineDash: ()=>{} }),
+    appendChild: ()=>{}, querySelectorAll: ()=>[], addEventListener: ()=>{}, setAttribute: ()=>{}
+});
+
+const sandbox = {
+    window: { onload: null, addEventListener: ()=>{} },
+    document: { getElementById: ()=>mockEl(), querySelector: ()=>mockEl(), querySelectorAll: ()=>[mockEl()], createElement: ()=>mockEl() },
+    console: {
+        log: console.log,
+        warn: console.warn,
+        error: (...args) => {
+            errors.push(args.join(' '));
+            console.error('JS ERROR:', ...args);
+        }
+    },
+    Math: Math, parseInt: parseInt, parseFloat: parseFloat, setTimeout: fn=>fn(), setInterval: ()=>{}
+};
+sandbox.window.document = sandbox.document;
+vm.createContext(sandbox);
+vm.runInContext(code, sandbox);
+
+if (typeof sandbox.window.onload === 'function') sandbox.window.onload();
+if (typeof sandbox.setRole === 'function') {
+    sandbox.setRole('all_rounders');
+    sandbox.setRole('batters');
+    sandbox.setRole('bowlers');
+}
+if (typeof sandbox.renderXI === 'function') sandbox.renderXI();
+if (typeof sandbox.openSlotModal === 'function') sandbox.openSlotModal(0);
+if (typeof sandbox.setSlotFilter === 'function') sandbox.setSlotFilter('all');
+if (typeof sandbox.filterSlotCandidates === 'function') sandbox.filterSlotCandidates();
+if (typeof sandbox.assignCandidateToSlot === 'function') {
+    sandbox.assignCandidateToSlot('Travis Head', 14.0, 52.0, 'Opener', 'Release Watch');
+}
+if (typeof sandbox.resetXI === 'function') sandbox.resetXI();
+if (typeof sandbox.closeSlotModal === 'function') sandbox.closeSlotModal();
+
+if (errors.length > 0) {
+    console.error('Console errors encountered:', errors);
+    process.exit(1);
+}
+console.log('PASS: Redesigned Selection Panel simulated cleanly with 0 console errors');
+"""
+    res = subprocess.run(["node", "-e", node_cmd], capture_output=True, text=True)
+    assert res.returncode == 0, f"Node.js validation failed: {res.stderr}\n{res.stdout}"

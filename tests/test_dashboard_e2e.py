@@ -14,7 +14,7 @@ import re
 import subprocess
 import pytest
 
-WORKSPACE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+WORKSPACE_DIR = os.path.abspath(os.path.dirname(__file__)) if os.path.isdir(os.path.join(os.path.dirname(__file__), "dashboard")) else os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_PATH = os.path.join(WORKSPACE_DIR, "dashboard", "data.json")
 HTML_PATH = os.path.join(WORKSPACE_DIR, "dashboard", "index.html")
 BUILD_SCRIPT = os.path.join(WORKSPACE_DIR, "build_dashboard.py")
@@ -453,12 +453,13 @@ const fs = require('fs');
 const vm = require('vm');
 const filePath = process.argv[1];
 const html = fs.readFileSync(filePath, 'utf8');
-const match = html.match(/<script[\\s\\S]*?>([\\s\\S]*?)<\\/script>/i);
-if (!match) {
-    console.error('FAIL: No script tag found');
+const scripts = [...html.matchAll(/<script[\\s\\S]*?>([\\s\\S]*?)<\\/script>/gi)];
+const target = scripts.find(s => s[1].includes('const DATA')) || scripts[scripts.length - 1];
+if (!target) {
+    console.error('FAIL: No application script tag found');
     process.exit(1);
 }
-const code = match[1];
+const code = target[1];
 try {
     new vm.Script(code);
     console.log('PASS: JS syntax is valid');
@@ -477,12 +478,13 @@ const fs = require('fs');
 const vm = require('vm');
 const filePath = process.argv[1];
 const html = fs.readFileSync(filePath, 'utf8');
-const match = html.match(/<script[\\s\\S]*?>([\\s\\S]*?)<\\/script>/i);
-if (!match) {
-    console.error('FAIL: No script tag found');
+const scripts = [...html.matchAll(/<script[\\s\\S]*?>([\\s\\S]*?)<\\/script>/gi)];
+const target = scripts.find(s => s[1].includes('const DATA')) || scripts[scripts.length - 1];
+if (!target) {
+    console.error('FAIL: No application script tag found');
     process.exit(1);
 }
-const code = match[1];
+const code = target[1];
 
 const mockElement = () => ({
     innerHTML: '',
@@ -562,7 +564,28 @@ console.log('PASS: Simulated DOM executed cleanly without runtime exceptions');
 # ==============================================================================
 
 class TestTier4RealWorldApplicationScenarios:
-    """Verify War Room bidding target isolation and Starting XI purse allocation."""
+    """Verify War Room bidding target isolation, 'IPL 2027 WAR ROOM' complete absence, and Starting XI purse allocation."""
+
+    def test_ipl_2027_war_room_complete_absence(self, dashboard_html):
+        """Verify complete absence of 'IPL 2027 WAR ROOM' (case-insensitive) across build_dashboard.py, dashboard/index.html, and index.html."""
+        # 1. Check dashboard/index.html
+        assert "ipl 2027 war room" not in dashboard_html.lower(), (
+            "Found 'IPL 2027 WAR ROOM' in dashboard/index.html"
+        )
+        # 2. Check root index.html
+        root_html_path = os.path.join(WORKSPACE_DIR, "index.html")
+        assert os.path.isfile(root_html_path), f"Root index.html not found at {root_html_path}"
+        with open(root_html_path, "r", encoding="utf-8") as f:
+            root_html = f.read()
+        assert "ipl 2027 war room" not in root_html.lower(), (
+            "Found 'IPL 2027 WAR ROOM' in root index.html"
+        )
+        # 3. Check build_dashboard.py
+        with open(BUILD_SCRIPT, "r", encoding="utf-8") as f:
+            build_script_content = f.read()
+        assert "ipl 2027 war room" not in build_script_content.lower(), (
+            "Found 'IPL 2027 WAR ROOM' in build_dashboard.py"
+        )
 
     def test_auction_war_room_board_leakage(self, dashboard_data, dashboard_html):
         """Auction War Room Board leakage test: ensure no untouchables, RR core, or BCCI ineligibles appear."""
@@ -609,3 +632,354 @@ class TestTier4RealWorldApplicationScenarios:
         assert has_purse_metric, (
             "Dashboard should display starting XI purse tracking (₹113.6 Cr committed / ₹6.4 Cr remaining)"
         )
+
+
+# ==============================================================================
+# TIER 5: ALL-ROUNDERS, CONFIRMED TRADES, & REDESIGNED SELECTION PANEL
+# ==============================================================================
+
+class TestTier5AllRoundersTradesAndSelectionPanelRedesign:
+    """Comprehensive verification for All-Rounders, confirmed trades, and the redesigned selection panel."""
+
+    def test_all_rounders_category_loaded_and_rendered(self, dashboard_data, dashboard_html):
+        """1) Verify the All-Rounders category is loaded with 48 dual-role players and rendered."""
+        assert "all_rounders" in dashboard_data, "dashboard/data.json missing 'all_rounders' key"
+        ar_list = dashboard_data["all_rounders"]
+        assert len(ar_list) == 48, f"Expected 48 all-rounders in data.json, got {len(ar_list)}"
+
+        # Validate required composite pressure metrics on all 48 records
+        for p in ar_list:
+            assert "name" in p and p["name"], "All-rounder missing name"
+            assert "composite_rpcs" in p, f"{p['name']} missing composite_rpcs"
+            assert "harmonic_rpcs" in p, f"{p['name']} missing harmonic_rpcs"
+            assert "volume_weighted_rpcs" in p, f"{p['name']} missing volume_weighted_rpcs"
+            assert "balance_ratio" in p, f"{p['name']} missing balance_ratio"
+            assert "bat_rpcs" in p, f"{p['name']} missing bat_rpcs"
+            assert "bowl_rpcs" in p, f"{p['name']} missing bowl_rpcs"
+            assert "press_balls" in p, f"{p['name']} missing press_balls"
+            assert "press_sr" in p, f"{p['name']} missing press_sr"
+            assert "press_econ" in p, f"{p['name']} missing press_econ"
+            assert "wpa" in p, f"{p['name']} missing wpa"
+            assert "csr" in p, f"{p['name']} missing csr"
+            assert "scs" in p, f"{p['name']} missing scs"
+            assert "archetype" in p, f"{p['name']} missing archetype"
+            assert "badge_type" in p, f"{p['name']} missing badge_type"
+
+        # Verify key marquee all-rounders are present
+        marquee_names = [
+            "Hardik Pandya", "Andre Russell", "Ravindra Jadeja", "Glenn Maxwell",
+            "Sunil Narine", "Axar Patel", "Marcus Stoinis", "Mitchell Santner",
+            "Washington Sundar", "Nitish Reddy", "Shivam Dube", "Marco Jansen",
+            "Romario Shepherd", "Liam Livingstone", "Rashid Khan", "Wanindu Hasaranga",
+            "Sam Curran", "Krunal Pandya"
+        ]
+        ar_name_set = {p["name"] for p in ar_list}
+        for name in marquee_names:
+            assert name in ar_name_set, f"Marquee all-rounder {name} missing from all_rounders list"
+
+        # Validate dual-role player synchronization with batters and bowlers
+        batters_dict = {p["name"]: p for p in dashboard_data["batters"]}
+        bowlers_dict = {p["name"]: p for p in dashboard_data["bowlers"]}
+        for p in ar_list:
+            name = p["name"]
+            assert name in batters_dict, f"All-rounder {name} must exist in batters list"
+            assert name in bowlers_dict, f"All-rounder {name} must exist in bowlers list"
+            b = batters_dict[name]
+            bw = bowlers_dict[name]
+            for sync_key in ["team_2026", "badge_type", "badge_label", "auction_status", "eligibility", "country"]:
+                assert p[sync_key] == b[sync_key] == bw[sync_key], (
+                    f"Metadata desync for all-rounder {name} on {sync_key}: "
+                    f"AR={p[sync_key]}, Batter={b[sync_key]}, Bowler={bw[sync_key]}"
+                )
+
+        # Validate UI rendering tokens in index.html
+        assert 'id="btn-all_rounders"' in dashboard_html, "Missing 'btn-all_rounders' role toggle button"
+        assert "All-Rounders (48)" in dashboard_html, "Missing 'All-Rounders (48)' toggle label"
+        assert "Composite RPCS" in dashboard_html, "Missing 'Composite RPCS' column header in index.html"
+        assert "Press Balls (Bat/Bowl)" in dashboard_html, "Missing 'Press Balls (Bat/Bowl)' column header in index.html"
+        assert "Press SR (Bat)" in dashboard_html, "Missing 'Press SR (Bat)' column header in index.html"
+        assert "Press Econ (Bowl)" in dashboard_html, "Missing 'Press Econ (Bowl)' column header in index.html"
+        assert "Bat / Bowl RPCS" in dashboard_html, "Missing 'Bat / Bowl RPCS' column header in index.html"
+        assert "Net WPA" in dashboard_html, "Missing 'Net WPA' column header in index.html"
+        assert "Net BRA+BRS" in dashboard_html, "Missing 'Net BRA+BRS' column header in index.html"
+
+    def test_newly_confirmed_trades_tagged_and_excluded_from_auction_board(self, dashboard_data, dashboard_html):
+        """2) Verify all newly confirmed trades (Hardik, Shami, Arshdeep, etc.) are properly tagged and excluded from auction board."""
+        assert "confirmed_trades" in dashboard_data, "dashboard/data.json missing 'confirmed_trades' array"
+        trades = dashboard_data["confirmed_trades"]
+        assert len(trades) >= 70, f"Expected at least 70 confirmed trade records, got {len(trades)}"
+
+        # 1. Hardik Pandya: Traded to MI
+        hardik_trades = [t for t in trades if t["player_name"] == "Hardik Pandya"]
+        assert len(hardik_trades) >= 1, "Hardik Pandya missing from confirmed_trades"
+        for role in ["batters", "bowlers", "all_rounders"]:
+            p = _find_player(dashboard_data, role, "Hardik Pandya")
+            assert p is not None, f"Hardik Pandya missing from {role}"
+            assert p["badge_type"] == "traded", f"Hardik Pandya in {role} has badge_type={p['badge_type']}"
+            assert p["team_2026"] == "Mumbai Indians"
+            assert "LOCKED" in p["badge_label"]
+
+        # 2. Mohammed Shami: SRH -> LSG trade / untouchable retention
+        shami = _find_player(dashboard_data, "bowlers", "Mohammed Shami")
+        assert shami is not None, "Mohammed Shami missing from bowlers"
+        assert shami["badge_type"] == "retention"
+        assert shami["team_2026"] == "Lucknow Super Giants"
+        assert shami["badge_label"] == "UNTOUCHABLE CORE"
+
+        # 3. Arshdeep Singh: PBKS ₹18 Cr RTM
+        arshdeep = _find_player(dashboard_data, "bowlers", "Arshdeep Singh")
+        assert arshdeep is not None, "Arshdeep Singh missing from bowlers"
+        assert arshdeep["badge_type"] == "retention"
+        assert arshdeep["team_2026"] == "Punjab Kings"
+        assert arshdeep["badge_label"] == "UNTOUCHABLE CORE"
+
+        # 4. Cameron Green: MI -> RCB trade
+        for role in ["batters", "bowlers", "all_rounders"]:
+            p = _find_player(dashboard_data, role, "Cameron Green")
+            assert p is not None, f"Cameron Green missing from {role}"
+            assert p["badge_type"] == "traded"
+            assert p["team_2026"] == "Royal Challengers Bengaluru"
+
+        # 5. Avesh Khan & Devdutt Padikkal swap (LSG <-> RR)
+        avesh = _find_player(dashboard_data, "bowlers", "Avesh Khan")
+        assert avesh is not None, "Avesh Khan missing from bowlers"
+        assert avesh["badge_type"] == "traded"
+        assert avesh["team_2026"] == "Rajasthan Royals"
+
+        padikkal = _find_player(dashboard_data, "batters", "Devdutt Padikkal")
+        assert padikkal is not None, "Devdutt Padikkal missing from batters"
+        assert padikkal["badge_type"] == "traded"
+        assert padikkal["team_2026"] == "Lucknow Super Giants"
+
+        # 6. Romario Shepherd (LSG -> MI trade)
+        for role in ["batters", "bowlers", "all_rounders"]:
+            p = _find_player(dashboard_data, role, "Romario Shepherd")
+            assert p is not None, f"Romario Shepherd missing from {role}"
+            assert p["badge_type"] == "traded"
+            assert p["team_2026"] == "Mumbai Indians"
+
+        # 7. Shardul Thakur (DC -> KKR trade)
+        for role in ["batters", "bowlers", "all_rounders"]:
+            p = _find_player(dashboard_data, role, "Shardul Thakur")
+            assert p is not None, f"Shardul Thakur missing from {role}"
+            assert p["badge_type"] == "traded"
+            assert p["team_2026"] == "Kolkata Knight Riders"
+
+        # 8. Auction Board Strict Exclusion Verification
+        all_pool = dashboard_data["batters"] + dashboard_data["bowlers"] + dashboard_data.get("all_rounders", [])
+        actionable_targets = [
+            p for p in all_pool
+            if p.get("badge_type") not in ["retention", "ineligible", "rr_core", "traded"]
+        ]
+        excluded_names = [
+            "Hardik Pandya", "Mohammed Shami", "Arshdeep Singh", "Cameron Green",
+            "Avesh Khan", "Devdutt Padikkal", "Romario Shepherd", "Shardul Thakur",
+            "Kuldeep Yadav", "Rishabh Pant", "Shahbaz Ahmed", "Rohit Sharma",
+            "Virat Kohli", "Jasprit Bumrah", "Suryakumar Yadav", "Shubman Gill"
+        ]
+        for name in excluded_names:
+            assert not any(p["name"] == name for p in actionable_targets), (
+                f"Violation: Traded/Retained player {name} was found in actionable auction targets!"
+            )
+
+    def test_redesigned_selection_panel_and_zero_console_errors(self):
+        """3) Verify the redesigned selection panel with Whoop clarity and 0 console errors during full lifecycle."""
+        sim_script = """
+const fs = require('fs');
+const vm = require('vm');
+const html = fs.readFileSync('dashboard/index.html', 'utf8');
+const scripts = [...html.matchAll(/<script[\\s\\S]*?>([\\s\\S]*?)<\\/script>/gi)];
+const target = scripts.find(s => s[1].includes('const DATA')) || scripts[scripts.length - 1];
+if (!target) {
+    console.error('FAIL: No application script tag found');
+    process.exit(1);
+}
+const code = target[1];
+
+let consoleErrors = [];
+let consoleWarns = [];
+
+const mockEl = () => ({
+    innerHTML: '',
+    textContent: '',
+    value: '',
+    style: {},
+    classList: {
+        add: () => {},
+        remove: () => {},
+        contains: () => false,
+        toggle: () => {},
+    },
+    getContext: () => ({
+        clearRect: () => {},
+        beginPath: () => {},
+        arc: () => {},
+        fill: () => {},
+        stroke: () => {},
+        fillText: () => {},
+        moveTo: () => {},
+        lineTo: () => {},
+        measureText: () => ({ width: 10 }),
+        setLineDash: () => {},
+    }),
+    appendChild: () => {},
+    querySelectorAll: () => [mockEl()],
+    addEventListener: () => {},
+    setAttribute: () => {},
+});
+
+const sandbox = {
+    window: {
+        onload: null,
+        addEventListener: () => {},
+    },
+    document: {
+        getElementById: (id) => mockEl(),
+        querySelector: (sel) => mockEl(),
+        querySelectorAll: (sel) => [mockEl()],
+        createElement: (tag) => mockEl(),
+    },
+    console: {
+        log: () => {},
+        info: () => {},
+        warn: (...args) => consoleWarns.push(args.join(' ')),
+        error: (...args) => consoleErrors.push(args.join(' ')),
+    },
+    Math: Math,
+    parseInt: parseInt,
+    parseFloat: parseFloat,
+    setTimeout: (fn) => fn(),
+    setInterval: () => {},
+};
+sandbox.window.document = sandbox.document;
+
+try {
+    vm.createContext(sandbox);
+    vm.runInContext(code, sandbox);
+
+    // 1. Initial page load
+    if (typeof sandbox.window.onload === 'function') sandbox.window.onload();
+
+    // 2. Table view role switching across all 3 roles
+    if (typeof sandbox.setRole === 'function') {
+        sandbox.setRole('all_rounders');
+        sandbox.setRole('batters');
+        sandbox.setRole('bowlers');
+    }
+    if (typeof sandbox.renderTable === 'function') sandbox.renderTable();
+
+    // 3. Auction board rendering with multiple filters
+    if (typeof sandbox.renderAuctionBoard === 'function') {
+        ['all', 'released', 'global_steal', 'domestic', 'death', 'spin', 'pace'].forEach(f => {
+            sandbox.renderAuctionBoard(f);
+        });
+    }
+
+    // 4. XI Selection Panel rendering
+    if (typeof sandbox.renderXI === 'function') sandbox.renderXI();
+
+    // 5. Opening slot assignment modal for Opener (slot 0)
+    if (typeof sandbox.openSlotModal === 'function') sandbox.openSlotModal(0);
+
+    // 6. Slot modal filter pill switching
+    if (typeof sandbox.setSlotFilter === 'function') {
+        sandbox.setSlotFilter('all');
+        sandbox.setSlotFilter('match');
+        sandbox.setSlotFilter('free_agent');
+        sandbox.setSlotFilter('rr_core');
+    }
+    if (typeof sandbox.filterSlotCandidates === 'function') sandbox.filterSlotCandidates();
+
+    // 7. Assign candidate to slot 0 (Travis Head)
+    if (typeof sandbox.assignCandidateToSlot === 'function') {
+        sandbox.assignCandidateToSlot('Travis Head', 14.0, 52.0, 'Top-Order Aggressor', 'Release Watch');
+    }
+
+    // 8. Open slot assignment modal for All-Rounder (slot 6)
+    if (typeof sandbox.openSlotModal === 'function') sandbox.openSlotModal(6);
+
+    // 9. Assign Hardik Pandya to slot 6
+    if (typeof sandbox.assignCandidateToSlot === 'function') {
+        sandbox.assignCandidateToSlot('Hardik Pandya', 15.0, 50.0, 'Premier All-Rounder', 'Traded');
+    }
+
+    // 10. Close slot modal & Reset XI
+    if (typeof sandbox.closeSlotModal === 'function') sandbox.closeSlotModal();
+    if (typeof sandbox.resetXI === 'function') sandbox.resetXI();
+
+    if (consoleErrors.length > 0) {
+        console.error('FAIL: Console errors recorded: ' + JSON.stringify(consoleErrors));
+        process.exit(1);
+    }
+
+    console.log('PASS: Selection panel lifecycle simulated with 0 console errors');
+} catch (e) {
+    console.error('FAIL: Unhandled exception in simulated DOM: ' + e.stack);
+    process.exit(1);
+}
+"""
+        res = subprocess.run(["node", "-e", sim_script], capture_output=True, text=True)
+        assert res.returncode == 0, f"Simulated selection panel execution failed: {res.stderr}\n{res.stdout}"
+
+    def test_localhost_8080_live_inspection(self):
+        """4) Inspect the live output on localhost:8080 to verify HTTP 200 and feature delivery."""
+        import urllib.request
+        try:
+            req = urllib.request.urlopen("http://localhost:8080", timeout=5)
+            assert req.status == 200, f"Expected HTTP 200 from localhost:8080, got {req.status}"
+            content = req.read().decode("utf-8")
+            # Verify live presence of key features
+            assert "btn-all_rounders" in content, "Live server missing 'btn-all_rounders'"
+            assert "All-Rounders (48)" in content, "Live server missing 'All-Rounders (48)'"
+            assert "Hardik Pandya" in content, "Live server missing 'Hardik Pandya'"
+            assert "slotModal" in content, "Live server missing '#slotModal'"
+            assert "₹120.00 Cr" in content, "Live server missing purse tracking display"
+        except urllib.error.URLError as e:
+            pytest.fail(f"Could not connect to live dashboard on http://localhost:8080: {e}")
+
+
+# ==============================================================================
+# TIER 6: RESPONSIVE OVERFLOW REMEDIATION & METADATA POLISH
+# ==============================================================================
+
+class TestTier6ResponsiveOverflowAndMetadataPolish:
+    """Verify responsive zero-overflow styling rules, metadata polish, and JS interval hardening."""
+
+    def test_repository_metadata_cleanliness(self):
+        """Verify complete absence of 'war room' in pyproject.toml and README.md."""
+        with open("pyproject.toml", "r", encoding="utf-8") as f:
+            pyproject_content = f.read()
+        assert "war room" not in pyproject_content.lower(), "Found 'war room' in pyproject.toml"
+        assert "Auction Strategy Platform" in pyproject_content, "Expected 'Auction Strategy Platform' in pyproject.toml"
+
+        with open("README.md", "r", encoding="utf-8") as f:
+            readme_content = f.read()
+        assert "war room" not in readme_content.lower(), "Found 'war room' in README.md"
+        assert "Auction Strategy Platform" in readme_content, "Expected 'Auction Strategy Platform' in README.md"
+
+    def test_responsive_css_rules_and_fluid_minimums(self, dashboard_html):
+        """Verify presence of fluid grid minimums and mobile media queries preventing overflow."""
+        # 1. Sort select max-width constraint
+        assert "max-width: 100%" in dashboard_html, "Missing 'max-width: 100%' constraint"
+        assert "box-sizing: border-box" in dashboard_html, "Missing 'box-sizing: border-box' constraint"
+
+        # 2. Fluid grid minimums
+        assert "minmax(min(100%, 300px), 1fr)" in dashboard_html, "Missing fluid minmax for .case-grid"
+        assert "minmax(min(100%, 280px), 1fr)" in dashboard_html, "Missing fluid minmax for Tab 8 proofs grid"
+        assert "minmax(min(100%, 260px), 1fr)" in dashboard_html, "Missing fluid minmax for .audit-player-grid"
+
+        # 3. Mobile media queries for XI slot cards, radar dropdowns, and header
+        assert ".xi-slot-card" in dashboard_html
+        assert "flex-wrap: wrap !important;" in dashboard_html
+        assert "#tab-radar .sort-select" in dashboard_html
+
+    def test_defensive_js_interval_declaration(self, dashboard_html):
+        """Verify runDecryptedText uses hoisted/separated interval declaration to avoid TDZ."""
+        with open("build_dashboard.py", "r", encoding="utf-8") as f:
+            build_script = f.read()
+        assert "let interval;" in build_script, "build_dashboard.py missing 'let interval;' in runDecryptedText"
+        assert "interval = setInterval(" in build_script, "build_dashboard.py missing 'interval = setInterval(' in runDecryptedText"
+        assert "let interval;" in dashboard_html, "dashboard/index.html missing 'let interval;' in runDecryptedText"
+        assert "interval = setInterval(" in dashboard_html, "dashboard/index.html missing 'interval = setInterval(' in runDecryptedText"
+
+
