@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "superrr-selector"
 version = "2.0.0"
-description = "Rajasthan Royals SupeRR Selector — Pressure Analytics & IPL 2027 Auction War Room"
+description = "Rajasthan Royals SupeRR Selector — Pressure Analytics & Auction Strategy Platform"
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [

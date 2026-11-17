@@ -1,15 +1,15 @@
-# Rajasthan Royals SupeRR Selector (Season 2) — Empirical Pressure Analytics & IPL 2027 Auction War Room
+# Rajasthan Royals SupeRR Selector (Season 2) — Empirical Pressure Analytics & Auction Strategy Platform
 
 [![CI](https://github.com/yashagarwal-lab/superrr-dashboard/actions/workflows/ci.yml/badge.svg)](https://github.com/yashagarwal-lab/superrr-dashboard/actions/workflows/ci.yml)
 [![Tests](https://img.shields.io/badge/tests-58%20passed-10b981.svg)](tests/)
 [![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-3b82f6.svg)](pyproject.toml)
-[![Live War Room](https://img.shields.io/badge/live-interactive%20war%20room-e11d48.svg)](https://yashagarwal-lab.github.io/superrr-dashboard/)
+[![Live Strategy Showcase](https://img.shields.io/badge/live-interactive%20strategy%20showcase-e11d48.svg)](https://yashagarwal-lab.github.io/superrr-dashboard/)
 [![PDF Report](https://img.shields.io/badge/report-executive%20pdf%20(2.7MB)-8b5cf6.svg)](Rajasthan_Royals_SupeRR_Selector_Round1_Report.pdf)
 [![License](https://img.shields.io/badge/license-MIT-gray.svg)](LICENSE)
 
 An empirical sports-science and machine learning analytics platform identifying the most reliable players under high-leverage pressure across **200,987 deliveries** (883 matches, 141 competitions) and optimizing **Rajasthan Royals' IPL 2027 Auction Strategy**.
 
-* **Live Interactive War Room**: [https://yashagarwal-lab.github.io/superrr-dashboard/](https://yashagarwal-lab.github.io/superrr-dashboard/)
+* **Live Interactive Strategy Showcase**: [https://yashagarwal-lab.github.io/superrr-dashboard/](https://yashagarwal-lab.github.io/superrr-dashboard/)
 * **Executive PDF Methodology Report**: [`Rajasthan_Royals_SupeRR_Selector_Round1_Report.pdf`](Rajasthan_Royals_SupeRR_Selector_Round1_Report.pdf)
 * **Full Markdown Methodology**: [`Rajasthan_Royals_SupeRR_Selector_Round1_Methodology_Report.md`](Rajasthan_Royals_SupeRR_Selector_Round1_Methodology_Report.md)
 * **Video Presentation & Social Pitch Scripts**: [`docs/presentation_scripts.md`](docs/presentation_scripts.md)
@@ -51,10 +51,10 @@ This platform introduces the **Rajasthan Pressure Clutch Score (RPCS)**, a mathe
 ```
 SuperRR/
 ├── pipeline.py                     # Standalone production ETL & RPCS pressure evaluation engine
-├── build_dashboard.py              # Compiles data.json into standalone interactive war room dashboard
+├── build_dashboard.py              # Compiles data.json into standalone interactive strategy showcase dashboard
 ├── generate_charts.py              # Publication-grade chart generation from pipeline output
 ├── convert_to_pdf.py               # Markdown to styled PDF compilation engine (Weasyprint)
-├── index.html                      # Root war room dashboard for direct GitHub Pages hosting
+├── index.html                      # Root strategy showcase dashboard for direct GitHub Pages hosting
 ├── requirements.txt                # Pinned production dependencies
 ├── pyproject.toml                  # Modern Python packaging and pytest configuration
 ├── .gitignore                      # Clean Python, cache, and artifact ignore rules
@@ -70,7 +70,7 @@ SuperRR/
 │
 ├── dashboard/                      # Dashboard assets & intelligence database
 │   ├── data.json                   # Verified player intelligence & RPCS database (394 players)
-│   └── index.html                  # Compiled interactive war room dashboard
+│   └── index.html                  # Compiled interactive strategy showcase dashboard
 │
 ├── output/                         # Verified evaluation deliverables
 │   ├── top_10_batters.csv          # Unstop Official Top 10 Batters
