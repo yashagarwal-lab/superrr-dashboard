@@ -644,7 +644,7 @@ All terms are min-max normalised across the qualifying pool (198 batters / 196 b
 
 ### 8.1 Regulatory Framework
 
-The global rankings are computed across all 883 matches without restriction — this is the mathematical truth submitted to Unstop. For RR's auction war room, Pakistani nationals (Muqeem, Nawaz, Abrar) are BCCI-ineligible and serve as performance benchmarks only. Every player in RR's auction target list is 100% available to bid for.
+The global rankings are computed across all 883 matches without restriction — this is the mathematical truth submitted to Unstop. For RR's auction strategy, Pakistani nationals (Muqeem, Nawaz, Abrar) are BCCI-ineligible and serve as performance benchmarks only. Every player in RR's auction target list is 100% available to bid for.
 
 ### 8.2 RR's Current Roster Situation
 
