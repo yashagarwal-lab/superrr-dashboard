@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "superrr-selector"
+version = "2.0.0"
+description = "Rajasthan Royals SupeRR Selector — Pressure Analytics & IPL 2027 Auction War Room"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Yash Agarwal", email = "yashagarwal.lab@gmail.com" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = [
+    "numpy>=2.0.0",
+    "pandas>=2.2.0",
+    "scipy>=1.14.0",
+    "scikit-learn>=1.5.0",
+    "matplotlib>=3.9.0",
+    "seaborn>=0.13.0",
+    "markdown>=3.6",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+]
+pdf = [
+    "weasyprint>=62.0",
+    "latex2mathml>=3.77.0",
+]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::FutureWarning",
+]
