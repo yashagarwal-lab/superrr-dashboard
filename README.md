@@ -90,7 +90,7 @@ SuperRR/
 ├── scripts/                        # Automation & deployment scripts
 │   └── deploy_gh_pages.sh          # One-click dashboard compilation and verification
 │
-└── tests/                          # Automated test suite (58 tests)
+└── tests/                          # Automated test suite (70 tests)
     ├── __init__.py
     ├── test_pipeline.py            # Pipeline mathematics, boundary invariants, and forensic validation
     ├── test_dashboard.py           # Dashboard schema, auction rules, and BCCI eligibility assertions
@@ -148,7 +148,7 @@ python build_dashboard.py
 ### 5. Run the Automated Test Suite
 
 ```bash
-# Execute 58 rigorous unit and e2e integration tests
+# Execute 70 rigorous unit and e2e integration tests
 pytest -v
 ```
 
@@ -156,15 +156,15 @@ pytest -v
 
 ## 🧪 Testing & Validation Suite
 
-The repository includes a comprehensive 58-test suite across 3 tiers:
+The repository includes a comprehensive 70-test suite across 3 tiers:
 
 * **Pipeline Invariants (`tests/test_pipeline.py`)**: Validates zero-boundary conditions, Win Probability monotonicity, non-striker runout isolation, and Tilak Varma imputation.
-* **Auction & Regulatory Compliance (`tests/test_dashboard.py`)**: Asserts 27 Pakistani records are marked `BCCI Ineligible`, verifies the Kuldeep Yadav ⇄ Rishabh Pant trade lock, and ensures Free Agent tags match IPL 2026/27 realities.
+* **Auction & Regulatory Compliance (`tests/test_dashboard.py`)**: Asserts 27 Pakistani records are marked `BCCI Ineligible`, verifies the confirmed trades, and ensures Free Agent tags match IPL 2027 realities.
 * **End-to-End Simulation (`tests/test_dashboard_e2e.py`)**: Tests DOM rendering, scatter plot coordinates, radar profiles, and the Royals Starting XI ₹120.0 Cr purse simulator.
 
 ```bash
 $ pytest
-============================== 58 passed in 7.73s ==============================
+============================== 70 passed in 10.21s =============================
 ```
 
 ---

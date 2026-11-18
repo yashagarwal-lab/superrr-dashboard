@@ -191,13 +191,30 @@ Minimum 150 pressure balls (batters faced, bowlers bowled). At that threshold th
 
 ## 7. RR Auction Strategy (IPL 2027)
 
-### 7.1 Where RR Stands
+### 7.1 Where RR Stands & The Competitive Landscape
 
 Retained core (19 players): Yashasvi Jaiswal (₹18.0 Cr), Vaibhav Sooryavanshi (₹1.1 Cr), Dhruv Jurel-WK (₹14.0 Cr), Riyan Parag-C (₹14.0 Cr), Jofra Archer (₹12.5 Cr), Sandeep Sharma (₹4.0 Cr), Mohd. Shami (T, ₹10.0 Cr), Ravindra Jadeja (₹16.0 Cr), Ravi Bishnoi (₹11.0 Cr), plus Nandre Burger, Donovan Ferreira, Dasun Shanaka, Manimaran Siddharth (T), Shubham Dubey, Sushant Mishra, Brijesh Sharma, Aman Rao Perala, Lhuan-dre Pretorius, Yash Raj Punja.
 
 Released (9 players): Shimron Hetmyer, Adam Milne, Kwena Maphaka, Tushar Deshpande, Kuldeep Sen, Ravi Singh, Emanjot Chahal, Vignesh Puthur, Yudhvir Singh Charak. (Priyansh Arya is retained by Punjab Kings).
 
 Official Purse Remaining: **₹27.05 Cr** across **6 open slots** (3 overseas).
+
+#### All 10 Franchises: Official Purse & Slot Standings
+
+| Franchise | Purse Remaining | Slots Total (OS) | Key Retained Pillars / Confirmed Trades | Market Leverage Tier |
+|:---|:---:|:---:|:---|:---|
+| Lucknow Super Giants | ₹47.45 Cr | 7 (3) | Pooran, Mayank Yadav, Kuldeep Yadav (T), Sam Curran (T) | Tier 1 Aggressor |
+| Kolkata Knight Riders | ₹41.65 Cr | 8 (3) | Narine, Rinku Singh, Cameron Green, Varun, Harshit | Tier 1 Aggressor |
+| Sunrisers Hyderabad | ₹40.15 Cr | 7 (3) | Cummins, Abhishek Sharma, Klaasen, Natarajan (T), Ellis (T) | Tier 1 Aggressor |
+| Delhi Capitals | ₹39.50 Cr | 9 (4) | Axar Patel, Rishabh Pant (T), KL Rahul, Miller, Stubbs | Tier 1 Aggressor |
+| Mumbai Indians | ₹32.60 Cr | 9 (2) | Rohit, Suryakumar, Bumrah, Tilak Varma, Arshdeep (T) | Tier 2 Balanced |
+| Chennai Super Kings | ₹28.05 Cr | 6 (2) | Ruturaj Gaikwad, Samson, Dube, Livingstone (T), Noor | Tier 2 Balanced |
+| **Rajasthan Royals** | **₹27.05 Cr** | **6 (3)** | **Jaiswal, Parag, Jurel, Archer, Shami (T), Jadeja, Bishnoi** | **Tier 2 Value-Maximizer** |
+| Punjab Kings | ₹18.60 Cr | 6 (2) | Shreyas Iyer, Hardik Pandya (T), Stoinis, Chahal, Jansen | Tier 3 Constrained |
+| Royal Challengers Bengaluru | ₹14.15 Cr | 5 (1) | Virat Kohli, Patidar, Phil Salt, Tim David, Hazlewood | Tier 3 Constrained |
+| Gujarat Titans | ₹8.75 Cr | 3 (2) | Shubman Gill, Jos Buttler, Rashid Khan, Siraj, Harshal (T) | Tier 4 Ultra-Constrained |
+
+With four franchises holding ₹39–48 Cr purse reserves, RR must operate as a **disciplined Value-Maximizer** — avoiding inflated bidding wars for marquee names and executing surgical buys in the ₹2–7 Cr bracket.
 
 Three strategic gaps to fill with ₹27.05 Cr:
 
@@ -272,7 +289,12 @@ Three strategic gaps to fill with ₹27.05 Cr:
 
 All results are fully reproducible from the submitted data files. Run `python3 pipeline.py` to regenerate rankings.
 
-### Test Suite (13/13 Passing)
+### Test Suite (70/70 Passing in CI/CD)
+
+The methodology and auction board pipeline are covered by **70 automated tests** across 3 validation tiers:
+
+- **13 Core Pipeline & Forensic Invariant Tests** (`test_pipeline.py`): Validating Tilak Varma retire-out attribution, non-striker WPA conservation, match 48610 quarantine, leverage index calibration, and rank stability across sample floors (150/175/200).
+- **57 Dashboard, Regulatory & E2E Tests** (`test_dashboard.py`, `test_dashboard_e2e.py`): Verifying all 10 franchise rosters, confirmed trades, Pakistani player BCCI exclusions, salary cap limits, and DOM interactive stability.
 
 ```
 test_forensics_tilak_varma                  PASSED
@@ -288,6 +310,8 @@ test_top_10_batters_match                   PASSED
 test_top_10_bowlers_match                   PASSED
 test_multiplicative_retention_ratio         PASSED
 test_rank_stability_across_floors           PASSED
+... [57 additional franchise & E2E tests passing]
+============================= 70 passed in 10.21s ==============================
 ```
 
 ### Output Files
