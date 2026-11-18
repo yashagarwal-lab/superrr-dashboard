@@ -158,24 +158,24 @@ def test_franchise_cornerstones_not_auction_targets():
     assert 'Mumbai Indians icon' in rohit['trade_notes']
     assert rohit['auction_status'] == 'Franchise Core / Untouchable Retention'
 
-    # 2. Hardik Pandya (MI Captain - Traded)
+    # 2. Hardik Pandya (Traded to PBKS)
     hardik = next(x for x in d['bowlers'] if x['name'] == 'Hardik Pandya')
     assert hardik['badge_type'] == 'traded'
-    assert hardik['badge_label'] == 'TRADED TO MI (LOCKED)'
-    assert hardik['team_2026'] == 'Mumbai Indians'
-    assert 'marquee trade' in hardik['trade_notes']
+    assert hardik['badge_label'] == 'TRADED TO PBKS (LOCKED)'
+    assert hardik['team_2026'] == 'Punjab Kings'
+    assert 'trade' in hardik['trade_notes'].lower()
 
-    # 3. Arshdeep Singh (PBKS ₹18 Cr RTM)
+    # 3. Arshdeep Singh (Traded to MI)
     arshdeep = next(x for x in d['bowlers'] if x['name'] == 'Arshdeep Singh')
-    assert arshdeep['badge_type'] == 'retention'
-    assert arshdeep['badge_label'] == 'UNTOUCHABLE CORE'
-    assert arshdeep['team_2026'] == 'Punjab Kings'
+    assert arshdeep['badge_type'] == 'traded'
+    assert arshdeep['badge_label'] == 'TRADED TO MI (LOCKED)'
+    assert arshdeep['team_2026'] == 'Mumbai Indians'
     assert '18 Cr' in arshdeep['trade_notes']
 
-    # 4. Mohammed Shami (Contracted Spearhead)
+    # 4. Mohammed Shami (Traded to RR)
     shami = next(x for x in d['bowlers'] if x['name'] == 'Mohammed Shami')
-    assert shami['badge_type'] == 'retention'
-    assert shami['badge_label'] == 'UNTOUCHABLE CORE'
+    assert shami['badge_type'] == 'traded'
+    assert shami['team_2026'] == 'Rajasthan Royals'
     assert 'Premier Indian pace spearhead' in shami['trade_notes']
 
     # 5. Shubman Gill (GT Captain)
@@ -226,27 +226,23 @@ def test_confirmed_trades_tagged_and_excluded():
     # Verify key trade players
     hardik = next(x for x in d["bowlers"] if x["name"] == "Hardik Pandya")
     assert hardik["badge_type"] == "traded"
-    assert hardik["team_2026"] == "Mumbai Indians"
+    assert hardik["team_2026"] == "Punjab Kings"
 
     shami = next(x for x in d["bowlers"] if x["name"] == "Mohammed Shami")
-    assert shami["badge_type"] == "retention"
-    assert shami["team_2026"] == "Lucknow Super Giants"
+    assert shami["badge_type"] == "traded"
+    assert shami["team_2026"] == "Rajasthan Royals"
 
     arshdeep = next(x for x in d["bowlers"] if x["name"] == "Arshdeep Singh")
-    assert arshdeep["badge_type"] == "retention"
-    assert arshdeep["team_2026"] == "Punjab Kings"
+    assert arshdeep["badge_type"] == "traded"
+    assert arshdeep["team_2026"] == "Mumbai Indians"
 
     cameron = next(x for x in d["batters"] if x["name"] == "Cameron Green")
-    assert cameron["badge_type"] == "traded"
-    assert cameron["team_2026"] == "Royal Challengers Bengaluru"
-
-    avesh = next(x for x in d["bowlers"] if x["name"] == "Avesh Khan")
-    assert avesh["badge_type"] == "traded"
-    assert avesh["team_2026"] == "Rajasthan Royals"
+    assert cameron["badge_type"] == "retention"
+    assert cameron["team_2026"] == "Kolkata Knight Riders"
 
     padikkal = next(x for x in d["batters"] if x["name"] == "Devdutt Padikkal")
-    assert padikkal["badge_type"] == "traded"
-    assert padikkal["team_2026"] == "Lucknow Super Giants"
+    assert padikkal["badge_type"] == "retention"
+    assert padikkal["team_2026"] == "Royal Challengers Bengaluru"
 
     # Ensure none appear in actionable auction board
     all_players = d["batters"] + d["bowlers"]
@@ -254,7 +250,7 @@ def test_confirmed_trades_tagged_and_excluded():
         p for p in all_players
         if p.get("badge_type") not in ["retention", "ineligible", "rr_core", "traded"]
     ]
-    for traded_name in ["Hardik Pandya", "Mohammed Shami", "Arshdeep Singh", "Cameron Green", "Avesh Khan", "Devdutt Padikkal"]:
+    for traded_name in ["Hardik Pandya", "Mohammed Shami", "Arshdeep Singh", "Cameron Green", "Devdutt Padikkal"]:
         assert not any(p["name"] == traded_name for p in actionable_targets), f"{traded_name} must NOT be on auction board!"
 
 

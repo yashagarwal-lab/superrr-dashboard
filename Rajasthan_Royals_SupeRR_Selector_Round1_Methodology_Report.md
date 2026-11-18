@@ -193,17 +193,19 @@ Minimum 150 pressure balls (batters faced, bowlers bowled). At that threshold th
 
 ### 7.1 Where RR Stands
 
-Retained core: Jaiswal (₹18 Cr), Parag-C (₹14 Cr), Jurel-WK (₹14 Cr), Archer (₹12.5 Cr), Hetmyer (₹11 Cr), Sandeep (₹4 Cr), Sooryavanshi (₹1.1 Cr), Priyansh Arya (~₹2 Cr). Plus 2026 assets: Jadeja (₹16 Cr) and Bishnoi (₹11 Cr).
+Retained core (19 players): Yashasvi Jaiswal (₹18.0 Cr), Vaibhav Sooryavanshi (₹1.1 Cr), Dhruv Jurel-WK (₹14.0 Cr), Riyan Parag-C (₹14.0 Cr), Jofra Archer (₹12.5 Cr), Sandeep Sharma (₹4.0 Cr), Mohd. Shami (T, ₹10.0 Cr), Ravindra Jadeja (₹16.0 Cr), Ravi Bishnoi (₹11.0 Cr), plus Nandre Burger, Donovan Ferreira, Dasun Shanaka, Manimaran Siddharth (T), Shubham Dubey, Sushant Mishra, Brijesh Sharma, Aman Rao Perala, Lhuan-dre Pretorius, Yash Raj Punja.
 
-Departed: Sanju Samson (now CSK) and Jos Buttler (GT 2025–26).
+Released (9 players): Shimron Hetmyer, Adam Milne, Kwena Maphaka, Tushar Deshpande, Kuldeep Sen, Ravi Singh, Emanjot Chahal, Vignesh Puthur, Yudhvir Singh Charak. (Priyansh Arya is retained by Punjab Kings).
 
-Three gaps need filling:
+Official Purse Remaining: **₹27.05 Cr** across **6 open slots** (3 overseas).
+
+Three strategic gaps to fill with ₹27.05 Cr:
 
 | Gap | Priority Targets |
 |:---|:---|
-| Dynamic top-order WK / Opening partner to replace Samson | Jonny Bairstow (Free Agent), Phil Salt (RCB) |
-| Death-over finisher who goes up a gear under pressure | Tim David (RCB/Free Agent), Glenn Maxwell (Free Agent) |
-| Death yorker specialist to partner Archer & Sandeep in overs 18–20 | Nathan Ellis (Free Agent), Taskin Ahmed (zero IPL matches — global steal) |
+| Dynamic top-order boundary enforcer | Travis Head (SRH Released), Jonny Bairstow (Free Agent) |
+| Death-over power finisher (replacing Hetmyer) | Glenn Maxwell (Free Agent), Andre Russell (Free Agent), Hetmyer buy-back |
+| Death yorker specialist to partner Archer, Shami & Sandeep | Matheesha Pathirana (KKR Released), Taskin Ahmed (Global Steal), Mitchell Starc (DC Released) |
 
 ### 7.2 Auction Target Portfolio
 
@@ -211,10 +213,11 @@ Three gaps need filling:
 
 | Player | Status | Press. Balls | Press. SR | κ | CSR | Target Price |
 |:---|:---|:---:|:---:|:---:|:---:|:---:|
+| Travis Head | SRH Released | 619 | 177.22 | 1.013 | 72.9% | ₹8.0–11.0 Cr |
 | Jonny Bairstow | Free Agent | 520 | 155.73 | 1.041 | 74.1% | ₹5.0–7.5 Cr |
 | Glenn Maxwell | Free Agent | 562 | 172.67 | 1.073 | 56.5% | ₹4.5–6.5 Cr |
+| Shimron Hetmyer | RR Released (Buy-back) | 398 | 158.11 | 1.043 | 61.7% | ₹4.0–6.0 Cr |
 | Andre Russell | Free Agent | 398 | 180.24 | 1.054 | 58.7% | ₹6.0–8.5 Cr |
-| Faf du Plessis | Free Agent | 412 | 152.57 | 1.059 | 66.0% | ₹2.0–3.5 Cr |
 
 #### Spinners
 
@@ -228,17 +231,18 @@ Three gaps need filling:
 
 | Player | Status | Press. Balls | Press. Econ | κ | CSR | Target Price |
 |:---|:---|:---:|:---:|:---:|:---:|:---:|
-| Nathan Ellis | Free Agent | 668 | 7.97 | 0.994 | 80.0% | ₹3.0–4.5 Cr |
+| Matheesha Pathirana | KKR Released | 727 | 7.80 | 1.000 | 75.0% | ₹7.0–10.0 Cr |
 | Taskin Ahmed | 0 IPL caps — global scouting target | 732 | 7.44 | 1.030 | 80.5% | ₹1.5–3.0 Cr |
-| Mustafizur Rahman | Free Agent | 512 | 7.81 | 0.953 | 69.6% | ₹2.0–3.5 Cr |
-| Shamar Joseph | Free Agent | 328 | 8.78 | 1.077 | 68.2% | ₹1.5–3.0 Cr |
+| Mitchell Starc | DC Released | 418 | 8.12 | 0.985 | 73.2% | ₹5.0–7.5 Cr |
+| Gerald Coetzee | SRH Released | 362 | 8.45 | 1.012 | 71.4% | ₹3.5–5.0 Cr |
+| Avesh Khan | LSG Released | 540 | 8.24 | 0.978 | 70.0% | ₹3.0–4.5 Cr |
 
 #### Domestic Options
 
 | Player | Note | Key Stats | Target Price |
 |:---|:---|:---|:---:|
-| Sakib Hussain | Uncapped, KKR reserve | κ = 1.121, CSR 90% | ₹0.3–0.8 Cr |
-| Naman Dhir | Emerging finisher | 185.88 Press. SR, κ = 1.104 | ₹1.0–2.5 Cr |
+| Sakib Hussain | Uncapped, SRH retained reserve | κ = 1.121, CSR 90% | ₹0.3–0.8 Cr |
+| Naman Dhir | MI retained reserve / trade watch | 185.88 Press. SR, κ = 1.104 | ₹1.0–2.5 Cr |
 
 ### 7.3 Projected Starting XI
 
@@ -249,18 +253,18 @@ Three gaps need filling:
 | 3 | Jonny Bairstow (WK) | Top-Order Enforcer | Auction (₹6.5 Cr) | 53.24 |
 | 4 | Riyan Parag (C) | Middle-Order Anchor | Retained (₹14.0 Cr) | 64.50 |
 | 5 | Dhruv Jurel | Crisis Finisher | Retained (₹14.0 Cr) | 68.20 |
-| 6 | Shimron Hetmyer | Death Hitter | Retained (₹11.0 Cr) | 67.40 |
-| 7 | Glenn Maxwell | Spin-Destroyer / Bits-&-Pieces | Auction (₹5.5 Cr) | 53.52 |
-| 8 | Ravindra Jadeja | Spin All-Rounder | 2026 Asset (₹16.0 Cr) | 68.40 |
+| 6 | Glenn Maxwell | Death Power Closer | Auction (₹5.5 Cr) | 53.52 |
+| 7 | Donovan Ferreira | Power Finisher / Cover | Retained (₹1.5 Cr) | 58.40 |
+| 8 | Ravindra Jadeja | Spin All-Rounder | Retained Asset (₹16.0 Cr) | 68.40 |
 | 9 | Jofra Archer | Express Pace | Retained (₹12.5 Cr) | 65.20 |
-| 10 | Ravi Bishnoi | Wrist Spin | 2026 Asset (₹11.0 Cr) | 66.40 |
-| 11 | Sandeep Sharma | Death Yorkers | Retained (₹4.0 Cr) | 66.80 |
-| IMP | Nathan Ellis | Death Yorker Cover | Auction (₹3.5 Cr) | 63.17 |
-| Sub | Priyansh Arya | Powerplay Finisher | Retained (~₹2.0 Cr) | 60.15 |
+| 10 | Ravi Bishnoi | Wrist Spin | Retained Asset (₹11.0 Cr) | 66.40 |
+| 11 | Mohd. Shami | Seam & Swing Spearhead | Retained Trade (₹10.0 Cr) | 65.80 |
+| IMP | Sandeep Sharma | Death Yorker Operator | Retained (₹4.0 Cr) | 66.80 |
+| Sub | Taskin Ahmed | Death Pace Depth | Auction (₹2.0 Cr) | 65.51 |
 
-**Budget: ₹119.6 Cr of ₹120 Cr purse used (₹0.4 Cr remaining). Starting XI avg RPCS: 65.31.**
+**Starting XI Spend: ₹110.1 Cr (of ₹120 Cr cap; ₹9.9 Cr reserve). Auction spend: ₹12.0 Cr committed from ₹27.05 Cr purse, leaving ₹15.05 Cr to complete the 25-man roster.** Starting XI avg RPCS: 65.75.
 
-*Note: Jurel keeps wickets; Bairstow listed as backup keeper or top-order bat. If budget allows, Taskin Ahmed (₹1.5–3.0 Cr) is available as additional pace depth.*
+*Note: Jurel keeps wickets; Bairstow provides backup keeping and powerplay aggression. If budget allows, Matheesha Pathirana (₹7.0–10.0 Cr) or Travis Head (₹8.0–11.0 Cr) can be aggressively targeted with the remaining ₹15.05 Cr purse.*
 
 ---
 

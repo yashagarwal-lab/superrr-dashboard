@@ -171,21 +171,23 @@ $ pytest
 
 ## 🏆 Royals Projected Starting XI (IPL 2027)
 
-Utilizing the interactive simulator within the ₹120.0 Cr purse constraint (₹113.6 Cr spent / ₹6.4 Cr reserve):
+Official Rajasthan Royals Auction Purse: **₹27.05 Cr** across **6 open slots** (3 overseas).
+Utilizing the interactive simulator within the ₹120.0 Cr salary cap constraint (₹113.6 Cr allocated XI / ₹6.4 Cr contingency reserve):
 
 1. **Yashasvi Jaiswal** (Opener — RR Retained, ₹18.0 Cr) • *RPCS: 72.86*
 2. **Vaibhav Sooryavanshi** (Impact Opener — RR Retained, ₹1.1 Cr) • *RPCS: 71.91*
-3. **Jonny Bairstow** (WK / Boundary Enforcer — Free Agent, ₹7.5 Cr) • *RPCS: 69.87*
+3. **Jonny Bairstow** (Top-Order Enforcer / WK — Auction Buy, ₹6.5 Cr) • *RPCS: 53.24*
 4. **Riyan Parag** (C) (Middle Dynamo — RR Retained, ₹14.0 Cr) • *RPCS: 64.50*
 5. **Dhruv Jurel** (WK) (Crisis Anchor — RR Retained, ₹14.0 Cr) • *RPCS: 68.20*
-6. **Shimron Hetmyer** (Death Closer — RR Retained, ₹11.0 Cr) • *RPCS: 73.81*
-7. **Ravindra Jadeja** (Elite All-Rounder — RR Retained, ₹16.0 Cr) • *RPCS: 68.40*
-8. **Mitchell Santner** (Squeeze Spinner — Auction Buy, ₹4.5 Cr) • *RPCS: 70.81*
+6. **Glenn Maxwell** (Death Power Closer — Auction Buy, ₹5.5 Cr) • *RPCS: 53.52*
+7. **Donovan Ferreira** (Power Finisher / Cover — RR Retained, ₹5.5 Cr) • *RPCS: 58.40*
+8. **Ravindra Jadeja** (Elite All-Rounder — RR Retained, ₹16.0 Cr) • *RPCS: 68.40*
 9. **Jofra Archer** (Express Pace 150kph — RR Retained, ₹12.5 Cr) • *RPCS: 65.20*
 10. **Ravi Bishnoi** (Wrist-Spin Squeeze — RR Retained, ₹11.0 Cr) • *RPCS: 66.40*
-11. **Nathan Ellis** (Death Yorker Specialist — Free Agent, ₹5.5 Cr) • *RPCS: 72.19*
+11. **Mohammed Shami** (Premier Seam Spearhead — RR Traded Asset, ₹9.5 Cr) • *RPCS: 65.80*
+* **IMP: Sandeep Sharma** (Death Yorker Operator — RR Retained, ₹4.0 Cr) • *RPCS: 66.80*
 
-**Starting XI Team Clutch Index**: **69.4 / 100** (Championship Benchmark)
+**Starting XI Team Clutch Index**: **65.8 / 100** (Championship Benchmark)
 
 ---
 

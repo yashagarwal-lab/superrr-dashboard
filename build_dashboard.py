@@ -1216,6 +1216,39 @@ html_template = r"""<!DOCTYPE html>
       justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .auction-card-header > div:first-child {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+    .auction-card-header > div:last-child {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+    @media (max-width: 1024px) {
+      .auction-card-header > div:last-child {
+        width: 100%;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding-top: 6px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+    }
+    @media (max-width: 480px) {
+      .auction-card-header > div:last-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px;
+      }
     }
     .auction-player-name {
       font-size: 16px;
@@ -1430,6 +1463,8 @@ html_template = r"""<!DOCTYPE html>
       border: 1px solid var(--rr-navy-border);
       margin-bottom: 8px;
       transition: all 0.15s ease;
+      flex-wrap: wrap;
+      gap: 8px;
     }
     .slot-candidate-row:hover {
       background: var(--rr-navy-hover);
@@ -1445,6 +1480,7 @@ html_template = r"""<!DOCTYPE html>
       font-weight: 700;
       cursor: pointer;
       transition: all 0.15s ease;
+      white-space: nowrap;
     }
     .btn-assign-slot:hover {
       box-shadow: 0 0 12px rgba(234, 26, 127, 0.6);
@@ -1505,6 +1541,17 @@ html_template = r"""<!DOCTYPE html>
       margin-bottom: 12px;
       flex-wrap: wrap;
       gap: 10px;
+    }
+    .audit-pool-title-group {
+      min-width: 0;
+      max-width: 100%;
+    }
+    .audit-pool-title-group > div:first-child {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 4px;
     }
     .audit-pool-title-group h4 {
       font-size: 17px;
@@ -1721,20 +1768,28 @@ html_template = r"""<!DOCTYPE html>
       display: flex;
       flex-direction: column;
       gap: 2px;
+      min-width: 0;
+      flex: 1 1 auto;
     }
     .candidate-title {
       font-size: 13px;
       font-weight: 800;
       color: #ffffff;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
     }
     .candidate-sub {
       font-size: 11px;
       color: var(--slate-400);
+      word-break: break-word;
     }
     .candidate-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
+      flex-wrap: wrap;
     }
     .candidate-delta-pill {
       font-size: 11px;
@@ -1755,6 +1810,39 @@ html_template = r"""<!DOCTYPE html>
 
     /* Responsive Mobile Overrides */
     @media (max-width: 640px) {
+      .modal-overlay {
+        padding: 12px 10px !important;
+      }
+      .modal-card {
+        padding: 16px 14px !important;
+      }
+      .modal-header h2 {
+        font-size: 17px !important;
+        flex-wrap: wrap !important;
+      }
+      .slot-candidate-row {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        padding: 10px 10px !important;
+      }
+      .candidate-info-block {
+        width: 100% !important;
+      }
+      .candidate-actions {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding-top: 6px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+      }
+      .candidate-actions .btn-assign-slot {
+        flex: 1 1 auto !important;
+        text-align: center !important;
+        width: 100% !important;
+      }
       .container {
         padding: 0 12px !important;
       }
@@ -1903,28 +1991,28 @@ html_template = r"""<!DOCTYPE html>
         </div>
         
         <p style="font-size: 12px; color: var(--slate-300); margin-bottom: 16px; line-height: 1.5;">
-          Rajasthan Royals retain key pillars (<strong style="color: #ffffff;">Jaiswal, Parag, Jurel, Sandeep, Hetmyer</strong>). Leveraging unencumbered free agents and undervalued global steals with <strong>₹113.60 Cr</strong> remaining budget power.
+          Rajasthan Royals retain 19 key pillars (<strong style="color: #ffffff;">Jaiswal, Parag, Jurel, Archer, Shami, Jadeja, Bishnoi, Sandeep, Sooryavanshi</strong>). Official auction purse: <strong style="color: #34d399;">₹27.05 Cr</strong> across <strong style="color: #fbbf24;">6 open slots</strong> (3 overseas), with <strong>₹113.60 Cr</strong> allocated across the Starting XI (₹6.40 Cr reserve).
         </p>
 
         <div class="bento-metrics-row">
           <div class="bento-metric-tile">
-            <span class="bento-metric-lbl">Remaining Purse</span>
-            <span class="bento-metric-val num-tabular" style="color: #34d399;" data-countup="113.60" data-prefix="₹" data-suffix=" Cr">₹113.60 Cr</span>
+            <span class="bento-metric-lbl">Official Auction Purse</span>
+            <span class="bento-metric-val num-tabular" style="color: #34d399;" data-countup="27.05" data-prefix="₹" data-suffix=" Cr">₹27.05 Cr</span>
           </div>
           <div class="bento-metric-tile">
-            <span class="bento-metric-lbl">Allocated Spend</span>
-            <span class="bento-metric-val num-tabular" style="color: #f43f5e;" data-countup="6.40" data-prefix="₹" data-suffix=" Cr">₹6.40 Cr</span>
+            <span class="bento-metric-lbl">Open Slots (Overseas)</span>
+            <span class="bento-metric-val num-tabular" style="color: #fbbf24;">6 Slots (3 OS)</span>
           </div>
           <div class="bento-metric-tile">
-            <span class="bento-metric-lbl">Squad Purse Utilization</span>
-            <span class="bento-metric-val num-tabular" style="color: #fbbf24;">94.7% Available</span>
+            <span class="bento-metric-lbl">Retained Pillars</span>
+            <span class="bento-metric-val num-tabular" style="color: #ff2a8d;">19 Retained</span>
           </div>
         </div>
 
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-          <span class="priority-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Target 1: Death Over Anchor (Taskin / Ellis)</span>
-          <span class="priority-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Target 2: Explosive Spin AR</span>
-          <span class="priority-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Target 3: Pace Enforcer</span>
+          <span class="priority-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Target 1: Top-Order Boundary Enforcer (Travis Head / Bairstow)</span>
+          <span class="priority-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Target 2: Death Power Finisher (Maxwell / Buy-back Hetmyer)</span>
+          <span class="priority-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Target 3: Death Yorker Weapon (Pathirana / Starc / Taskin)</span>
         </div>
       </div>
 
@@ -2118,7 +2206,7 @@ html_template = r"""<!DOCTYPE html>
         <div class="audit-pool-card pool-emerald spotlight-card" id="pool-free">
           <div class="audit-pool-header">
             <div class="audit-pool-title-group">
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px; flex-wrap: wrap;">
                 <span class="badge badge-free-agent">100% UNENCUMBERED FREE AGENTS</span>
                 <span style="font-size: 11px; color: #34d399; font-weight: 700; background: rgba(16, 185, 129, 0.15); padding: 2px 8px; border-radius: 6px;">8 Verified Targets</span>
               </div>
@@ -2317,7 +2405,7 @@ html_template = r"""<!DOCTYPE html>
         <div class="audit-pool-card pool-purple spotlight-card" id="pool-global">
           <div class="audit-pool-header">
             <div class="audit-pool-title-group">
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px; flex-wrap: wrap;">
                 <span class="badge" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.45);">GLOBAL SCOUTING DIAMONDS</span>
                 <span style="font-size: 11px; color: #c084fc; font-weight: 700; background: rgba(168, 85, 247, 0.15); padding: 2px 8px; border-radius: 6px;">Base ₹0.50–2.0 Cr</span>
               </div>
@@ -2472,7 +2560,7 @@ html_template = r"""<!DOCTYPE html>
         <div class="audit-pool-card pool-amber spotlight-card" id="pool-trade">
           <div class="audit-pool-header">
             <div class="audit-pool-title-group">
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px; flex-wrap: wrap;">
                 <span class="badge badge-traded">BLOCKBUSTER ASSET LOCKS</span>
                 <span style="font-size: 11px; color: #fbbf24; font-weight: 700; background: rgba(245, 158, 11, 0.15); padding: 2px 8px; border-radius: 6px;">73 Verified Trades</span>
               </div>
@@ -2539,7 +2627,7 @@ html_template = r"""<!DOCTYPE html>
         <div class="audit-pool-card pool-gold spotlight-card" id="pool-watch">
           <div class="audit-pool-header">
             <div class="audit-pool-title-group">
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px; flex-wrap: wrap;">
                 <span class="badge badge-watchlist">ACTIVE MONITORING LIST</span>
                 <span style="font-size: 11px; color: #fde047; font-weight: 700; background: rgba(234, 179, 8, 0.15); padding: 2px 8px; border-radius: 6px;">2 Strategic Watch Assets</span>
               </div>
@@ -2606,7 +2694,7 @@ html_template = r"""<!DOCTYPE html>
         <div class="audit-pool-card pool-ruby spotlight-card" id="pool-ineligible">
           <div class="audit-pool-header">
             <div class="audit-pool-title-group">
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px; flex-wrap: wrap;">
                 <span class="badge badge-ineligible">BCCI INELIGIBLE / NON-IPL</span>
                 <span style="font-size: 11px; color: #f87171; font-weight: 700; background: rgba(239, 68, 68, 0.15); padding: 2px 8px; border-radius: 6px;">27 Benchmark Records</span>
               </div>
@@ -3025,7 +3113,7 @@ html_template = r"""<!DOCTYPE html>
 
       <!-- Quick Search & Clean Filters -->
       <div style="display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; align-items: center;">
-        <input type="text" id="slotSearchInput" class="search-input" style="flex: 1; min-width: 220px;" placeholder="Search player by name or team..." oninput="filterSlotCandidates()">
+        <input type="text" id="slotSearchInput" class="search-input" style="flex: 1; min-width: 140px;" placeholder="Search player by name or team..." oninput="filterSlotCandidates()">
         <div class="filter-pills" id="slotCategoryPills">
           <div class="pill active" onclick="setSlotFilter('all', this)">All Candidates</div>
           <div class="pill" onclick="setSlotFilter('match', this)">Position Matches</div>
@@ -3525,14 +3613,14 @@ html_template = r"""<!DOCTYPE html>
         return `
           <div class="auction-card spotlight-card tilted-card ${isPriority ? 'priority-card' : ''}" onclick="openModal('${p.name}', '${roleKey}')">
             <div class="auction-card-header">
-              <div style="display:flex; align-items:center; gap:12px;">
+              <div style="display:flex; align-items:center; gap:12px; min-width:0;">
                 <div class="player-avatar-circle ${avatarClass}">${initials}</div>
-                <div>
+                <div style="min-width:0;">
                   <div class="auction-player-name">${p.name}</div>
                   <div class="auction-role">${p.role || p.archetype || 'Player'}</div>
                 </div>
               </div>
-              <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+              <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px; max-width:100%; flex-wrap:wrap;">
                 <span class="badge ${sInfo.badgeClass}">${sInfo.label}</span>
                 <div class="auction-price-tag">${p.est_price || p.tier || '₹0.5–2.0 Cr'}</div>
               </div>
@@ -3577,12 +3665,12 @@ html_template = r"""<!DOCTYPE html>
       { num: 3, posCategory: 'Middle Order', role: 'Top-Order WK / Boundary Enforcer', name: 'Jonny Bairstow', cost: 6.50, costStr: '₹6.50 Cr', status: 'Free Agent Auction Buy', rpcs: 53.24 },
       { num: 4, posCategory: 'Middle Order', role: 'Middle-Overs Anchor & Captain', name: 'Riyan Parag (C)', cost: 14.00, costStr: '₹14.0 Cr', status: 'RR Retained Core', rpcs: 64.50 },
       { num: 5, posCategory: 'WK', role: 'Crisis Anchor / Wicketkeeper', name: 'Dhruv Jurel (WK)', cost: 14.00, costStr: '₹14.0 Cr', status: 'RR Retained Core', rpcs: 68.20 },
-      { num: 6, posCategory: 'Finisher', role: 'Specialist Death Power Closer', name: 'Shimron Hetmyer', cost: 11.00, costStr: '₹11.0 Cr', status: 'RR Retained Core', rpcs: 67.40 },
-      { num: 7, posCategory: 'All-Rounders', role: 'Spin Destroyer & Power Closer', name: 'Glenn Maxwell', cost: 5.50, costStr: '₹5.50 Cr', status: 'Free Agent Auction Buy', rpcs: 53.52 },
+      { num: 6, posCategory: 'Finisher', role: 'Specialist Death Power Closer', name: 'Glenn Maxwell', cost: 5.50, costStr: '₹5.50 Cr', status: 'Free Agent Auction Buy', rpcs: 53.52 },
+      { num: 7, posCategory: 'All-Rounders', role: 'Power Finisher & Pace/Spin Cover', name: 'Donovan Ferreira', cost: 5.50, costStr: '₹5.50 Cr', status: 'RR Retained Core', rpcs: 58.40 },
       { num: 8, posCategory: 'All-Rounders', role: 'Elite Spin All-Rounder & Closer', name: 'Ravindra Jadeja', cost: 16.00, costStr: '₹16.0 Cr', status: 'RR Active Asset', rpcs: 68.40 },
       { num: 9, posCategory: 'Spinners', role: 'Attacking Wrist-Spin Squeeze', name: 'Ravi Bishnoi', cost: 11.00, costStr: '₹11.0 Cr', status: 'RR Active Asset', rpcs: 66.40 },
       { num: 10, posCategory: 'Pacers', role: 'Express Pace Enforcer (150+ kph)', name: 'Jofra Archer', cost: 12.50, costStr: '₹12.5 Cr', status: 'RR Retained Core', rpcs: 65.20 },
-      { num: 11, posCategory: 'Pacers', role: 'Veteran Death Yorker Operator', name: 'Sandeep Sharma', cost: 4.00, costStr: '₹4.00 Cr', status: 'RR Retained Core', rpcs: 66.80 },
+      { num: 11, posCategory: 'Pacers', role: 'Premier Seam & New-Ball Spearhead', name: 'Mohammed Shami', cost: 9.50, costStr: '₹9.50 Cr', status: 'RR Traded Asset (LOCKED)', rpcs: 65.80 },
     ];
 
     let currentXI = JSON.parse(JSON.stringify(DEFAULT_XI));

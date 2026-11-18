@@ -245,12 +245,12 @@ class TestTier1FeatureCoverage:
         )
 
     @pytest.mark.parametrize("player_name,role", [
-        ("Nathan Ellis", "bowlers"),
+        ("Mitchell Starc", "bowlers"),
         ("Jonny Bairstow", "batters"),
         ("Glenn Maxwell", "batters"),
     ])
     def test_confirmed_released_free_agents(self, dashboard_data, player_name, role):
-        """Confirmed released free agents (Nathan Ellis, Jonny Bairstow, Glenn Maxwell)."""
+        """Confirmed released free agents (Mitchell Starc, Jonny Bairstow, Glenn Maxwell)."""
         p = _find_player(dashboard_data, role, player_name)
         assert p is not None, f"Free agent {player_name} not found in {role}"
 
@@ -709,61 +709,56 @@ class TestTier5AllRoundersTradesAndSelectionPanelRedesign:
         trades = dashboard_data["confirmed_trades"]
         assert len(trades) >= 70, f"Expected at least 70 confirmed trade records, got {len(trades)}"
 
-        # 1. Hardik Pandya: Traded to MI
+        # 1. Hardik Pandya: Traded to PBKS
         hardik_trades = [t for t in trades if t["player_name"] == "Hardik Pandya"]
         assert len(hardik_trades) >= 1, "Hardik Pandya missing from confirmed_trades"
-        for role in ["batters", "bowlers", "all_rounders"]:
+        for role in ["bowlers", "all_rounders"]:
             p = _find_player(dashboard_data, role, "Hardik Pandya")
             assert p is not None, f"Hardik Pandya missing from {role}"
             assert p["badge_type"] == "traded", f"Hardik Pandya in {role} has badge_type={p['badge_type']}"
-            assert p["team_2026"] == "Mumbai Indians"
+            assert p["team_2026"] == "Punjab Kings"
             assert "LOCKED" in p["badge_label"]
 
-        # 2. Mohammed Shami: SRH -> LSG trade / untouchable retention
+        # 2. Mohammed Shami: Traded to RR
         shami = _find_player(dashboard_data, "bowlers", "Mohammed Shami")
         assert shami is not None, "Mohammed Shami missing from bowlers"
-        assert shami["badge_type"] == "retention"
-        assert shami["team_2026"] == "Lucknow Super Giants"
-        assert shami["badge_label"] == "UNTOUCHABLE CORE"
+        assert shami["badge_type"] == "traded"
+        assert shami["team_2026"] == "Rajasthan Royals"
+        assert "LOCKED" in shami["badge_label"]
 
-        # 3. Arshdeep Singh: PBKS ₹18 Cr RTM
+        # 3. Arshdeep Singh: Traded to MI
         arshdeep = _find_player(dashboard_data, "bowlers", "Arshdeep Singh")
         assert arshdeep is not None, "Arshdeep Singh missing from bowlers"
-        assert arshdeep["badge_type"] == "retention"
-        assert arshdeep["team_2026"] == "Punjab Kings"
-        assert arshdeep["badge_label"] == "UNTOUCHABLE CORE"
+        assert arshdeep["badge_type"] == "traded"
+        assert arshdeep["team_2026"] == "Mumbai Indians"
+        assert "LOCKED" in arshdeep["badge_label"]
 
-        # 4. Cameron Green: MI -> RCB trade
+        # 4. Cameron Green: Retained by KKR
         for role in ["batters", "bowlers", "all_rounders"]:
             p = _find_player(dashboard_data, role, "Cameron Green")
             assert p is not None, f"Cameron Green missing from {role}"
-            assert p["badge_type"] == "traded"
-            assert p["team_2026"] == "Royal Challengers Bengaluru"
+            assert p["badge_type"] == "retention"
+            assert p["team_2026"] == "Kolkata Knight Riders"
 
-        # 5. Avesh Khan & Devdutt Padikkal swap (LSG <-> RR)
-        avesh = _find_player(dashboard_data, "bowlers", "Avesh Khan")
-        assert avesh is not None, "Avesh Khan missing from bowlers"
-        assert avesh["badge_type"] == "traded"
-        assert avesh["team_2026"] == "Rajasthan Royals"
-
+        # 5. Devdutt Padikkal: Retained by RCB
         padikkal = _find_player(dashboard_data, "batters", "Devdutt Padikkal")
         assert padikkal is not None, "Devdutt Padikkal missing from batters"
-        assert padikkal["badge_type"] == "traded"
-        assert padikkal["team_2026"] == "Lucknow Super Giants"
+        assert padikkal["badge_type"] == "retention"
+        assert padikkal["team_2026"] == "Royal Challengers Bengaluru"
 
-        # 6. Romario Shepherd (LSG -> MI trade)
+        # 6. Romario Shepherd (Retained by RCB)
         for role in ["batters", "bowlers", "all_rounders"]:
             p = _find_player(dashboard_data, role, "Romario Shepherd")
             assert p is not None, f"Romario Shepherd missing from {role}"
-            assert p["badge_type"] == "traded"
-            assert p["team_2026"] == "Mumbai Indians"
+            assert p["badge_type"] == "retention"
+            assert p["team_2026"] == "Royal Challengers Bengaluru"
 
-        # 7. Shardul Thakur (DC -> KKR trade)
+        # 7. Shardul Thakur (Retained by MI)
         for role in ["batters", "bowlers", "all_rounders"]:
             p = _find_player(dashboard_data, role, "Shardul Thakur")
             assert p is not None, f"Shardul Thakur missing from {role}"
-            assert p["badge_type"] == "traded"
-            assert p["team_2026"] == "Kolkata Knight Riders"
+            assert p["badge_type"] == "retention"
+            assert p["team_2026"] == "Mumbai Indians"
 
         # 8. Auction Board Strict Exclusion Verification
         all_pool = dashboard_data["batters"] + dashboard_data["bowlers"] + dashboard_data.get("all_rounders", [])
@@ -773,7 +768,7 @@ class TestTier5AllRoundersTradesAndSelectionPanelRedesign:
         ]
         excluded_names = [
             "Hardik Pandya", "Mohammed Shami", "Arshdeep Singh", "Cameron Green",
-            "Avesh Khan", "Devdutt Padikkal", "Romario Shepherd", "Shardul Thakur",
+            "Devdutt Padikkal", "Romario Shepherd", "Shardul Thakur",
             "Kuldeep Yadav", "Rishabh Pant", "Shahbaz Ahmed", "Rohit Sharma",
             "Virat Kohli", "Jasprit Bumrah", "Suryakumar Yadav", "Shubman Gill"
         ]
@@ -981,5 +976,23 @@ class TestTier6ResponsiveOverflowAndMetadataPolish:
         assert "interval = setInterval(" in build_script, "build_dashboard.py missing 'interval = setInterval(' in runDecryptedText"
         assert "let interval;" in dashboard_html, "dashboard/index.html missing 'let interval;' in runDecryptedText"
         assert "interval = setInterval(" in dashboard_html, "dashboard/index.html missing 'interval = setInterval(' in runDecryptedText"
+
+    def test_internal_flex_clipping_remediations(self, dashboard_html):
+        """Verify internal component flex-wrapping rules preventing component boundary clipping."""
+        # Defect 1: Tab 2 Auction Card Header Wrapping
+        assert ".auction-card-header" in dashboard_html
+        assert "flex-wrap: wrap;" in dashboard_html
+        assert ".auction-card-header > div:last-child" in dashboard_html
+
+        # Defect 2: Tab 3 Contracts Audit Title Wrapping
+        assert ".audit-pool-title-group > div:first-child" in dashboard_html
+        assert "flex-wrap: wrap;" in dashboard_html
+
+        # Defect 3: Tab 6 Modal Candidate Row & Action Button Wrapping
+        assert ".slot-candidate-row" in dashboard_html
+        assert ".candidate-actions" in dashboard_html
+        assert "padding: 16px 14px !important;" in dashboard_html
+        assert ".candidate-actions .btn-assign-slot" in dashboard_html
+
 
 
