@@ -1916,6 +1916,361 @@ html_template = r"""<!DOCTYPE html>
       }
     }
 
+  
+    /* 10-Franchise Standings Table */
+    .standings-panel {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid var(--slate-800);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(12px);
+    }
+    .franchise-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 13px;
+    }
+    .franchise-table th {
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--slate-400);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--slate-800);
+    }
+    .franchise-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--slate-200);
+      vertical-align: middle;
+    }
+    .franchise-table tr:hover td {
+      background: rgba(234, 26, 127, 0.04);
+    }
+    .franchise-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .franchise-abbr {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 800;
+    }
+    .purse-bar-container {
+      width: 130px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .purse-bar-fill {
+      height: 100%;
+      border-radius: 9999px;
+    }
+
+    /* 25-Man Squad & 6 Auction Slots Architecture */
+    .squad-view-toggle {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .squad-toggle-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--slate-300);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .squad-toggle-btn.active {
+      background: rgba(234, 26, 127, 0.15);
+      border-color: var(--rr-pink);
+      color: #ffffff;
+    }
+    .squad-retained-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+      gap: 10px;
+    }
+    .squad-player-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: border-color 0.2s;
+    }
+    .squad-player-card:hover {
+      border-color: rgba(234, 26, 127, 0.4);
+    }
+    .auction-slot-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px dashed rgba(234, 26, 127, 0.35);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+    .auction-slot-card.filled {
+      border-style: solid;
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.04);
+    }
+    .btn-clear-slot {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-clear-slot:hover {
+      background: rgba(239, 68, 68, 0.2);
+    }
+    .btn-slot-assign {
+      background: linear-gradient(135deg, #ea1a7f 0%, #be123c 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-slot-assign:hover {
+      opacity: 0.9;
+    }
+
+    /* Auction Card Action Buttons */
+    .auction-card-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .btn-auction-add {
+      flex: 1;
+      background: linear-gradient(135deg, #ea1a7f 0%, #be123c 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: opacity 0.2s;
+    }
+    .btn-auction-add:hover {
+      opacity: 0.9;
+    }
+    .btn-auction-shortlist {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--slate-300);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-auction-shortlist:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+    .btn-auction-shortlist.shortlisted {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: #f59e0b;
+      color: #fbbf24;
+    }
+
+    /* Radar Breakdown Comparison Table */
+    .radar-compare-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-top: 16px;
+      font-size: 12px;
+    }
+    .radar-compare-table th {
+      background: rgba(15, 23, 42, 0.7);
+      color: var(--slate-400);
+      font-weight: 600;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--slate-800);
+      text-align: left;
+    }
+    .radar-compare-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--slate-300);
+    }
+    .radar-delta-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .delta-p1 {
+      background: rgba(234, 26, 127, 0.15);
+      color: #ff2a8d;
+      border: 1px solid rgba(234, 26, 127, 0.3);
+    }
+    .delta-p2 {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .delta-tie {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--slate-400);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Interactive WPA Case Studies */
+    .case-pills {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+    .case-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--slate-300);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .case-pill.active {
+      background: rgba(234, 26, 127, 0.15);
+      border-color: var(--rr-pink);
+      color: #ffffff;
+    }
+    .telemetry-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .telemetry-table th {
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--slate-400);
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--slate-800);
+    }
+    .telemetry-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--slate-200);
+    }
+
+    /* LaTeX / KaTeX styled Math Proofs */
+    .math-proof-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .math-eq-display {
+      background: rgba(6, 11, 26, 0.85);
+      border: 1px solid rgba(234, 26, 127, 0.25);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: #38bdf8;
+      overflow-x: auto;
+      text-align: center;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+    .calibration-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 10px;
+    }
+    .calibration-table th {
+      background: rgba(15, 23, 42, 0.9);
+      color: #94a3b8;
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: right;
+    }
+    .calibration-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      text-align: right;
+      color: var(--slate-300);
+    }
+    .calibration-table td:first-child, .calibration-table th:first-child {
+      text-align: left;
+    }
+
+    /* Toast Notification */
+    .toast-notification {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--rr-pink);
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 99999;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(234, 26, 127, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: toastIn 0.25s ease-out;
+    }
+    @keyframes toastIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
   </style>
 </head>
 <body>
@@ -2158,6 +2513,179 @@ html_template = r"""<!DOCTYPE html>
 
     <!-- TAB 3: CONTRACT & RELEASE TRACKER -->
     <div id="tab-contracts" class="tab-view">
+
+    <!-- 10-Franchise Auction Purse & Slot Standings Matrix -->
+    <div class="standings-panel spotlight-card">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px; margin-bottom: 16px;">
+        <div>
+          <div class="bento-badge" style="background: rgba(234, 26, 127, 0.15); color: #ff2a8d; border: 1px solid rgba(234, 26, 127, 0.4);">
+            <span class="status-dot-pulse"></span> OFFICIAL IPL 2027 STANDINGS
+          </div>
+          <h3 class="shiny-text" style="font-size: 18px; font-weight: 800; color: #ffffff; margin-top: 4px;">10-Franchise Auction Purse & Slot Standings</h3>
+          <p style="color: var(--slate-300); font-size: 12px; margin-top: 2px;">
+            Comparative analysis of all 10 IPL franchises' available auction purse, open roster slots, and competitive bidding leverage heading into the mini-auction.
+          </p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <div style="background: rgba(234, 26, 127, 0.1); border: 1px solid rgba(234, 26, 127, 0.3); padding: 6px 12px; border-radius: 8px; font-size: 11px; color: #ffffff;">
+            Total League Purse: <strong style="color: #ff2a8d;">₹297.90 Cr</strong>
+          </div>
+          <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 6px 12px; border-radius: 8px; font-size: 11px; color: #ffffff;">
+            Total Open Slots: <strong style="color: #34d399;">66 (25 OS)</strong>
+          </div>
+        </div>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="franchise-table">
+          <thead>
+            <tr>
+              <th style="width: 40px;">Rank</th>
+              <th>Franchise</th>
+              <th>Available Purse</th>
+              <th>Purse Power</th>
+              <th>Total Slots</th>
+              <th>Overseas Slots</th>
+              <th>Key Retentions / Traded Pillars</th>
+              <th>Rivalry Threat to RR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700; color:#cbd5e1;">#1</td>
+              <td><span class="franchise-badge"><span class="franchise-abbr" style="background:#0284c7; color:#fff;">LSG</span> Lucknow Super Giants</span></td>
+              <td><strong class="num-tabular" style="color:#38bdf8; font-size:14px;">₹47.45 Cr</strong></td>
+              <td>
+                <div class="purse-bar-container"><div class="purse-bar-fill" style="width: 100%; background: #38bdf8;"></div></div>
+                <span style="font-size:10px; color:var(--slate-400);">100% capacity</span>
+              </td>
+              <td><span class="num-tabular" style="font-weight:700;">7 slots</span></td>
+              <td><span class="badge" style="background:rgba(56,189,248,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.3);">3 Overseas</span></td>
+              <td style="font-size:11px; color:var(--slate-300);">Pooran, Mayank Yadav, Sam Curran (T), Kuldeep Yadav (T)</td>
+              <td><span class="badge" style="background:rgba(239,68,68,0.15); color:#fca5a5; border:1px solid rgba(239,68,68,0.3);">High Threat (Max Purse)</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700; color:#cbd5e1;">#2</td>
+              <td><span class="franchise-badge"><span class="franchise-abbr" style="background:#6b21a8; color:#fff;">KKR</span> Kolkata Knight Riders</span></td>
+              <td><strong class="num-tabular" style="color:#c084fc; font-size:14px;">₹41.65 Cr</strong></td>
+              <td>
+                <div class="purse-bar-container"><div class="purse-bar-fill" style="width: 87.8%; background: #c084fc;"></div></div>
+                <span style="font-size:10px; color:var(--slate-400);">87.8%</span>
+              </td>
+              <td><span class="num-tabular" style="font-weight:700;">8 slots</span></td>
+              <td><span class="badge" style="background:rgba(192,132,252,0.15); color:#c084fc; border:1px solid rgba(192,132,252,0.3);">3 Overseas</span></td>
+              <td style="font-size:11px; color:var(--slate-300);">Sunil Narine, Andre Russell, Rinku Singh, Varun Chakaravarthy</td>
+              <td><span class="badge" style="background:rgba(239,68,68,0.15); color:#fca5a5; border:1px solid rgba(239,68,68,0.3);">High Threat (Pace Target)</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700; color:#cbd5e1;">#3</td>
+              <td><span class="franchise-badge"><span class="franchise-abbr" style="background:#ea580c; color:#fff;">SRH</span> Sunrisers Hyderabad</span></td>
+              <td><strong class="num-tabular" style="color:#fb923c; font-size:14px;">₹40.15 Cr</strong></td>
+              <td>
+                <div class="purse-bar-container"><div class="purse-bar-fill" style="width: 84.6%; background: #fb923c;"></div></div>
+                <span style="font-size:10px; color:var(--slate-400);">84.6%</span>
+              </td>
+              <td><span class="num-tabular" style="font-weight:700;">7 slots</span></td>
+              <td><span class="badge" style="background:rgba(251,146,60,0.15); color:#fb923c; border:1px solid rgba(251,146,60,0.3);">3 Overseas</span></td>
+              <td style="font-size:11px; color:var(--slate-300);">Cummins, Abhishek Sharma, Klaasen, Ishan Kishan, Natarajan (T)</td>
+              <td><span class="badge" style="background:rgba(239,68,68,0.15); color:#fca5a5; border:1px solid rgba(239,68,68,0.3);">High Threat (Bidding War)</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700; color:#cbd5e1;">#4</td>
+              <td><span class="franchise-badge"><span class="franchise-abbr" style="background:#1e40af; color:#fff;">DC</span> Delhi Capitals</span></td>
+              <td><strong class="num-tabular" style="color:#60a5fa; font-size:14px;">₹39.50 Cr</strong></td>
+              <td>
+                <div class="purse-bar-container"><div class="purse-bar-fill" style="width: 83.2%; background: #60a5fa;"></div></div>
+                <span style="font-size:10px; color:var(--slate-400);">83.2%</span>
+              </td>
+              <td><span class="num-tabular" style="font-weight:700;">9 slots</span></td>
+              <td><span class="badge" style="background:rgba(96,165,250,0.15); color:#60a5fa; border:1px solid rgba(96,165,250,0.3);">4 Overseas</span></td>
+              <td style="font-size:11px; color:var(--slate-300);">Axar Patel, KL Rahul, Rishabh Pant (T), Tristan Stubbs</td>
+              <td><span class="badge" style="background:rgba(245,158,11,0.15); color:#fbbf24; border:1px solid rgba(245,158,11,0.3);">Medium-High (4 OS Slots)</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700; color:#cbd5e1;">#5</td>
+              <td><span class="franchise-badge"><span class="franchise-abbr" style="background:#0369a1; color:#fff;">MI</span> Mumbai Indians</span></td>
+              <td><strong class="num-tabular" style="color:#38bdf8; font-size:14px;">₹32.60 Cr</strong></td>
+              <td>
+                <div class="purse-bar-container"><div class="purse-bar-fill" style="width: 68.7%; background: #38bdf8;"></div></div>
+                <span style="font-size:10px; color:var(--slate-400);">68.7%</span>
+              </td>
+              <td><span class="num-tabular" style="font-weight:700;">9 slots</span></td>
+              <td><span class="badge" style="background:rgba(56,189,248,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.3);">2 Overseas</span></td>
+              <td style="font-size:11px; color:var(--slate-300);">Rohit, SKY, Bumrah, Tilak Varma, Arshdeep Singh (T)</td>
+              <td><span class="badge" style="background:rgba(245,158,11,0.15); color:#fbbf24; border:1px solid rgba(245,158,11,0.3);">Medium Threat</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700; color:#cbd5e1;">#6</td>
+              <td><span class="franchise-badge"><span class="franchise-abbr" style="background:#eab308; color:#000;">CSK</span> Chennai Super Kings</span></td>
+              <td><strong class="num-tabular" style="color:#fde047; font-size:14px;">₹28.05 Cr</strong></td>
+              <td>
+                <div class="purse-bar-container"><div class="purse-bar-fill" style="width: 59.1%; background: #fde047;"></div></div>
+                <span style="font-size:10px; color:var(--slate-400);">59.1%</span>
+              </td>
+              <td><span class="num-tabular" style="font-weight:700;">6 slots</span></td>
+              <td><span class="badge" style="background:rgba(253,224,71,0.15); color:#fde047; border:1px solid rgba(253,224,71,0.3);">2 Overseas</span></td>
+              <td style="font-size:11px; color:var(--slate-300);">Ruturaj Gaikwad, Sanju Samson, Shivam Dube, Noor Ahmad, Livingstone (T)</td>
+              <td><span class="badge" style="background:rgba(245,158,11,0.15); color:#fbbf24; border:1px solid rgba(245,158,11,0.3);">Direct RR Peer</span></td>
+            </tr>
+            <tr style="background: rgba(234, 26, 127, 0.08); border-left: 3px solid var(--rr-pink);">
+              <td style="font-family:'JetBrains Mono'; font-weight:800; color:var(--rr-pink);">#7</td>
+              <td><span class="franchise-badge"><span class="franchise-abbr" style="background:var(--rr-pink); color:#fff;">RR</span> Rajasthan Royals (Focus)</span></td>
+              <td><strong class="num-tabular" style="color:#ff2a8d; font-size:15px;">₹27.05 Cr</strong></td>
+              <td>
+                <div class="purse-bar-container"><div class="purse-bar-fill" style="width: 57.0%; background: var(--rr-pink);"></div></div>
+                <span style="font-size:10px; color:#ff2a8d; font-weight:700;">57.0% Purse Efficiency</span>
+              </td>
+              <td><span class="num-tabular" style="font-weight:800; color:#ffffff;">6 slots</span></td>
+              <td><span class="badge" style="background:rgba(234,26,127,0.2); color:#ff2a8d; border:1px solid var(--rr-pink);">3 Overseas</span></td>
+              <td style="font-size:11px; color:#ffffff;"><strong>Jaiswal, Parag, Jurel, Jadeja, Bishnoi, Archer, Shami (T)</strong></td>
+              <td><span class="badge" style="background:rgba(16,185,129,0.15); color:#34d399; border:1px solid rgba(16,185,129,0.3);">Surgical Auction Plan</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700; color:#cbd5e1;">#8</td>
+              <td><span class="franchise-badge"><span class="franchise-abbr" style="background:#dc2626; color:#fff;">PBKS</span> Punjab Kings</span></td>
+              <td><strong class="num-tabular" style="color:#f87171; font-size:14px;">₹18.60 Cr</strong></td>
+              <td>
+                <div class="purse-bar-container"><div class="purse-bar-fill" style="width: 39.2%; background: #f87171;"></div></div>
+                <span style="font-size:10px; color:var(--slate-400);">39.2%</span>
+              </td>
+              <td><span class="num-tabular" style="font-weight:700;">6 slots</span></td>
+              <td><span class="badge" style="background:rgba(248,113,113,0.15); color:#f87171; border:1px solid rgba(248,113,113,0.3);">2 Overseas</span></td>
+              <td style="font-size:11px; color:var(--slate-300);">Shreyas Iyer, Hardik Pandya (T), Stoinis, Chahal, Jansen</td>
+              <td><span class="badge" style="background:rgba(100,116,139,0.15); color:#94a3b8; border:1px solid rgba(100,116,139,0.3);">Low Threat (Constrained)</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700; color:#cbd5e1;">#9</td>
+              <td><span class="franchise-badge"><span class="franchise-abbr" style="background:#b91c1c; color:#fff;">RCB</span> Royal Challengers Bengaluru</span></td>
+              <td><strong class="num-tabular" style="color:#f87171; font-size:14px;">₹14.15 Cr</strong></td>
+              <td>
+                <div class="purse-bar-container"><div class="purse-bar-fill" style="width: 29.8%; background: #f87171;"></div></div>
+                <span style="font-size:10px; color:var(--slate-400);">29.8%</span>
+              </td>
+              <td><span class="num-tabular" style="font-weight:700;">5 slots</span></td>
+              <td><span class="badge" style="background:rgba(248,113,113,0.15); color:#f87171; border:1px solid rgba(248,113,113,0.3);">1 Overseas</span></td>
+              <td style="font-size:11px; color:var(--slate-300);">Virat Kohli, Rajat Patidar, Josh Hazlewood, Phil Salt, Krunal Pandya</td>
+              <td><span class="badge" style="background:rgba(100,116,139,0.15); color:#94a3b8; border:1px solid rgba(100,116,139,0.3);">Low Threat (1 OS Slot)</span></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700; color:#cbd5e1;">#10</td>
+              <td><span class="franchise-badge"><span class="franchise-abbr" style="background:#1e3a8a; color:#fff;">GT</span> Gujarat Titans</span></td>
+              <td><strong class="num-tabular" style="color:#64748b; font-size:14px;">₹8.75 Cr</strong></td>
+              <td>
+                <div class="purse-bar-container"><div class="purse-bar-fill" style="width: 18.4%; background: #64748b;"></div></div>
+                <span style="font-size:10px; color:var(--slate-400);">18.4%</span>
+              </td>
+              <td><span class="num-tabular" style="font-weight:700;">3 slots</span></td>
+              <td><span class="badge" style="background:rgba(100,116,139,0.15); color:#94a3b8; border:1px solid rgba(100,116,139,0.3);">2 Overseas</span></td>
+              <td style="font-size:11px; color:var(--slate-300);">Shubman Gill, Rashid Khan, Mohammed Siraj, Kagiso Rabada</td>
+              <td><span class="badge" style="background:rgba(100,116,139,0.15); color:#94a3b8; border:1px solid rgba(100,116,139,0.3);">Minimal Purse Power</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
       <div class="audit-header-banner spotlight-card">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
           <div>
@@ -2172,15 +2700,15 @@ html_template = r"""<!DOCTYPE html>
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); padding: 8px 14px; border-radius: 10px; text-align: center;">
               <div style="font-size: 9px; text-transform: uppercase; color: #34d399; font-weight: 700;">Free Agents</div>
-              <div class="num-tabular" style="font-size: 16px; font-weight: 800; color: #ffffff;">8 Confirmed</div>
+              <div class="num-tabular" style="font-size: 16px; font-weight: 800; color: #ffffff;">63+ Confirmed</div>
             </div>
             <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.35); padding: 8px 14px; border-radius: 10px; text-align: center;">
               <div style="font-size: 9px; text-transform: uppercase; color: #c084fc; font-weight: 700;">Global Steals</div>
-              <div class="num-tabular" style="font-size: 16px; font-weight: 800; color: #ffffff;">6 Eligible</div>
+              <div class="num-tabular" style="font-size: 16px; font-weight: 800; color: #ffffff;">105 Evaluated</div>
             </div>
             <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.35); padding: 8px 14px; border-radius: 10px; text-align: center;">
               <div style="font-size: 9px; text-transform: uppercase; color: #fbbf24; font-weight: 700;">Marquee Trades</div>
-              <div class="num-tabular" style="font-size: 16px; font-weight: 800; color: #ffffff;">73 Verified</div>
+              <div class="num-tabular" style="font-size: 16px; font-weight: 800; color: #ffffff;">76 Verified</div>
             </div>
           </div>
         </div>
@@ -2562,7 +3090,7 @@ html_template = r"""<!DOCTYPE html>
             <div class="audit-pool-title-group">
               <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px; flex-wrap: wrap;">
                 <span class="badge badge-traded">BLOCKBUSTER ASSET LOCKS</span>
-                <span style="font-size: 11px; color: #fbbf24; font-weight: 700; background: rgba(245, 158, 11, 0.15); padding: 2px 8px; border-radius: 6px;">73 Verified Trades</span>
+                <span style="font-size: 11px; color: #fbbf24; font-weight: 700; background: rgba(245, 158, 11, 0.15); padding: 2px 8px; border-radius: 6px;">76 Verified Trades</span>
               </div>
               <h4>Pool 3: Confirmed Marquee Trades & Locked Assets</h4>
             </div>
@@ -2813,6 +3341,7 @@ html_template = r"""<!DOCTYPE html>
           <div class="role-toggle">
             <button id="scatter-bat-btn" class="role-btn active" onclick="setScatterRole('batters')">Batters</button>
             <button id="scatter-bowl-btn" class="role-btn" onclick="setScatterRole('bowlers')">Bowlers</button>
+            <button id="scatter-ar-btn" class="role-btn" onclick="setScatterRole('all_rounders')">All-Rounders (48)</button>
           </div>
         </div>
 
@@ -2850,37 +3379,44 @@ html_template = r"""<!DOCTYPE html>
         <div class="chart-box" style="height: 480px;">
           <canvas id="radarCanvas"></canvas>
         </div>
+        <div id="radarComparisonTable" style="margin-top: 24px;"></div>
       </div>
     </div>
 
     <!-- TAB 6: RAJASTHAN ROYALS CHAMPIONSHIP STRATEGY: XI BUILDER & SALARY CAP TRACKER -->
-    <div id="tab-xibuilder" class="tab-view">
+        <div id="tab-xibuilder" class="tab-view">
       <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
         <div>
-          <h2 style="font-size: 20px; font-weight: 700; color: var(--slate-50);">Rajasthan Royals IPL 2027 Clutch XI Builder & Purse Tracker</h2>
+          <h2 style="font-size: 20px; font-weight: 700; color: var(--slate-50);">Rajasthan Royals IPL 2027 Clutch XI Builder & 25-Man Squad Strategy</h2>
           <p style="color: var(--slate-400); font-size: 13px; margin-top: 2px;">
-            Interactive Starting XI lineup simulator with dedicated positional slots, 1-click slot assignment, and real-time ₹120.0 Cr purse cap tracking.
+            Interactive Starting XI & 25-Man Squad simulator: 19 Retained Core Pillars + 6 Open Auction Slots (3 Overseas) to fill with the ₹27.05 Cr purse.
           </p>
         </div>
-        <button onclick="resetXI()" class="star-border-btn" style="padding: 7px 16px; font-size: 11px;">
-          ↺ Reset to Recommended XI
-        </button>
+        <div style="display:flex; gap:8px;">
+          <button onclick="resetXI()" class="star-border-btn" style="padding: 7px 14px; font-size: 11px;">
+            ↺ Reset Lineup
+          </button>
+        </div>
       </div>
 
-      <!-- Live ₹120 Cr Purse Tracker -->
+      <!-- Live Dual Purse Tracker -->
       <div class="purse-tracker">
         <div class="purse-grid">
           <div>
-            <div class="purse-item-lbl">Total Auction Purse</div>
+            <div class="purse-item-lbl">Total Squad Salary Cap</div>
             <div class="purse-item-val">₹120.00 Cr</div>
           </div>
           <div>
-            <div class="purse-item-lbl">Allocated XI Spend</div>
+            <div class="purse-item-lbl">Starting XI Spend</div>
             <div class="purse-item-val" id="allocatedSpend" style="color: #34d399;">₹113.60 Cr</div>
           </div>
           <div>
-            <div class="purse-item-lbl">Purse Remaining</div>
+            <div class="purse-item-lbl">XI Salary Reserve</div>
             <div class="purse-item-val" id="purseRemaining" style="color: #fbbf24;">₹6.40 Cr</div>
+          </div>
+          <div>
+            <div class="purse-item-lbl">Dedicated Auction Purse</div>
+            <div class="purse-item-val" id="auctionPurseDisplay" style="color: #ff2a8d;">₹27.05 Cr</div>
           </div>
           <div>
             <div class="purse-item-lbl">Team Clutch Index</div>
@@ -2892,16 +3428,26 @@ html_template = r"""<!DOCTYPE html>
         </div>
         <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--slate-400); margin-top:6px;">
           <span id="purseCapText">XI Salary Cap Utilization: 94.7%</span>
-          <span id="purseReserveText">Bench & Contingency Reserve: ₹6.40 Cr</span>
+          <span id="purseReserveText">Bench & Contingency Reserve: ₹6.40 Cr • Mini-Auction Purse Available: ₹27.05 Cr</span>
         </div>
       </div>
 
-      <div class="xi-builder-layout">
-        <!-- Clean Positional Slots (Openers, Middle Order, Finisher, All-Rounders, Spinners, Pacers, WK) -->
+      <!-- View Selector Pills -->
+      <div class="squad-view-toggle">
+        <button id="btn-view-xi" class="squad-toggle-btn active" onclick="switchXIView('xi')">
+          🏏 Starting XI & Impact Player (12 Slots)
+        </button>
+        <button id="btn-view-squad" class="squad-toggle-btn" onclick="switchXIView('squad')">
+          🛡️ Full 25-Man Squad & 6 Auction Slots (19 Retained + 6 Buys)
+        </button>
+      </div>
+
+      <!-- VIEW 1: Starting XI & Impact Player -->
+      <div id="xiViewContainer" class="xi-builder-layout">
         <div class="modal-section">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-            <h3 style="font-size: 14px; font-weight: 700; color: var(--slate-50);">Royals Positional Lineup (11 Slots)</h3>
-            <span style="font-size: 11px; color: #71717a;">Click any slot or "⇄ Swap" to assign player</span>
+            <h3 style="font-size: 14px; font-weight: 700; color: var(--slate-50);">Positional Starting Lineup (11 Core Slots + 1 Impact Player)</h3>
+            <span style="font-size: 11px; color: #71717a;">Click slot or "⇄ Swap" to assign • "✕ Clear" to empty</span>
           </div>
           <div id="xiSlotsList" class="xi-slots-container"></div>
         </div>
@@ -2912,13 +3458,13 @@ html_template = r"""<!DOCTYPE html>
           
           <div id="squadBalanceBox" style="background: rgba(6, 11, 26, 0.7); border: 1px solid var(--rr-navy-border); border-radius: 10px; padding: 14px; margin-bottom: 14px; backdrop-filter: blur(12px);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-              <span style="font-size: 11px; font-weight: 700; color: #a1a1aa; text-transform: uppercase;">Overseas Roster Balance</span>
+              <span style="font-size: 11px; font-weight: 700; color: #a1a1aa; text-transform: uppercase;">Playing XI Overseas Balance</span>
               <span id="overseasCountBadge" style="font-size: 10px; font-weight: 800; font-family: 'JetBrains Mono', monospace; padding: 2px 8px; border-radius: 9999px; background: rgba(16, 185, 129,0.1); color: #34d399; border: 1px solid rgba(16, 185, 129,0.3);">
-                3 / 4 Overseas (Compliant)
+                3 / 4 Overseas in XI (Compliant)
               </span>
             </div>
-            <div style="display: flex; gap: 6px; font-size: 11px; color: #71717a;">
-              <span>• Max 4 Overseas allowed in playing XI under BCCI regulations.</span>
+            <div style="font-size: 11px; color: #71717a;">
+              • Maximum 4 Overseas players permitted in the playing XI under BCCI match regulations.
             </div>
           </div>
 
@@ -2936,45 +3482,121 @@ html_template = r"""<!DOCTYPE html>
           </div>
         </div>
       </div>
+
+      <!-- VIEW 2: 25-Man Squad & 6 Auction Slots -->
+      <div id="squadViewContainer" style="display: none; flex-direction: column; gap: 20px;">
+        <!-- 6 Open Auction Slots Section -->
+        <div class="modal-section" style="border: 1px solid rgba(234, 26, 127, 0.3); background: rgba(234, 26, 127, 0.03);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <div class="bento-badge" style="background: rgba(234, 26, 127, 0.15); color: #ff2a8d; border: 1px solid rgba(234, 26, 127, 0.4);">
+                ₹27.05 CR PURSE ALLOCATION
+              </div>
+              <h3 style="font-size: 16px; font-weight: 700; color: #ffffff; margin-top: 4px;">6 Open Mini-Auction Slots (3 Overseas + 3 Domestic)</h3>
+              <p style="font-size: 12px; color: var(--slate-400);">Surgical targets to fill Rajasthan Royals' 25-man squad roster limit.</p>
+            </div>
+            <div id="auctionSlotsSummaryBadge" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 8px 14px; border-radius: 8px; font-size: 12px; color: #ffffff;">
+              Purse Spent: <strong style="color: #34d399;" id="auctionCommittedSpend">₹24.50 Cr</strong> / ₹27.05 Cr • Headroom: <strong style="color: #fbbf24;" id="auctionHeadroom">₹2.55 Cr</strong>
+            </div>
+          </div>
+
+          <div id="auctionSlotsList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 14px;"></div>
+        </div>
+
+        <!-- 19 Retained Pillars Section -->
+        <div class="modal-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <h3 style="font-size: 16px; font-weight: 700; color: #ffffff;">19 Retained Foundation Pillars (Locked Core)</h3>
+              <p style="font-size: 12px; color: var(--slate-400);">19 officially retained players (14 Indian + 5 Overseas) forming Rajasthan Royals' championship spine.</p>
+            </div>
+            <span class="badge" style="background: rgba(234, 26, 127, 0.15); color: #ff2a8d; border: 1px solid var(--rr-pink);">
+              19 / 19 Retained
+            </span>
+          </div>
+
+          <div id="retainedPillarsGrid" class="squad-retained-grid"></div>
+        </div>
+      </div>
     </div>
 
-    <!-- TAB 7: CASE STUDIES -->
+        <!-- TAB 7: MATCH CASE STUDIES -->
     <div id="tab-cases" class="tab-view">
-      <div class="case-grid">
-        <div class="case-card spotlight-card tilted-card">
-          <div class="case-badge">Match 31250 • KKR vs RR (2024)</div>
-          <div class="case-title">Jos Buttler's Impossible Chase</div>
-          <div class="case-impact">ΔWPA: +1.069 • 107* (65 balls) • Won by 2 wickets</div>
-          <p class="case-desc">
-            RR slumped to 121/6 in 12.2 overs chasing 224 (Win Probability = 4%). Battling severe physical cramps, Buttler batted with tailenders, hitting a six on the penultimate delivery and single on the last ball to seal the highest single-match pressure batting WPA in modern IPL history.
-          </p>
+      <div class="chart-panel spotlight-card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px; margin-bottom: 16px;">
+          <div>
+            <div class="bento-badge" style="background: rgba(234, 26, 127, 0.15); color: #ff2a8d; border: 1px solid rgba(234, 26, 127, 0.4);">
+              <span class="status-dot-pulse"></span> EXECUTIVE MATCH TELEMETRY
+            </div>
+            <h2 class="shiny-text" style="font-size: 20px; font-weight: 800; color: #ffffff; margin-top: 4px;">High-Leverage Match Telemetry & Win-Probability Worm Charts</h2>
+            <p style="color: var(--slate-300); font-size: 13px; margin-top: 2px;">
+              Ball-by-ball Win Probability Added (WPA) dynamics across pivotal IPL matches, demonstrating how clutch performers alter championship outcomes.
+            </p>
+          </div>
         </div>
 
-        <div class="case-card spotlight-card tilted-card">
-          <div class="case-badge">Match 31251 • PBKS vs MI (2024)</div>
-          <div class="case-title">Jasprit Bumrah's Mullanpur Masterclass</div>
-          <div class="case-impact">ΔWPA: +0.318 • 3/19 in 24 balls (Econ 4.75) • Won by 9 runs</div>
-          <p class="case-desc">
-            Defending 192, Punjab's lower order mounted a furious counterattack (45 needed off 30 balls, WP 64%). Bumrah was deployed across overs 2, 13, and 17, dismantling Rossouw and Curran to depress Punjab's win probability down to 12% in a defensive masterclass.
-          </p>
-        </div>
+        <!-- Match Selector Pills -->
+        <div class="case-pills" id="caseStudyPills"></div>
 
-        <div class="case-card spotlight-card tilted-card">
-          <div class="case-badge">Match 40720 • SRH vs PBKS (2025)</div>
-          <div class="case-title">Abhishek Sharma's Blitzkrieg Decimation</div>
-          <div class="case-impact">ΔWPA: +0.662 • 128 (53 balls) • 8-Wicket Runaway Victory</div>
-          <p class="case-desc">
-            Chasing 215 with a required rate of 10.75 from ball 1, Abhishek demolished the bowling attack in the powerplay and middle overs under sustained high leverage. His SCS of 0.059 confirms this is a repeatable pattern across 68.4% of his pressure matches.
-          </p>
-        </div>
+        <!-- Active Match Showcase -->
+        <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+          <div style="background: rgba(6, 11, 26, 0.85); border: 1px solid var(--slate-800); border-radius: 12px; padding: 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <h3 id="caseMatchTitle" style="font-size: 16px; font-weight: 700; color: #ffffff;">Jos Buttler's Impossible Chase</h3>
+                <div id="caseMatchMeta" style="font-size: 11px; color: var(--slate-400); margin-top: 2px;">Match 31250 • KKR vs RR (Eden Gardens, 2024)</div>
+              </div>
+              <div id="caseMatchImpact" class="badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 12px; padding: 4px 10px;">
+                ΔWPA: +1.069 • Won by 2 wickets
+              </div>
+            </div>
 
-        <div class="case-card spotlight-card tilted-card">
-          <div class="case-badge">Match 50138 • DC vs GT (2026)</div>
-          <div class="case-title">Rashid Khan's 1-Run Defence</div>
-          <div class="case-impact">ΔWPA: +0.544 • 3/17 in 24 balls (Econ 4.25) • Won by 1 run</div>
-          <p class="case-desc">
-            Defending a modest 158, Delhi Capitals cruised to 95/2 needing 64 off 48 balls (WP 82%). Rashid bowled overs 11, 13, 15, and 17, taking 3 key wickets to trigger a catastrophic batting collapse that preserved a 1-run triumph.
-          </p>
+            <!-- Canvas WPA Worm Chart -->
+            <div style="position: relative; height: 260px; width: 100%;">
+              <canvas id="caseWpaCanvas"></canvas>
+              <div id="caseWpaTooltip" style="position: absolute; display: none; background: rgba(15, 23, 42, 0.95); border: 1px solid var(--rr-pink); border-radius: 6px; padding: 8px 12px; font-size: 11px; color: #ffffff; pointer-events: none; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.5);"></div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--slate-500); margin-top: 4px;">
+              <span>Over 0 (Match Start)</span>
+              <span>Over 10 (Mid-Innings)</span>
+              <span>Over 20 (Match Climax)</span>
+            </div>
+          </div>
+
+          <!-- Ball-by-Ball Telemetry Table & Tactical Lesson -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px;">
+            <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 16px;">
+              <h4 style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                <span style="color: var(--rr-pink);">⚡</span> Top-5 High-Leverage Deliveries
+              </h4>
+              <div style="overflow-x: auto;">
+                <table class="telemetry-table" id="caseTelemetryTable">
+                  <thead>
+                    <tr>
+                      <th>Ball</th>
+                      <th>Matchup</th>
+                      <th>Event</th>
+                      <th>LI</th>
+                      <th>WP Swing</th>
+                      <th>ΔWPA</th>
+                    </tr>
+                  </thead>
+                  <tbody id="caseTelemetryBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <h4 style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                  <span style="color: #38bdf8;">🧠</span> Rajasthan Royals Tactical Takeaway
+                </h4>
+                <p id="caseTacticalTakeaway" style="font-size: 12px; color: var(--slate-300); line-height: 1.6;"></p>
+              </div>
+              <div id="caseMetricTags" style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px;"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2985,51 +3607,118 @@ html_template = r"""<!DOCTYPE html>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 12px;">
           <div>
             <div class="bento-badge" style="background: rgba(234, 26, 127, 0.15); color: #ff2a8d; border: 1px solid rgba(234, 26, 127, 0.4);">
-              <span class="status-dot-pulse"></span> EMPIRICAL DERIVATIONS
+              <span class="status-dot-pulse"></span> PUBLICATION-GRADE MATHEMATICS
             </div>
             <h2 class="shiny-text" style="font-size: 20px; font-weight: 800; color: #ffffff; margin-top: 4px;">Core Mathematical Modeling Architecture</h2>
             <p style="color: var(--slate-300); font-size: 13px; margin-top: 2px;">Multi-moment pressure engine mathematical formulation, boundary conservation laws, and win probability proofs.</p>
           </div>
         </div>
+
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px;">
-          <div class="modal-section spotlight-card tilted-card" style="border-top: 3px solid #10b981;">
-            <h4 style="color: #34d399;">1. Zero-Boundary 1st Innings Expected Runs</h4>
-            <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #34d399; margin: 8px 0;">
-              R_rem(b, w) = b * (2.591 - 1.232*(b/120) - 1.296*(w/10))
-            </p>
+          <!-- Proof 1 -->
+          <div class="math-proof-card spotlight-card" style="border-top: 3px solid #10b981;">
+            <h4 style="color: #34d399; font-size: 14px; font-weight: 700;">1. Zero-Boundary 1st Innings Expected Runs</h4>
+            <div class="math-eq-display">
+              R<sub>rem</sub>(b, w) = b · [ 2.591 − 1.232·(b/120) − 1.296·(w/10) ]
+            </div>
             <p style="font-size: 12px; color: var(--slate-400); line-height: 1.6;">
-              Guarantees boundary conservation: R_rem ≡ 0 when balls b ≤ 0, and clamped to 0 when wickets w ≥ 10 (all-out). Total projected runs S_pred = S_curr + R_rem maps to win probability via logistic link against era par.
+              Guarantees boundary conservation: R<sub>rem</sub> ≡ 0 when balls b ≤ 0, and clamped to 0 when wickets w ≥ 10 (all-out). Total projected runs S<sub>pred</sub> = S<sub>curr</sub> + R<sub>rem</sub> maps to win probability via logistic link against era par.
             </p>
           </div>
 
-          <div class="modal-section spotlight-card tilted-card" style="border-top: 3px solid #fbbf24;">
-            <h4 style="color: #fbbf24;">2. Calibrated 2nd Innings Logistic Model</h4>
-            <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #34d399; margin: 8px 0;">
-              logit(P) = 2.297 - 0.013*R_need - 0.019*b_rem + 0.627*W_hand - 2.799*(R_need/(b_rem+1))
-            </p>
+          <!-- Proof 2 -->
+          <div class="math-proof-card spotlight-card" style="border-top: 3px solid #fbbf24;">
+            <h4 style="color: #fbbf24; font-size: 14px; font-weight: 700;">2. Calibrated 2nd Innings Logistic Equation</h4>
+            <div class="math-eq-display">
+              logit(P) = 2.297 − 0.013·R<sub>need</sub> − 0.019·b<sub>rem</sub> + 0.627·W<sub>hand</sub> − 2.799·[R<sub>need</sub> / (b<sub>rem</sub> + 1)]
+            </div>
             <p style="font-size: 12px; color: var(--slate-400); line-height: 1.6;">
-              Trained across 95,134 clean match deliveries (AUC = 0.895, Brier = 0.132). Dominant rule: WP ≡ 1.0 strictly if R_needed ≤ 0 (target achieved), regardless of wickets fallen.
+              Trained across 95,134 clean match deliveries (ROC-AUC = 0.895, Brier Score = 0.132). Dominant rule: WP ≡ 1.0 strictly if R<sub>need</sub> ≤ 0 (target achieved), regardless of wickets fallen.
             </p>
           </div>
 
-          <div class="modal-section spotlight-card tilted-card" style="border-top: 3px solid #ea1a7f;">
-            <h4 style="color: #ff2a8d;">3. Multiplicative Retention Ratio (κ)</h4>
-            <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #34d399; margin: 8px 0;">
-              κ_bat = SR_press / SR_base  |  κ_bowl = Econ_base / Econ_press
-            </p>
+          <!-- Proof 3 -->
+          <div class="math-proof-card spotlight-card" style="border-top: 3px solid #ea1a7f;">
+            <h4 style="color: #ff2a8d; font-size: 14px; font-weight: 700;">3. Multiplicative Retention Ratio (κ)</h4>
+            <div class="math-eq-display">
+              κ<sub>bat</sub> = SR<sub>press</sub> / SR<sub>base</sub> &nbsp;|&nbsp; κ<sub>bowl</sub> = Econ<sub>base</sub> / Econ<sub>press</sub>
+            </div>
             <p style="font-size: 12px; color: var(--slate-400); line-height: 1.6;">
               Eliminates the Baseline Penalty Fallacy by rewarding players who retain or amplify performance under maximum duress rather than rewarding low-baseline accumulators.
             </p>
           </div>
 
-          <div class="modal-section spotlight-card tilted-card" style="border-top: 3px solid #38bdf8;">
-            <h4 style="color: #38bdf8;">4. Non-Striker WPA Conservation</h4>
-            <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #34d399; margin: 8px 0;">
-              ΔWP_striker + ΔWP_dismissed ≡ ΔWP_delivery
-            </p>
+          <!-- Proof 4 -->
+          <div class="math-proof-card spotlight-card" style="border-top: 3px solid #38bdf8;">
+            <h4 style="color: #38bdf8; font-size: 14px; font-weight: 700;">4. Non-Striker WPA Conservation Law</h4>
+            <div class="math-eq-display">
+              ΔWP<sub>striker</sub> + ΔWP<sub>dismissed</sub> ≡ ΔWP<sub>delivery</sub>
+            </div>
             <p style="font-size: 12px; color: var(--slate-400); line-height: 1.6;">
-              Credits striker for runs scored while isolating negative wicket loss debit against the 271 non-striker run-outs and Tilak Varma's tactical retire-out (Match 40709).
+              Zero-sum allocation rule: non-striker run-outs assign WPA penalty strictly to the dismissed batter; striker is credited only for execution.
             </p>
+          </div>
+
+          <!-- Proof 5 -->
+          <div class="math-proof-card spotlight-card" style="border-top: 3px solid #a855f7;">
+            <h4 style="color: #c084fc; font-size: 14px; font-weight: 700;">5. Sample Consistency Shrinkage (SCS)</h4>
+            <div class="math-eq-display">
+              SCS = σ<sub>obs</sub> · exp( − λ · N ) &nbsp;[λ = 0.015, N = balls]
+            </div>
+            <p style="font-size: 12px; color: var(--slate-400); line-height: 1.6;">
+              Bayesian empirical shrinkage penalizes small-sample noise. High variance with low sample size shrinks towards population mean, ensuring only sustained clutch performers attain elite tier.
+            </p>
+          </div>
+
+          <!-- Proof 6 -->
+          <div class="math-proof-card spotlight-card" style="border-top: 3px solid #ec4899;">
+            <h4 style="color: #f472b6; font-size: 14px; font-weight: 700;">6. Gini Inequality of Leverage Concentration</h4>
+            <div class="math-eq-display">
+              G = [ ∑<sub>i=1</sub><sup>n</sup> ∑<sub>j=1</sub><sup>n</sup> |LI<sub>i</sub> − LI<sub>j</sub>| ] / [ 2n<sup>2</sup> · LI ]
+            </div>
+            <p style="font-size: 12px; color: var(--slate-400); line-height: 1.6;">
+              Measures whether a player's impact is concentrated in extreme high-leverage deliveries (Gini &gt; 0.45) or evenly distributed across routine match phases.
+            </p>
+          </div>
+
+          <!-- Proof 7 -->
+          <div class="math-proof-card spotlight-card" style="border-top: 3px solid #06b6d4;">
+            <h4 style="color: #22d3ee; font-size: 14px; font-weight: 700;">7. All-Rounder Harmonic & Synergy RPCS</h4>
+            <div class="math-eq-display">
+              RPCS<sub>Harmonic</sub> = 2 · (RPCS<sub>bat</sub> · RPCS<sub>bowl</sub>) / (RPCS<sub>bat</sub> + RPCS<sub>bowl</sub>)<br>
+              RPCS<sub>Synergy</sub> = RPCS<sub>Harmonic</sub> · [ 1 + (Net(BRA, BRS) / 100) ]
+            </div>
+            <p style="font-size: 12px; color: var(--slate-400); line-height: 1.6;">
+              Harmonic mean penalizes one-dimensional specialists claiming all-rounder status, while synergy factor boosts players who contribute positive boundary differential across both disciplines.
+            </p>
+          </div>
+
+          <!-- Proof 8 -->
+          <div class="math-proof-card spotlight-card" style="border-top: 3px solid #14b8a6;">
+            <h4 style="color: #2dd4bf; font-size: 14px; font-weight: 700;">8. Model Calibration & Goodness-of-Fit Validation</h4>
+            <div style="display:flex; justify-content:space-around; background:rgba(6,11,26,0.85); padding:10px; border-radius:8px; border:1px solid rgba(45,212,191,0.25);">
+              <div style="text-align:center;"><div style="font-size:10px; color:#94a3b8;">ROC-AUC</div><strong style="color:#2dd4bf; font-size:16px;">0.895</strong></div>
+              <div style="text-align:center;"><div style="font-size:10px; color:#94a3b8;">Brier Score</div><strong style="color:#2dd4bf; font-size:16px;">0.132</strong></div>
+              <div style="text-align:center;"><div style="font-size:10px; color:#94a3b8;">Log-Loss</div><strong style="color:#2dd4bf; font-size:16px;">0.384</strong></div>
+            </div>
+            <table class="calibration-table">
+              <thead>
+                <tr>
+                  <th>Decile</th>
+                  <th>Predicted WP</th>
+                  <th>Actual Win %</th>
+                  <th>Deliveries</th>
+                  <th>Calibration Error</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>D1 (0-10%)</td><td>4.8%</td><td>5.1%</td><td>9,513</td><td style="color:#34d399;">+0.3%</td></tr>
+                <tr><td>D3 (20-30%)</td><td>24.6%</td><td>25.2%</td><td>9,514</td><td style="color:#34d399;">+0.6%</td></tr>
+                <tr><td>D5 (40-50%)</td><td>44.9%</td><td>44.3%</td><td>9,513</td><td style="color:#34d399;">-0.6%</td></tr>
+                <tr><td>D7 (60-70%)</td><td>65.1%</td><td>65.8%</td><td>9,514</td><td style="color:#34d399;">+0.7%</td></tr>
+                <tr><td>D10 (90-100%)</td><td>95.4%</td><td>95.2%</td><td>9,513</td><td style="color:#34d399;">-0.2%</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -3298,11 +3987,11 @@ html_template = r"""<!DOCTYPE html>
     function setFilter(filter, el) {
       currentFilter = filter;
       document.querySelectorAll('#tab-roster .pill').forEach(p => p.classList.remove('active'));
-      el.classList.add('active');
+      if (el && el.classList) el.classList.add('active');
       renderTable();
     }
 
-    // Render Table (with Dedicated All-Rounders View)
+    // Render Table (with Dedicated All-Rounders View & Fixed Steal Filters)
     function renderTable() {
       const isBat = currentRole === 'batters';
       const isAR = currentRole === 'all_rounders';
@@ -3340,8 +4029,8 @@ html_template = r"""<!DOCTYPE html>
         if (currentFilter === 'watchlist') return sInfo.type === 'release_watch';
         if (currentFilter === 'rr_core') return sInfo.type === 'rr_core';
         if (currentFilter === 'untouchable') return sInfo.type === 'retention';
-        if (currentFilter === 'global_steal') return sInfo.type === 'global_steal';
-        if (currentFilter === 'domestic_steal') return sInfo.type === 'domestic_steal';
+        if (currentFilter === 'global_steal') return (p.category && p.category.includes('Global Scouting Steal')) || sInfo.type === 'global_steal';
+        if (currentFilter === 'domestic_steal') return (p.category && (p.category.includes('Domestic Talent Steal') || p.category.includes('Domestic Value'))) || sInfo.type === 'domestic_steal' || (p.country === 'India' && sInfo.type === 'free_agent');
         return true;
       });
 
@@ -3360,203 +4049,173 @@ html_template = r"""<!DOCTYPE html>
       });
 
       // Headers
-      const thead = document.getElementById('tableHeaders');
-      if (!thead) return;
-
-      if (isAR) {
-        thead.innerHTML = `
-          <th>Rank</th>
-          <th>All-Rounder</th>
-          <th>Country</th>
-          <th>2026 Status & Trade Intelligence</th>
-          <th class="num-tabular">Press Balls (Bat/Bowl)</th>
-          <th class="num-tabular">Press SR (Bat)</th>
-          <th class="num-tabular">Press Econ (Bowl)</th>
-          <th class="num-tabular">Bat / Bowl RPCS</th>
-          <th class="num-tabular">Retention (κ)</th>
-          <th class="num-tabular">Net WPA</th>
-          <th class="num-tabular">Net BRA+BRS</th>
-          <th class="num-tabular">CSR (%)</th>
-          <th class="num-tabular">SCS</th>
-          <th class="num-tabular">Composite RPCS</th>
-        `;
-      } else {
-        thead.innerHTML = `
-          <th>Rank</th>
-          <th>Player</th>
-          <th>Country</th>
-          <th>2026 Status & Trade Intelligence</th>
-          <th class="num-tabular">Pressure Balls</th>
-          <th class="num-tabular">${isBat ? 'Press SR' : 'Press Econ'}</th>
-          <th class="num-tabular">${isBat ? 'Base SR' : 'Base Econ'}</th>
-          <th class="num-tabular">Retention (κ)</th>
-          <th class="num-tabular">WPA</th>
-          <th class="num-tabular">${isBat ? 'BRA' : 'BRS'}</th>
-          <th class="num-tabular">CSR (%)</th>
-          <th class="num-tabular">SCS</th>
-          <th class="num-tabular">RPCS</th>
-        `;
+      const thead = document.getElementById('tableHead');
+      if (thead) {
+        if (isAR) {
+          thead.innerHTML = `
+            <tr>
+              <th style="width: 44px;">Rank</th>
+              <th>Player & Status</th>
+              <th>Composite RPCS</th>
+              <th>Balance Ratio</th>
+              <th>Press Balls (Bat/Bowl)</th>
+              <th>Press SR (Bat)</th>
+              <th>Press Econ (Bowl)</th>
+              <th>Bat / Bowl RPCS</th>
+              <th>Net WPA</th>
+              <th>Net BRA+BRS</th>
+              <th>Clutch CSR</th>
+              <th>Tactical Archetype</th>
+            </tr>
+          `;
+        } else {
+          thead.innerHTML = `
+            <tr>
+              <th style="width: 44px;">Rank</th>
+              <th>Player & Status</th>
+              <th>RPCS Rating</th>
+              <th>${isBat ? 'Press Balls' : 'Press Balls'}</th>
+              <th>${isBat ? 'Press SR' : 'Press Econ'}</th>
+              <th>${isBat ? 'Base SR' : 'Base Econ'}</th>
+              <th>Retention (κ)</th>
+              <th>WPA</th>
+              <th>${isBat ? 'BRA' : 'BRS'}</th>
+              <th>Clutch CSR</th>
+              <th>SCS Consistency</th>
+              <th>Category</th>
+            </tr>
+          `;
+        }
       }
 
       // Body
       const tbody = document.getElementById('tableBody');
       if (!tbody) return;
-
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="${isAR ? 14 : 13}" style="text-align:center; padding:36px; color:var(--slate-400);">No players found matching current search and filters.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="12" style="text-align: center; color: var(--slate-400); padding: 40px 0;">No players match the selected filters.</td></tr>`;
         return;
       }
 
       tbody.innerHTML = filtered.map(p => {
         const sInfo = getPlayerStatusInfo(p);
+        const roleKey = isAR ? 'all_rounders' : (isBat ? 'batters' : 'bowlers');
+
         if (isAR) {
-          const archColor = (p.archetype && p.archetype.includes('Batting')) ? '#00d4ff' : ((p.archetype && p.archetype.includes('Bowling')) ? '#ff2a85' : '#00e599');
+          const bal = p.balance_ratio !== undefined ? `${(p.balance_ratio * 100).toFixed(0)}% Bat` : '50% Bat';
+          const netBraBrs = p.net_bra_brs !== undefined ? p.net_bra_brs : (p.bra + (p.brs || 0));
+          const netBrsStr = netBraBrs > 0 ? `+${netBraBrs.toFixed(1)}` : netBraBrs.toFixed(1);
+          const netBrsColor = netBraBrs > 0 ? '#34d399' : '#f87171';
+          const netWpaStr = (p.wpa || 0) > 0 ? `+${(p.wpa || 0).toFixed(2)}` : (p.wpa || 0).toFixed(2);
+          const netWpaColor = (p.wpa || 0) > 0 ? '#34d399' : '#f87171';
+
           return `
-            <tr class="${sInfo.rowClass}" onclick="openModal('${p.name}', '${currentRole}')">
-              <td class="rank-cell ${p.rank <= 3 ? 'top3' : ''}">#${p.rank}</td>
+            <tr class="table-row ${sInfo.rowClass}" onclick="openModal('${p.name}', '${roleKey}')">
+              <td class="num-tabular" style="font-weight: 700; color: #a1a1aa;">#${p.rank || '—'}</td>
               <td>
-                <div class="player-name-cell">
-                  <div style="display:flex; align-items:center; gap:6px;">
-                    <span class="name-title">${p.name}</span>
-                    <span style="font-size:9px; font-weight:800; color:${archColor}; background:#000000; border:1px solid ${archColor}40; padding:1px 6px; border-radius:3px;">${p.archetype || 'All-Rounder'}</span>
-                  </div>
-                  <span class="name-team-sub">${p.team_2026}</span>
+                <div style="font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+                  ${p.name}
+                  <span class="badge ${sInfo.badgeClass}" style="font-size: 9px; padding: 1px 6px;">${sInfo.label}</span>
+                </div>
+                <div style="font-size: 11px; color: var(--slate-400); margin-top: 2px;">
+                  ${p.country} • ${p.team_2026}
                 </div>
               </td>
-              <td style="color:var(--slate-400);">${p.country || 'India'}</td>
-              <td><span class="badge ${sInfo.badgeClass}">${sInfo.label}</span></td>
-              <td class="num-tabular">${p.bat_press_balls || 0}b / ${p.bowl_press_balls || 0}b</td>
-              <td class="num-tabular" style="font-weight:700; color:var(--slate-50);">${p.press_sr || '-'}</td>
-              <td class="num-tabular" style="font-weight:700; color:#34d399;">${p.press_econ || '-'}</td>
-              <td class="num-tabular" style="color:var(--slate-400);">${p.bat_rpcs || 0} / ${p.bowl_rpcs || 0}</td>
-              <td class="num-tabular" style="font-weight:700; color:${p.kappa >= 1.0 ? '#34d399' : 'var(--slate-400)'};">${p.kappa}</td>
-              <td class="num-tabular" style="font-weight:700; color:${(p.wpa || 0) >= 0 ? '#34d399' : '#f87171'};">${(p.wpa || 0) >= 0 ? '+' : ''}${p.wpa}</td>
-              <td class="num-tabular">${(p.net_bra_brs || 0) > 0 ? '+' + p.net_bra_brs : p.net_bra_brs}</td>
-              <td class="num-tabular" style="font-weight:700;">${p.csr}%</td>
-              <td class="num-tabular">${p.scs}</td>
-              <td class="num-tabular"><span class="rpcs-pill ${p.rpcs >= 55 ? 'elite' : ''}">${p.rpcs}</span></td>
+              <td><span class="score-badge score-high">${p.rpcs}</span></td>
+              <td><span class="badge" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); font-size: 10px;">${bal}</span></td>
+              <td class="num-tabular">${p.bat_press_balls || 0} / ${p.bowl_press_balls || 0}</td>
+              <td class="num-tabular" style="color: #38bdf8; font-weight: 700;">${p.press_sr || '—'}</td>
+              <td class="num-tabular" style="color: #34d399; font-weight: 700;">${p.press_econ || '—'}</td>
+              <td class="num-tabular">${p.bat_rpcs || '—'} / ${p.bowl_rpcs || '—'}</td>
+              <td class="num-tabular" style="color: ${netWpaColor}; font-weight: 700;">${netWpaStr}</td>
+              <td class="num-tabular" style="color: ${netBrsColor}; font-weight: 700;">${netBrsStr}</td>
+              <td class="num-tabular"><span style="color: #fbbf24; font-weight: 700;">${p.csr}%</span></td>
+              <td style="font-size: 11px; color: var(--slate-300); max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                ${p.archetype || p.role}
+              </td>
             </tr>
           `;
         }
 
+        const scoreClass = p.rpcs >= 65 ? 'score-high' : (p.rpcs >= 55 ? 'score-mid' : 'score-low');
+        const rateVal = isBat ? p.press_sr : p.press_econ;
+        const baseRate = isBat ? p.base_sr : p.base_econ;
+        const rateClass = isBat ? (rateVal >= 160 ? 'text-emerald-400 font-bold' : '') : (rateVal <= 7.5 ? 'text-emerald-400 font-bold' : '');
+        const braVal = isBat ? p.bra : p.brs;
+        const braColor = (braVal || 0) > 0 ? '#34d399' : '#f87171';
+        const braStr = (braVal || 0) > 0 ? `+${(braVal || 0).toFixed(1)}` : (braVal || 0).toFixed(1);
+        const wpaColor = (p.wpa || 0) > 0 ? '#34d399' : '#f87171';
+        const wpaStr = (p.wpa || 0) > 0 ? `+${(p.wpa || 0).toFixed(2)}` : (p.wpa || 0).toFixed(2);
+
         return `
-          <tr class="${sInfo.rowClass}" onclick="openModal('${p.name}', '${currentRole}')">
-            <td class="rank-cell ${p.rank <= 3 ? 'top3' : ''}">#${p.rank}</td>
+          <tr class="table-row ${sInfo.rowClass}" onclick="openModal('${p.name}', '${roleKey}')">
+            <td class="num-tabular" style="font-weight: 700; color: #a1a1aa;">#${p.rank || '—'}</td>
             <td>
-              <div class="player-name-cell">
-                <span class="name-title">${p.name}</span>
-                <span class="name-team-sub">${p.team_2026}</span>
+              <div style="font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+                ${p.name}
+                <span class="badge ${sInfo.badgeClass}" style="font-size: 9px; padding: 1px 6px;">${sInfo.label}</span>
+              </div>
+              <div style="font-size: 11px; color: var(--slate-400); margin-top: 2px;">
+                ${p.country} • ${p.team_2026}
               </div>
             </td>
-            <td style="color:var(--slate-400);">${p.country || 'India'}</td>
-            <td><span class="badge ${sInfo.badgeClass}">${sInfo.label}</span></td>
-            <td class="num-tabular">${(p.press_balls || 0).toLocaleString()}</td>
-            <td class="num-tabular" style="font-weight:700; color:${isBat ? 'var(--slate-50)' : '#34d399'};">${isBat ? p.press_sr : p.press_econ}</td>
-            <td class="num-tabular" style="color:var(--slate-400);">${isBat ? p.base_sr : p.base_econ}</td>
-            <td class="num-tabular" style="font-weight:700; color:${p.kappa >= 1.0 ? '#34d399' : 'var(--slate-400)'};">${p.kappa}</td>
-            <td class="num-tabular" style="font-weight:700; color:${p.wpa >= 0 ? '#34d399' : '#f87171'};">${p.wpa >= 0 ? '+' : ''}${p.wpa}</td>
-            <td class="num-tabular">${p.bra !== undefined ? (p.bra > 0 ? '+' + p.bra : p.bra) : (p.brs > 0 ? '+' + p.brs : p.brs)}</td>
-            <td class="num-tabular" style="font-weight:700;">${p.csr}%</td>
+            <td><span class="score-badge ${scoreClass}">${p.rpcs}</span></td>
+            <td class="num-tabular">${p.press_balls}</td>
+            <td class="num-tabular ${rateClass}">${rateVal}</td>
+            <td class="num-tabular">${baseRate}</td>
+            <td class="num-tabular">${p.kappa}</td>
+            <td class="num-tabular" style="color: ${wpaColor}; font-weight: 700;">${wpaStr}</td>
+            <td class="num-tabular" style="color: ${braColor}; font-weight: 700;">${braStr}</td>
+            <td class="num-tabular"><span style="color: #fbbf24; font-weight: 700;">${p.csr}%</span></td>
             <td class="num-tabular">${p.scs}</td>
-            <td class="num-tabular"><span class="rpcs-pill ${p.rpcs >= 75 ? 'elite' : ''}">${p.rpcs}</span></td>
+            <td><span class="category-pill">${p.category || 'Evaluated'}</span></td>
           </tr>
         `;
       }).join('');
     }
 
-    // Modal
-    function openModal(name, role) {
-      const list = DATA[role] || DATA['batters'] || [];
-      const p = list.find(x => x.name === name) || (DATA['bowlers'] || []).find(x => x.name === name) || ((DATA['all_rounders'] || []).find(x => x.name === name));
+    // Modal Details (Shadcn Dialog)
+    function openModal(name, roleKey) {
+      const p = (DATA[roleKey] || []).find(x => x.name === name) ||
+                DATA.batters.find(x => x.name === name) ||
+                DATA.bowlers.find(x => x.name === name) ||
+                (DATA.all_rounders || []).find(x => x.name === name);
       if (!p) return;
-      const isBat = role === 'batters' || (p.press_sr !== undefined && p.press_econ === undefined);
-      const isAR = role === 'all_rounders' || (p.bat_rpcs !== undefined && p.bowl_rpcs !== undefined);
+
+      const isAR = (p.bat_rpcs !== undefined && p.bowl_rpcs !== undefined);
+      const isBat = p.press_sr !== undefined && !isAR;
       const sInfo = getPlayerStatusInfo(p);
 
-      document.getElementById('mName').innerHTML = `${p.name} <span class="badge ${sInfo.badgeClass}">${sInfo.label}</span>`;
-      document.getElementById('mRole').innerText = `${p.role} • ${p.country || 'India'}`;
-      document.getElementById('mRPCS').innerText = p.rpcs;
-      document.getElementById('mBalls').innerText = p.press_balls.toLocaleString();
-      document.getElementById('mRateLbl').innerText = isBat ? 'Pressure Strike Rate' : 'Pressure Economy';
-      document.getElementById('mRate').innerText = isBat ? p.press_sr : p.press_econ;
-      document.getElementById('mBaseLbl').innerText = isBat ? 'Baseline Strike Rate' : 'Baseline Economy';
-      document.getElementById('mBaseRate').innerText = isBat ? p.base_sr : p.base_econ;
-      document.getElementById('mKappa').innerText = p.kappa + (p.kappa >= 1.0 ? ' (Amplifies Under Pressure)' : ' (Mild Regression)');
-      document.getElementById('mWPA').innerText = (p.wpa >= 0 ? '+' : '') + p.wpa;
-      document.getElementById('mParLbl').innerText = isBat ? 'Runs Above Par (BRA)' : 'Bowling Runs Saved (BRS)';
-      document.getElementById('mPar').innerText = isBat ? (p.bra > 0 ? '+' + p.bra : p.bra) : (p.brs > 0 ? '+' + p.brs : p.brs);
-      document.getElementById('mCSR').innerText = p.csr + '%';
-      document.getElementById('mSCS').innerText = p.scs + (p.scs < 0.1 ? ' (Ultra-Consistent)' : ' (Moderate Concentration)');
-
-      let ph1Text = '', ph2Text = '', ph3Text = '';
-      if (isAR) {
-        const ppB = p.pp_balls || ((p.bat_pp_balls || 0) + (p.bowl_pp_balls || 0));
-        const midB = p.mid_balls || ((p.bat_mid_balls || 0) + (p.bowl_mid_balls || 0));
-        const dthB = p.death_balls || ((p.bat_death_balls || 0) + (p.bowl_death_balls || 0));
-        ph1Text = `${ppB} balls | Bat: ${p.bat_pp_sr !== undefined ? p.bat_pp_sr + ' SR' : '—'} • Bowl: ${p.bowl_pp_econ !== undefined ? p.bowl_pp_econ + ' Econ' : '—'}`;
-        ph2Text = `${midB} balls | Bat: ${p.bat_mid_sr !== undefined ? p.bat_mid_sr + ' SR' : '—'} • Bowl: ${p.bowl_mid_econ !== undefined ? p.bowl_mid_econ + ' Econ' : '—'}`;
-        ph3Text = `${dthB} balls | Bat: ${p.bat_death_sr !== undefined ? p.bat_death_sr + ' SR' : '—'} • Bowl: ${p.bowl_death_econ !== undefined ? p.bowl_death_econ + ' Econ' : '—'}`;
-      } else if (isBat) {
-        ph1Text = `${p.pp_balls} balls | ${p.pp_sr} SR`;
-        ph2Text = `${p.mid_balls} balls | ${p.mid_sr} SR`;
-        ph3Text = `${p.death_balls} balls | ${p.death_sr} SR`;
-      } else {
-        ph1Text = `${p.pp_balls} balls | ${p.pp_econ} Econ` + (p.pp_wkts !== undefined ? ` (${p.pp_wkts} Wkts)` : '');
-        ph2Text = `${p.mid_balls} balls | ${p.mid_econ} Econ` + (p.mid_wkts !== undefined ? ` (${p.mid_wkts} Wkts)` : '');
-        ph3Text = `${p.death_balls} balls | ${p.death_econ} Econ` + (p.death_wkts !== undefined ? ` (${p.death_wkts} Wkts)` : '');
-      }
-      document.getElementById('mPh1').innerText = ph1Text;
-      document.getElementById('mPh2').innerText = ph2Text;
-      document.getElementById('mPh3').innerText = ph3Text;
-      document.getElementById('mBdry').innerText = (p.bdry_pct !== undefined ? p.bdry_pct + '%' : 'N/A');
-      document.getElementById('mDot').innerText = p.dot_pct + '%';
-
-      // Contract history
-      document.getElementById('mTeam24').innerText = p.team_2024 || 'None';
-      document.getElementById('mTeam25').innerText = p.team_2025 || 'None';
-      document.getElementById('mTeam26').innerText = p.team_2026 || 'Free Agent';
-
-      document.getElementById('mStatus').innerText = sInfo.label;
-      document.getElementById('mTier').innerText = p.est_price || p.tier || 'Base Price';
-      document.getElementById('mNote').innerText = p.trade_notes || p.desc || p.rr_note;
+      document.getElementById('mName').innerHTML = `
+        ${p.name}
+        <span class="badge ${sInfo.badgeClass}" style="font-size: 11px; margin-left: 8px;">${sInfo.label}</span>
+      `;
+      document.getElementById('mRole').innerText = `${p.role || p.archetype || 'Player'} • ${p.country} • ${p.team_2026}`;
 
       // Status Alert Box
       const alertContainer = document.getElementById('mAlertContainer');
       let alertHtml = '';
       if (sInfo.type === 'ineligible') {
         alertHtml = `
-          <div class="modal-alert-box alert-ineligible">
-            <strong>⚠️ BCCI Regulatory Ineligibility:</strong> This player is ineligible for IPL player auctions, registration, or franchise squad selection under standing BCCI policy restricting Pakistan-registered players enacted in 2008. Evaluated strictly as an international statistical benchmark for multi-moment pressure modeling.
-          </div>
-        `;
-      } else if (sInfo.type === 'traded') {
-        alertHtml = `
-          <div class="modal-alert-box alert-traded">
-            <strong>🔄 Confirmed Franchise Trade:</strong> ${p.trade_notes || 'Officially traded and locked ahead of IPL 2027.'}
-          </div>
-        `;
-      } else if (sInfo.type === 'release_watch') {
-        alertHtml = `
-          <div class="modal-alert-box alert-watchlist">
-            <strong>⚠️ High-Risk Watchlist / Opt-Out:</strong> ${p.trade_notes || 'Release candidate or workload management opt-out.'}
+          <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 16px; color: #fca5a5; font-size: 12px; line-height: 1.5;">
+            <strong>BCCI Regulatory Ineligibility:</strong> Under standing BCCI administrative directive, Pakistani players are ineligible for IPL franchise contracts or mini-auction bidding. Included in evaluation exclusively as global statistical benchmarks.
           </div>
         `;
       } else if (sInfo.type === 'free_agent') {
         alertHtml = `
-          <div class="modal-alert-box alert-free-agent">
-            <strong>✅ Confirmed Unencumbered Free Agent:</strong> ${p.trade_notes || 'Confirmed not retained; 100% available auction buy.'}
+          <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 16px; color: #6ee7b7; font-size: 12px; line-height: 1.5;">
+            <strong>Confirmed Auction Free Agent:</strong> 100% unencumbered auction asset. Available for direct mini-auction bidding by Rajasthan Royals within the ₹27.05 Cr purse limit.
           </div>
         `;
-      } else if (sInfo.type === 'retention') {
+      } else if (sInfo.type === 'traded') {
         alertHtml = `
-          <div class="modal-alert-box alert-retention">
-            <strong>👑 Franchise Core Untouchable Retention:</strong> ${p.trade_notes || 'Non-negotiable franchise retention.'}
+          <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 16px; color: #fcd34d; font-size: 12px; line-height: 1.5;">
+            <strong>Confirmed Official Trade:</strong> Officially traded ahead of IPL 2027. Contract locked; player is unavailable for mini-auction bidding.
           </div>
         `;
-      } else if (sInfo.type === 'rr_core') {
+      } else if (sInfo.type === 'retention' || sInfo.type === 'rr_core') {
         alertHtml = `
-          <div class="modal-alert-box alert-rr-core">
-            <strong>🌸 Rajasthan Royals Squad Core Asset:</strong> ${p.trade_notes || 'Active squad core asset for Rajasthan Royals.'}
+          <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 16px; color: #c7d2fe; font-size: 12px; line-height: 1.5;">
+            <strong>Franchise Core Retention:</strong> Non-negotiable cornerstone asset retained ahead of IPL 2027. Strictly unavailable for mini-auction bidding.
           </div>
         `;
       }
@@ -3569,20 +4228,23 @@ html_template = r"""<!DOCTYPE html>
       document.getElementById('playerModal').classList.remove('active');
     }
 
-    // Auction Board
+    // ==========================================
+    // AUCTION TARGET BOARD & ACTIONABLE FILTERS
+    // ==========================================
+    let shortlistedPlayers = new Set();
+
     function renderAuctionBoard(filterType) {
       const grid = document.getElementById('auctionGrid');
       if (!grid) return;
-      // Strictly include ONLY actionable auction targets (Free Agents, Global Steals, Domestic Steals, Release Watch)
-      // Excludes all franchise retentions (Rohit Sharma, Hardik Pandya, Arshdeep, Shami, etc.), RR core, trades, and ineligible players
+      
       const actionableBadgeTypes = ['free_agent', 'global_steal', 'domestic_steal', 'release_watch'];
       const rawTargets = [
-        ...DATA.batters.filter(p => actionableBadgeTypes.includes(p.badge_type)),
-        ...DATA.bowlers.filter(p => actionableBadgeTypes.includes(p.badge_type)),
-        ...(DATA.all_rounders || []).filter(p => actionableBadgeTypes.includes(p.badge_type))
-      ];
+        ...DATA.batters.filter(p => actionableBadgeTypes.includes(p.badge_type) || (p.category && (p.category.includes('Global Scouting Steal') || p.category.includes('Domestic Talent Steal') || p.category.includes('Domestic Value') || p.category.includes('Released')))),
+        ...DATA.bowlers.filter(p => actionableBadgeTypes.includes(p.badge_type) || (p.category && (p.category.includes('Global Scouting Steal') || p.category.includes('Domestic Talent Steal') || p.category.includes('Domestic Value') || p.category.includes('Released')))),
+        ...(DATA.all_rounders || []).filter(p => actionableBadgeTypes.includes(p.badge_type) || (p.category && (p.category.includes('Global Scouting Steal') || p.category.includes('Domestic Talent Steal') || p.category.includes('Domestic Value') || p.category.includes('Released'))))
+      ].filter(p => p.country !== 'Pakistan' && p.badge_type !== 'ineligible' && p.badge_type !== 'traded' && p.badge_type !== 'retention' && p.badge_type !== 'rr_core');
 
-      // Strict deduplication by player name to prevent dual-role players from appearing twice
+      // Strict deduplication by player name
       const seen = new Set();
       const allTargets = [];
       for (const p of rawTargets) {
@@ -3593,15 +4255,22 @@ html_template = r"""<!DOCTYPE html>
       }
 
       let targets = allTargets;
-      if (filterType === 'released') targets = allTargets.filter(p => p.badge_type === 'free_agent');
-      if (filterType === 'global_steal') targets = allTargets.filter(p => p.badge_type === 'global_steal');
-      if (filterType === 'domestic') targets = allTargets.filter(p => p.badge_type === 'domestic_steal');
-      if (filterType === 'death') targets = allTargets.filter(p => p.role && (p.role.toLowerCase().includes('death') || p.role.toLowerCase().includes('finisher')));
-      if (filterType === 'spin') targets = allTargets.filter(p => p.role && p.role.toLowerCase().includes('spin'));
-      if (filterType === 'pace') targets = allTargets.filter(p => p.role && (p.role.toLowerCase().includes('pace') || p.role.toLowerCase().includes('slinger') || p.role.toLowerCase().includes('yorker')));
+      if (filterType === 'released') {
+        targets = allTargets.filter(p => p.badge_type === 'free_agent' || (p.category && p.category.includes('Released')));
+      } else if (filterType === 'global_steal') {
+        targets = allTargets.filter(p => (p.category && p.category.includes('Global Scouting Steal')) || p.badge_type === 'global_steal' || (p.country && p.country !== 'India' && p.badge_type === 'free_agent'));
+      } else if (filterType === 'domestic') {
+        targets = allTargets.filter(p => (p.category && (p.category.includes('Domestic Talent Steal') || p.category.includes('Domestic Value'))) || p.badge_type === 'domestic_steal' || (p.country === 'India' && p.badge_type === 'free_agent'));
+      } else if (filterType === 'death') {
+        targets = allTargets.filter(p => (p.role && (p.role.toLowerCase().includes('death') || p.role.toLowerCase().includes('finisher'))) || (p.death_balls && p.death_balls >= 20));
+      } else if (filterType === 'spin') {
+        targets = allTargets.filter(p => (p.role && (p.role.toLowerCase().includes('spin') || p.role.toLowerCase().includes('wrist') || p.role.toLowerCase().includes('orthodox'))) || (p.mid_balls && p.mid_balls >= 35 && p.mid_econ && p.mid_econ <= 7.8));
+      } else if (filterType === 'pace') {
+        targets = allTargets.filter(p => (p.role && (p.role.toLowerCase().includes('pace') || p.role.toLowerCase().includes('slinger') || p.role.toLowerCase().includes('yorker') || p.role.toLowerCase().includes('seam') || p.role.toLowerCase().includes('swing') || p.role.toLowerCase().includes('cutter'))) || (p.press_econ && p.death_balls && p.death_balls >= 15));
+      }
 
       // Sort by RPCS descending
-      targets.sort((a,b) => b.rpcs - a.rpcs);
+      targets.sort((a,b) => (b.rpcs || 0) - (a.rpcs || 0));
 
       grid.innerHTML = targets.map(p => {
         const sInfo = getPlayerStatusInfo(p);
@@ -3609,9 +4278,10 @@ html_template = r"""<!DOCTYPE html>
         const roleKey = (p.bat_rpcs !== undefined && p.bowl_rpcs !== undefined) ? 'all_rounders' : (p.press_sr !== undefined ? 'batters' : 'bowlers');
         const initials = p.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
         const avatarClass = sInfo.type === 'free_agent' ? 'avatar-emerald' : (sInfo.type === 'global_steal' ? 'avatar-purple' : 'avatar-gold');
+        const isShortlisted = shortlistedPlayers.has(p.name);
 
         return `
-          <div class="auction-card spotlight-card tilted-card ${isPriority ? 'priority-card' : ''}" onclick="openModal('${p.name}', '${roleKey}')">
+          <div class="auction-card spotlight-card tilted-card ${isPriority ? 'priority-card' : ''}" onclick="openModal('${p.name.replace(/'/g, "\\'")}', '${roleKey}')">
             <div class="auction-card-header">
               <div style="display:flex; align-items:center; gap:12px; min-width:0;">
                 <div class="player-avatar-circle ${avatarClass}">${initials}</div>
@@ -3643,6 +4313,14 @@ html_template = r"""<!DOCTYPE html>
                 <div class="mini-stat-lbl">Clutch CSR</div>
               </div>
             </div>
+            <div class="auction-card-actions">
+              <button class="btn-auction-add" onclick="event.stopPropagation(); addToXIFromAuction('${p.name.replace(/'/g, "\\'")}')">
+                ➕ Add to XI / Slot
+              </button>
+              <button class="btn-auction-shortlist ${isShortlisted ? 'shortlisted' : ''}" onclick="event.stopPropagation(); toggleShortlist('${p.name.replace(/'/g, "\\'")}', this)">
+                ${isShortlisted ? '⭐ Shortlisted' : '⭐ Shortlist'}
+              </button>
+            </div>
           </div>
         `;
       }).join('');
@@ -3656,26 +4334,142 @@ html_template = r"""<!DOCTYPE html>
       renderAuctionBoard(type);
     }
 
+    function toggleShortlist(name, btn) {
+      if (shortlistedPlayers.has(name)) {
+        shortlistedPlayers.delete(name);
+        if (btn) {
+          btn.classList.remove('shortlisted');
+          btn.innerText = '⭐ Shortlist';
+        }
+        showToast(`Removed "${name}" from shortlist.`);
+      } else {
+        shortlistedPlayers.add(name);
+        if (btn) {
+          btn.classList.add('shortlisted');
+          btn.innerText = '⭐ Shortlisted';
+        }
+        showToast(`Added "${name}" to Rajasthan Royals Shortlist!`);
+      }
+    }
+
+    function addToXIFromAuction(name) {
+      const p = DATA.batters.find(x => x.name === name) ||
+                DATA.bowlers.find(x => x.name === name) ||
+                (DATA.all_rounders || []).find(x => x.name === name);
+      if (!p) return;
+
+      const cost = getPlayerCostEstimate(p);
+      const isOS = p.country !== 'India';
+
+      // Check if open auction slot exists in 25-man squad
+      const emptySlotIdx = currentAuctionSlots.findIndex(s => s.assignedPlayer.includes('[Open'));
+      if (emptySlotIdx !== -1) {
+        currentAuctionSlots[emptySlotIdx].assignedPlayer = p.name;
+        currentAuctionSlots[emptySlotIdx].role = p.role || p.archetype || 'Auction Acquisition';
+        currentAuctionSlots[emptySlotIdx].estCost = cost;
+        currentAuctionSlots[emptySlotIdx].rpcs = p.rpcs;
+        currentAuctionSlots[emptySlotIdx].country = p.country;
+        renderXI();
+        showToast(`Assigned ${p.name} to Auction Slot #${emptySlotIdx + 1}!`);
+        return;
+      }
+
+      // Otherwise offer slot assignment modal
+      openSlotModal(0, false);
+      showToast(`Select a position in Starting XI to slot in ${p.name}.`);
+    }
+
+    function showToast(msg) {
+      if (typeof document === 'undefined' || !document.body || typeof document.body.appendChild !== 'function') return;
+      const existing = document.querySelector('.toast-notification');
+      if (existing && typeof existing.remove === 'function') existing.remove();
+      const toast = document.createElement('div');
+      if (!toast) return;
+      toast.className = 'toast-notification';
+      toast.innerHTML = '<span>⚡</span> <span>' + msg + '</span>';
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        if (toast.style) {
+          toast.style.transition = 'opacity 0.3s';
+          toast.style.opacity = '0';
+        }
+        setTimeout(() => { if (typeof toast.remove === 'function') toast.remove(); }, 300);
+      }, 3000);
+    }
+
     // ==========================================
-    // REVAMPED STARTING XI SIMULATOR & PURSE TRACKER
+    // RAJASTHAN ROYALS 25-MAN SQUAD & XI BUILDER
     // ==========================================
     const DEFAULT_XI = [
-      { num: 1, posCategory: 'Openers', role: 'Pressure Opener / Target Setter', name: 'Yashasvi Jaiswal', cost: 18.00, costStr: '₹18.0 Cr', status: 'RR Retained Core', rpcs: 72.86 },
-      { num: 2, posCategory: 'Openers', role: 'Impact Hyper-Striker (221.5 SR)', name: 'Vaibhav Sooryavanshi', cost: 1.10, costStr: '₹1.10 Cr', status: 'RR Retained Core (MVP)', rpcs: 71.91 },
-      { num: 3, posCategory: 'Middle Order', role: 'Top-Order WK / Boundary Enforcer', name: 'Jonny Bairstow', cost: 6.50, costStr: '₹6.50 Cr', status: 'Free Agent Auction Buy', rpcs: 53.24 },
-      { num: 4, posCategory: 'Middle Order', role: 'Middle-Overs Anchor & Captain', name: 'Riyan Parag (C)', cost: 14.00, costStr: '₹14.0 Cr', status: 'RR Retained Core', rpcs: 64.50 },
-      { num: 5, posCategory: 'WK', role: 'Crisis Anchor / Wicketkeeper', name: 'Dhruv Jurel (WK)', cost: 14.00, costStr: '₹14.0 Cr', status: 'RR Retained Core', rpcs: 68.20 },
-      { num: 6, posCategory: 'Finisher', role: 'Specialist Death Power Closer', name: 'Glenn Maxwell', cost: 5.50, costStr: '₹5.50 Cr', status: 'Free Agent Auction Buy', rpcs: 53.52 },
-      { num: 7, posCategory: 'All-Rounders', role: 'Power Finisher & Pace/Spin Cover', name: 'Donovan Ferreira', cost: 5.50, costStr: '₹5.50 Cr', status: 'RR Retained Core', rpcs: 58.40 },
-      { num: 8, posCategory: 'All-Rounders', role: 'Elite Spin All-Rounder & Closer', name: 'Ravindra Jadeja', cost: 16.00, costStr: '₹16.0 Cr', status: 'RR Active Asset', rpcs: 68.40 },
-      { num: 9, posCategory: 'Spinners', role: 'Attacking Wrist-Spin Squeeze', name: 'Ravi Bishnoi', cost: 11.00, costStr: '₹11.0 Cr', status: 'RR Active Asset', rpcs: 66.40 },
-      { num: 10, posCategory: 'Pacers', role: 'Express Pace Enforcer (150+ kph)', name: 'Jofra Archer', cost: 12.50, costStr: '₹12.5 Cr', status: 'RR Retained Core', rpcs: 65.20 },
-      { num: 11, posCategory: 'Pacers', role: 'Premier Seam & New-Ball Spearhead', name: 'Mohammed Shami', cost: 9.50, costStr: '₹9.50 Cr', status: 'RR Traded Asset (LOCKED)', rpcs: 65.80 },
+      { num: 1, posCategory: 'Openers', role: 'Pressure Opener / Target Setter', name: 'Yashasvi Jaiswal', cost: 18.00, costStr: '₹18.0 Cr', status: 'RR Retained Core', rpcs: 72.86, country: 'India' },
+      { num: 2, posCategory: 'Openers', role: 'Impact Hyper-Striker (221.5 SR)', name: 'Vaibhav Sooryavanshi', cost: 1.10, costStr: '₹1.10 Cr', status: 'RR Retained Core (MVP)', rpcs: 71.91, country: 'India' },
+      { num: 3, posCategory: 'Middle Order', role: 'Top-Order WK / Boundary Enforcer', name: 'Jonny Bairstow', cost: 6.50, costStr: '₹6.50 Cr', status: 'Free Agent Auction Buy', rpcs: 53.24, country: 'England' },
+      { num: 4, posCategory: 'Middle Order', role: 'Middle-Overs Anchor & Captain', name: 'Riyan Parag (C)', cost: 14.00, costStr: '₹14.0 Cr', status: 'RR Retained Core', rpcs: 64.50, country: 'India' },
+      { num: 5, posCategory: 'WK', role: 'Crisis Anchor / Wicketkeeper', name: 'Dhruv Jurel (WK)', cost: 14.00, costStr: '₹14.0 Cr', status: 'RR Retained Core', rpcs: 68.20, country: 'India' },
+      { num: 6, posCategory: 'Finisher', role: 'Specialist Death Power Closer', name: 'Glenn Maxwell', cost: 5.50, costStr: '₹5.50 Cr', status: 'Free Agent Auction Buy', rpcs: 53.52, country: 'Australia' },
+      { num: 7, posCategory: 'All-Rounders', role: 'Power Finisher & Pace/Spin Cover', name: 'Donovan Ferreira', cost: 5.50, costStr: '₹5.50 Cr', status: 'RR Retained Core', rpcs: 58.40, country: 'South Africa' },
+      { num: 8, posCategory: 'All-Rounders', role: 'Elite Spin All-Rounder & Closer', name: 'Ravindra Jadeja', cost: 16.00, costStr: '₹16.0 Cr', status: 'RR Active Asset', rpcs: 68.40, country: 'India' },
+      { num: 9, posCategory: 'Spinners', role: 'Attacking Wrist-Spin Squeeze', name: 'Ravi Bishnoi', cost: 11.00, costStr: '₹11.0 Cr', status: 'RR Active Asset', rpcs: 66.40, country: 'India' },
+      { num: 10, posCategory: 'Pacers', role: 'Express Pace Enforcer (150+ kph)', name: 'Jofra Archer', cost: 12.50, costStr: '₹12.5 Cr', status: 'RR Retained Core', rpcs: 65.20, country: 'England' },
+      { num: 11, posCategory: 'Pacers', role: 'Premier Seam & New-Ball Spearhead', name: 'Mohammed Shami', cost: 9.50, costStr: '₹9.50 Cr', status: 'RR Traded Asset (LOCKED)', rpcs: 65.80, country: 'India' },
+      { num: 12, posCategory: 'Impact Player', role: 'Death Yorker & Change-of-Pace Specialist', name: 'Nandre Burger', cost: 4.50, costStr: '₹4.50 Cr', status: 'RR Retained Core', rpcs: 63.80, country: 'South Africa' }
+    ];
+
+    const DEFAULT_AUCTION_SLOTS = [
+      { slotNum: 1, slotName: 'Auction Slot #1 (Overseas Target)', slotType: 'overseas', assignedPlayer: 'Jonny Bairstow', role: 'Top-Order WK / Boundary Enforcer', estCost: 6.50, rpcs: 53.24, country: 'England' },
+      { slotNum: 2, slotName: 'Auction Slot #2 (Overseas Target)', slotType: 'overseas', assignedPlayer: 'Glenn Maxwell', role: 'Specialist Death Power Closer', estCost: 5.50, rpcs: 53.52, country: 'Australia' },
+      { slotNum: 3, slotName: 'Auction Slot #3 (Overseas Target)', slotType: 'overseas', assignedPlayer: 'Matheesha Pathirana', role: 'Specialist Death Yorker & Slinger', estCost: 6.00, rpcs: 66.80, country: 'Sri Lanka' },
+      { slotNum: 4, slotName: 'Auction Slot #4 (Domestic Value Gem)', slotType: 'domestic', assignedPlayer: 'Rasikh Salam', role: 'Fast Indian Uncapped Yorker Specialist', estCost: 3.50, rpcs: 58.10, country: 'India' },
+      { slotNum: 5, slotName: 'Auction Slot #5 (Domestic Value Gem)', slotType: 'domestic', assignedPlayer: 'Nehal Wadhera', role: 'Clutch Middle-Order Finisher', estCost: 3.00, rpcs: 56.40, country: 'India' },
+      { slotNum: 6, slotName: 'Auction Slot #6 (High-Ceiling Reserve)', slotType: 'reserve', assignedPlayer: 'Vyshak Kumar', role: 'Domestic Tactical Seam Specialist', estCost: 2.00, rpcs: 52.30, country: 'India' }
+    ];
+
+    const RR_RETAINED_25 = [
+      { name: 'Yashasvi Jaiswal', role: 'Opening Batter', country: 'India', fee: 18.00, isTraded: false },
+      { name: 'Vaibhav Sooryavanshi', role: 'Impact Opening Batter', country: 'India', fee: 1.10, isTraded: false },
+      { name: 'Dhruv Jurel', role: 'Wicketkeeper / Middle Order', country: 'India', fee: 14.00, isTraded: false },
+      { name: 'Riyan Parag', role: 'Middle-Order Anchor & Captain', country: 'India', fee: 14.00, isTraded: false },
+      { name: 'Ravindra Jadeja', role: 'Elite Spin All-Rounder', country: 'India', fee: 16.00, isTraded: false },
+      { name: 'Ravi Bishnoi', role: 'Attacking Wrist Spinner', country: 'India', fee: 11.00, isTraded: false },
+      { name: 'Mohd. Shami', role: 'Premier Seam Spearhead', country: 'India', fee: 9.50, isTraded: true },
+      { name: 'Sandeep Sharma', role: 'Death Yorker Specialist', country: 'India', fee: 4.00, isTraded: false },
+      { name: 'Jofra Archer', role: 'Express Pace Spearhead', country: 'England', fee: 12.50, isTraded: false },
+      { name: 'Donovan Ferreira', role: 'Power Finisher & Pace/Spin', country: 'South Africa', fee: 5.50, isTraded: false },
+      { name: 'Nandre Burger', role: 'Left-Arm Fast Bowler', country: 'South Africa', fee: 4.50, isTraded: false },
+      { name: 'Dasun Shanaka', role: 'Seam All-Rounder', country: 'Sri Lanka', fee: 2.00, isTraded: false },
+      { name: 'Lhuan-dre Pretorius', role: 'WK / Top-Order Batter', country: 'South Africa', fee: 1.50, isTraded: false },
+      { name: 'Manimaran Siddharth', role: 'Left-Arm Orthodox Spinner', country: 'India', fee: 0.50, isTraded: true },
+      { name: 'Shubham Dubey', role: 'Middle-Order Finisher', country: 'India', fee: 5.80, isTraded: false },
+      { name: 'Sushant Mishra', role: 'Left-Arm Fast Bowler', country: 'India', fee: 0.50, isTraded: false },
+      { name: 'Aman Rao Perala', role: 'Domestic Batter', country: 'India', fee: 0.30, isTraded: false },
+      { name: 'Brijesh Sharma', role: 'Domestic Batter', country: 'India', fee: 0.30, isTraded: false },
+      { name: 'Yash Raj Punja', role: 'Domestic Bowler', country: 'India', fee: 0.30, isTraded: false }
     ];
 
     let currentXI = JSON.parse(JSON.stringify(DEFAULT_XI));
+    let currentAuctionSlots = JSON.parse(JSON.stringify(DEFAULT_AUCTION_SLOTS));
     let activeSlotIdx = 0;
+    let isModifyingAuctionSlot = false;
     let slotCandidateFilter = 'all';
+
+    function switchXIView(viewName) {
+      const xiContainer = document.getElementById('xiViewContainer');
+      const squadContainer = document.getElementById('squadViewContainer');
+      const btnXI = document.getElementById('btn-view-xi');
+      const btnSquad = document.getElementById('btn-view-squad');
+
+      if (viewName === 'xi') {
+        if (xiContainer) xiContainer.style.display = 'grid';
+        if (squadContainer) squadContainer.style.display = 'none';
+        if (btnXI) btnXI.classList.add('active');
+        if (btnSquad) btnSquad.classList.remove('active');
+      } else {
+        if (xiContainer) xiContainer.style.display = 'none';
+        if (squadContainer) squadContainer.style.display = 'flex';
+        if (btnXI) btnXI.classList.remove('active');
+        if (btnSquad) btnSquad.classList.add('active');
+      }
+    }
 
     function getPlayerCostEstimate(p) {
       const match = DEFAULT_XI.find(x => x.name === p.name);
@@ -3691,9 +4485,13 @@ html_template = r"""<!DOCTYPE html>
     }
 
     function updatePurseUI() {
-      const totalSpend = currentXI.reduce((sum, s) => sum + (s.cost || 0), 0);
+      // 1. Starting XI Salary Cap (₹120.00 Cr cap)
+      // Exclude impact player (slot 11 / idx 11) from main 11 salary calculation to preserve standard 113.6 Cr spend
+      const xi11 = currentXI.slice(0, 11);
+      const totalSpend = xi11.reduce((sum, s) => sum + (s.cost || 0), 0);
       const remaining = 120.00 - totalSpend;
-      const avgRPCS = (currentXI.reduce((sum, s) => sum + (s.rpcs || 0), 0) / (currentXI.length || 1)).toFixed(1);
+      const validSlots = xi11.filter(s => !s.name.includes('[Empty'));
+      const avgRPCS = validSlots.length > 0 ? (validSlots.reduce((sum, s) => sum + (s.rpcs || 0), 0) / validSlots.length).toFixed(1) : '0.0';
 
       const spendEl = document.getElementById('allocatedSpend');
       if (spendEl) spendEl.innerText = `₹${totalSpend.toFixed(2)} Cr`;
@@ -3711,7 +4509,7 @@ html_template = r"""<!DOCTYPE html>
       if (fillEl) {
         const pct = Math.min(100, Math.max(0, (totalSpend / 120.00) * 100));
         fillEl.style.width = `${pct.toFixed(1)}%`;
-        fillEl.style.background = remaining >= 0 ? '#00e599' : '#ff3b30';
+        fillEl.style.background = remaining >= 0 ? '#34d399' : '#ff3b30';
       }
 
       const capTextEl = document.getElementById('purseCapText');
@@ -3721,84 +4519,165 @@ html_template = r"""<!DOCTYPE html>
 
       const reserveTextEl = document.getElementById('purseReserveText');
       if (reserveTextEl) {
-        reserveTextEl.innerText = remaining >= 0 
-          ? `Bench & Contingency Reserve: ₹${remaining.toFixed(2)} Cr`
-          : `⚠️ Exceeds Salary Cap by ₹${Math.abs(remaining).toFixed(2)} Cr!`;
-        reserveTextEl.style.color = remaining >= 0 ? 'var(--slate-400)' : '#ff3b30';
+        reserveTextEl.innerText = `Bench & Contingency Reserve: ₹${remaining.toFixed(2)} Cr • Mini-Auction Purse Available: ₹27.05 Cr`;
       }
 
-      const overseasCount = currentXI.filter(s => {
-        const p = (DATA.batters || []).find(x => x.name === s.name) || (DATA.bowlers || []).find(x => x.name === s.name) || ((DATA.all_rounders || []).find(x => x.name === s.name));
-        return p && p.country && p.country !== 'India';
-      }).length;
+      // Overseas Tracker for XI (Max 4 allowed)
+      const osCount = xi11.filter(s => s.country && s.country !== 'India' && !s.name.includes('[Empty')).length;
+      const osBadge = document.getElementById('overseasCountBadge');
+      if (osBadge) {
+        osBadge.innerText = `${osCount} / 4 Overseas in XI (${osCount <= 4 ? 'Compliant' : 'VIOLATION'})`;
+        osBadge.style.color = osCount <= 4 ? '#34d399' : '#ff3b30';
+      }
 
-      const overseasEl = document.getElementById('overseasCountBadge');
-      if (overseasEl) {
-        if (overseasCount <= 4) {
-          overseasEl.innerText = `${overseasCount} / 4 Overseas (Compliant)`;
-          overseasEl.style.color = '#00e599';
-          overseasEl.style.borderColor = 'rgba(0, 229, 153, 0.4)';
-          overseasEl.style.background = 'rgba(0, 229, 153, 0.1)';
-        } else {
-          overseasEl.innerText = `${overseasCount} / 4 Overseas (Exceeds Limit!)`;
-          overseasEl.style.color = '#ff3b30';
-          overseasEl.style.borderColor = 'rgba(255, 59, 48, 0.4)';
-          overseasEl.style.background = 'rgba(255, 59, 48, 0.1)';
-        }
+      // 2. Mini-Auction Purse Tracker (₹27.05 Cr budget across 6 slots)
+      const auctionSpend = currentAuctionSlots.reduce((sum, s) => sum + (s.assignedPlayer.includes('[Open') ? 0 : (s.estCost || 0)), 0);
+      const auctionHeadroom = 27.05 - auctionSpend;
+      const auctionPurseEl = document.getElementById('auctionPurseDisplay');
+      if (auctionPurseEl) auctionPurseEl.innerText = `₹27.05 Cr`;
+
+      const commSpendEl = document.getElementById('auctionCommittedSpend');
+      if (commSpendEl) commSpendEl.innerText = `₹${auctionSpend.toFixed(2)} Cr`;
+
+      const headroomEl = document.getElementById('auctionHeadroom');
+      if (headroomEl) {
+        headroomEl.innerText = `₹${auctionHeadroom.toFixed(2)} Cr`;
+        headroomEl.style.color = auctionHeadroom >= 0 ? '#fbbf24' : '#ff3b30';
       }
     }
 
     function renderXI() {
+      // 1. Render Positional Starting Lineup (11 Core + 1 Impact Player)
       const container = document.getElementById('xiSlotsList');
-      if (!container) return;
+      if (container) {
+        const posColors = {
+          'Openers': '#ea1a7f',
+          'Middle Order': '#38bdf8',
+          'WK': '#fbbf24',
+          'Finisher': '#ff2a8d',
+          'All-Rounders': '#a855f7',
+          'Spinners': '#f59e0b',
+          'Pacers': '#f43f5e',
+          'Impact Player': '#10b981'
+        };
 
-      const posColors = {
-        'Openers': '#ea1a7f',
-        'Middle Order': '#38bdf8',
-        'WK': '#fbbf24',
-        'Finisher': '#ff2a8d',
-        'All-Rounders': '#a855f7',
-        'Spinners': '#f59e0b',
-        'Pacers': '#f43f5e'
-      };
-
-      container.innerHTML = currentXI.map((slot, idx) => {
-        const accent = posColors[slot.posCategory] || '#ffffff';
-        return `
-          <div class="xi-slot-card" style="border-left: 3px solid ${accent};" onclick="openSlotModal(${idx})">
-            <div class="xi-slot-left">
-              <span class="xi-slot-pos-badge" style="color:${accent}; border-color:${accent}40;">${slot.posCategory} • #${slot.num}</span>
-              <div class="xi-slot-player-meta">
-                <span class="xi-slot-player-name">${slot.name}</span>
-                <span class="xi-slot-player-sub">${slot.role} • <span style="color:var(--slate-400);">${slot.status}</span></span>
+        container.innerHTML = currentXI.map((slot, idx) => {
+          const accent = posColors[slot.posCategory] || '#ffffff';
+          const isEmpty = slot.name.includes('[Empty');
+          return `
+            <div class="xi-slot-card" style="border-left: 3px solid ${accent}; ${isEmpty ? 'opacity: 0.6; border-style: dashed;' : ''}" onclick="openSlotModal(${idx}, false)">
+              <div class="xi-slot-left">
+                <span class="xi-slot-pos-badge" style="color:${accent}; border-color:${accent}40;">${slot.posCategory} • #${slot.num}</span>
+                <div class="xi-slot-player-meta">
+                  <span class="xi-slot-player-name">${slot.name}</span>
+                  <span class="xi-slot-player-sub">${slot.role} • <span style="color:var(--slate-400);">${slot.status}</span></span>
+                </div>
+              </div>
+              <div class="xi-slot-right">
+                <span class="xi-slot-cost">₹${(slot.cost || 0).toFixed(2)} Cr</span>
+                <span class="xi-slot-rpcs">${slot.rpcs}</span>
+                <div style="display:flex; gap:6px;">
+                  <button class="xi-swap-action-btn" onclick="event.stopPropagation(); openSlotModal(${idx}, false)">⇄ Swap</button>
+                  ${!isEmpty ? `<button class="btn-clear-slot" onclick="event.stopPropagation(); clearSlot(${idx}, false)">✕</button>` : ''}
+                </div>
               </div>
             </div>
-            <div class="xi-slot-right">
-              <span class="xi-slot-cost">₹${(slot.cost || 0).toFixed(2)} Cr</span>
-              <span class="xi-slot-rpcs">${slot.rpcs}</span>
-              <button class="xi-swap-action-btn" onclick="event.stopPropagation(); openSlotModal(${idx})">⇄ Swap</button>
+          `;
+        }).join('');
+      }
+
+      // 2. Render 6 Open Auction Slots
+      const auctionList = document.getElementById('auctionSlotsList');
+      if (auctionList) {
+        auctionList.innerHTML = currentAuctionSlots.map((slot, idx) => {
+          const isFilled = !slot.assignedPlayer.includes('[Open');
+          return `
+            <div class="auction-slot-card ${isFilled ? 'filled' : ''}">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                  <span class="badge" style="background: rgba(234, 26, 127, 0.15); color: #ff2a8d; font-size: 10px; margin-bottom: 4px;">${slot.slotName}</span>
+                  <h4 style="font-size: 14px; font-weight: 700; color: #ffffff; margin-top: 2px;">${slot.assignedPlayer}</h4>
+                  <div style="font-size: 11px; color: var(--slate-400);">${slot.role}</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-family: 'JetBrains Mono'; font-weight: 800; color: #34d399; font-size: 13px;">₹${(slot.estCost || 0).toFixed(2)} Cr</div>
+                  <div style="font-size: 10px; color: #fbbf24;">RPCS: ${slot.rpcs}</div>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; padding-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.06);">
+                <span style="font-size: 10px; color: var(--slate-400);">${slot.country}</span>
+                <div style="display: flex; gap: 6px;">
+                  <button class="btn-slot-assign" onclick="openSlotModal(${idx}, true)">⇄ Assign</button>
+                  ${isFilled ? `<button class="btn-clear-slot" onclick="clearSlot(${idx}, true)">✕ Clear</button>` : ''}
+                </div>
+              </div>
             </div>
-          </div>
-        `;
-      }).join('');
+          `;
+        }).join('');
+      }
+
+      // 3. Render 19 Retained Foundation Pillars
+      const retainedGrid = document.getElementById('retainedPillarsGrid');
+      if (retainedGrid) {
+        retainedGrid.innerHTML = RR_RETAINED_25.map((p, idx) => {
+          const isOS = p.country !== 'India';
+          return `
+            <div class="squad-player-card">
+              <div>
+                <div style="font-weight: 700; color: #ffffff; font-size: 12px; display: flex; align-items: center; gap: 6px;">
+                  ${p.name}
+                  ${p.isTraded ? '<span class="badge" style="background:rgba(245,158,11,0.2); color:#fbbf24; font-size:8px;">TRADED</span>' : ''}
+                  ${isOS ? '<span class="badge" style="background:rgba(56,189,248,0.2); color:#38bdf8; font-size:8px;">OVERSEAS</span>' : ''}
+                </div>
+                <div style="font-size: 10px; color: var(--slate-400); margin-top: 1px;">${p.role}</div>
+              </div>
+              <div style="text-align: right;">
+                <span class="num-tabular" style="font-weight: 800; color: var(--rr-pink); font-size: 11px;">₹${p.fee.toFixed(2)} Cr</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
 
       updatePurseUI();
     }
 
+    function clearSlot(slotIdx, isAuction) {
+      if (isAuction) {
+        currentAuctionSlots[slotIdx].assignedPlayer = `[Open Auction Slot #${slotIdx + 1}]`;
+        currentAuctionSlots[slotIdx].role = 'Unassigned Roster Spot';
+        currentAuctionSlots[slotIdx].estCost = 0.00;
+        currentAuctionSlots[slotIdx].rpcs = 0.0;
+        currentAuctionSlots[slotIdx].country = 'TBD';
+      } else {
+        currentXI[slotIdx].name = `[Empty Slot #${currentXI[slotIdx].num}]`;
+        currentXI[slotIdx].cost = 0.00;
+        currentXI[slotIdx].costStr = '₹0.00 Cr';
+        currentXI[slotIdx].rpcs = 0.0;
+        currentXI[slotIdx].status = 'Unassigned Lineup Position';
+      }
+      renderXI();
+      showToast('Slot emptied. Budget recalculated.');
+    }
+
     // 1-Click Slot Assignment Modal
-    function openSlotModal(slotIdx) {
+    function openSlotModal(slotIdx, isAuction) {
       activeSlotIdx = slotIdx;
-      const slot = currentXI[slotIdx];
-      const totalSpend = currentXI.reduce((sum, s) => sum + (s.cost || 0), 0);
-      const remaining = 120.00 - totalSpend;
+      isModifyingAuctionSlot = isAuction;
 
       const titleEl = document.getElementById('slotModalTitle');
-      if (titleEl) {
-        titleEl.innerHTML = `Assign Slot #${slot.num}: <span style="color:#ea1a7f;">${slot.posCategory}</span>`;
-      }
       const subEl = document.getElementById('slotModalSub');
-      if (subEl) {
-        subEl.innerHTML = `Currently assigned: <strong>${slot.name}</strong> (₹${(slot.cost || 0).toFixed(2)} Cr) • Available Remaining Purse: <strong>₹${remaining.toFixed(2)} Cr</strong>`;
+
+      if (isAuction) {
+        const slot = currentAuctionSlots[slotIdx];
+        if (titleEl) titleEl.innerHTML = `Assign 25-Man Squad Slot: <span style="color:#ea1a7f;">${slot.slotName}</span>`;
+        if (subEl) subEl.innerHTML = `Currently assigned: <strong>${slot.assignedPlayer}</strong> • Allocated Budget: <strong>₹${slot.estCost.toFixed(2)} Cr</strong>`;
+      } else {
+        const slot = currentXI[slotIdx];
+        const totalSpend = currentXI.slice(0, 11).reduce((sum, s) => sum + (s.cost || 0), 0);
+        const remaining = 120.00 - totalSpend;
+        if (titleEl) titleEl.innerHTML = `Assign Slot #${slot.num}: <span style="color:#ea1a7f;">${slot.posCategory}</span>`;
+        if (subEl) subEl.innerHTML = `Currently assigned: <strong>${slot.name}</strong> • Salary Cap Remaining: <strong>₹${remaining.toFixed(2)} Cr</strong>`;
       }
 
       const searchInput = document.getElementById('slotSearchInput');
@@ -3836,22 +4715,26 @@ html_template = r"""<!DOCTYPE html>
 
       const searchInput = document.getElementById('slotSearchInput');
       const search = (searchInput && searchInput.value ? searchInput.value : '').toLowerCase().trim();
-      const currentSlot = currentXI[activeSlotIdx];
-      const currentSlotCost = currentSlot ? currentSlot.cost : 0;
-      const totalSpend = currentXI.reduce((sum, s) => sum + (s.cost || 0), 0);
-      const remainingPurse = 120.00 - totalSpend;
 
-      // Pool of candidates excluding BCCI Ineligible players
+      const allPlayers = [
+        ...DATA.batters.map(p => ({ ...p, mainRole: 'Batter', isBat: true })),
+        ...DATA.bowlers.map(p => ({ ...p, mainRole: 'Bowler', isBowl: true })),
+        ...(DATA.all_rounders || []).map(p => ({ ...p, mainRole: 'All-Rounder', isAR: true }))
+      ];
+
+      // Strict deduplication
       const seen = new Set();
-      const pool = [];
-      [...(DATA.all_rounders || []), ...DATA.batters, ...DATA.bowlers].forEach(p => {
-        if (!seen.has(p.name) && p.country !== 'Pakistan' && p.badge_type !== 'ineligible') {
+      const uniquePlayers = [];
+      for (const p of allPlayers) {
+        if (!seen.has(p.name)) {
           seen.add(p.name);
-          pool.push(p);
+          uniquePlayers.push(p);
         }
-      });
+      }
 
-      let filtered = pool.filter(p => {
+      let filtered = uniquePlayers.filter(p => {
+        if (p.country === 'Pakistan' || p.badge_type === 'ineligible') return false;
+
         if (search) {
           const matchName = (p.name || '').toLowerCase().includes(search);
           const matchTeam = (p.team_2026 || '').toLowerCase().includes(search);
@@ -3859,58 +4742,47 @@ html_template = r"""<!DOCTYPE html>
           if (!matchName && !matchTeam && !matchRole) return false;
         }
 
-        const sInfo = getPlayerStatusInfo(p);
-        if (slotCandidateFilter === 'free_agent') return sInfo.type === 'free_agent';
-        if (slotCandidateFilter === 'rr_core') return sInfo.type === 'rr_core';
+        if (slotCandidateFilter === 'free_agent') {
+          return p.badge_type === 'free_agent' || (p.category && p.category.includes('Released'));
+        }
+        if (slotCandidateFilter === 'rr_core') {
+          return p.badge_type === 'rr_core' || p.team_2026 === 'Rajasthan Royals';
+        }
         if (slotCandidateFilter === 'match') {
-          const roleStr = (p.role || p.archetype || '').toLowerCase();
-          const cat = currentSlot.posCategory.toLowerCase();
-          if (cat === 'openers') return roleStr.includes('opener') || roleStr.includes('top-order');
-          if (cat === 'middle order') return roleStr.includes('middle') || roleStr.includes('anchor');
-          if (cat === 'wk') return roleStr.includes('wk') || roleStr.includes('keeper');
-          if (cat === 'finisher') return roleStr.includes('finisher') || roleStr.includes('closer') || roleStr.includes('power');
-          if (cat === 'all-rounders') return roleStr.includes('all-rounder') || p.bat_rpcs !== undefined;
-          if (cat === 'spinners') return roleStr.includes('spin');
-          if (cat === 'pacers') return roleStr.includes('pace') || roleStr.includes('seam') || roleStr.includes('yorker');
+          if (!isModifyingAuctionSlot) {
+            const slot = currentXI[activeSlotIdx];
+            const cat = slot.posCategory;
+            if (cat === 'Openers') return (p.pp_balls && p.pp_balls >= 35) || (p.role && p.role.includes('Opener'));
+            if (cat === 'Spinners') return p.role && (p.role.includes('Spin') || p.role.includes('Wrist'));
+            if (cat === 'Pacers') return p.role && (p.role.includes('Pace') || p.role.includes('Spearhead') || p.role.includes('Seam'));
+            if (cat === 'All-Rounders') return p.isAR || (p.bat_rpcs !== undefined && p.bowl_rpcs !== undefined);
+            if (cat === 'Finisher') return p.role && (p.role.includes('Finisher') || p.role.includes('Death'));
+          }
         }
         return true;
       });
 
-      filtered.sort((a, b) => (b.rpcs || 0) - (a.rpcs || 0));
+      // Sort by RPCS descending
+      filtered.sort((a,b) => (b.rpcs || 0) - (a.rpcs || 0));
 
-      listEl.innerHTML = filtered.slice(0, 50).map(p => {
+      const candidatesToRender = filtered.slice(0, 40);
+
+      listEl.innerHTML = candidatesToRender.map(p => {
         const sInfo = getPlayerStatusInfo(p);
         const cost = getPlayerCostEstimate(p);
-        const delta = currentSlotCost - cost;
-        const newRemaining = remainingPurse + delta;
-        const isOverBudget = newRemaining < 0;
-
-        let deltaHtml = '';
-        if (delta > 0) {
-          deltaHtml = `<span class="candidate-delta-pill" style="color:#34d399; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3);">+₹${delta.toFixed(2)} Cr Saved</span>`;
-        } else if (delta < 0) {
-          const costMore = Math.abs(delta);
-          const color = isOverBudget ? '#f87171' : '#fbbf24';
-          deltaHtml = `<span class="candidate-delta-pill" style="color:${color}; background:rgba(${isOverBudget ? '239,68,68' : '251,191,36'},0.1); border:1px solid rgba(${isOverBudget ? '239,68,68' : '251,191,36'},0.3);">-₹${costMore.toFixed(2)} Cr Spend</span>`;
-        } else {
-          deltaHtml = `<span class="candidate-delta-pill" style="color:var(--slate-400); background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);">₹0.00 Cr Impact</span>`;
-        }
+        const roleStr = p.role || p.archetype || p.mainRole;
 
         return `
           <div class="slot-candidate-row">
-            <div class="candidate-info-block">
-              <div class="candidate-title">
-                <span>${p.name}</span>
-                <span class="badge ${sInfo.badgeClass}" style="font-size:9px; padding:2px 8px;">${sInfo.label}</span>
-              </div>
-              <div class="candidate-sub">
-                ${p.role || p.archetype || 'Player'} • ${p.team_2026} • RPCS <strong style="color:#ffffff;">${p.rpcs}</strong> • Cost: <strong style="color:#34d399;">₹${cost.toFixed(2)} Cr</strong>
-              </div>
+            <div class="candidate-meta">
+              <span class="candidate-name">${p.name}</span>
+              <span class="candidate-sub">${roleStr} • ${p.country} • ${p.team_2026}</span>
             </div>
             <div class="candidate-actions">
-              ${deltaHtml}
-              <button class="btn-assign-slot ${isOverBudget ? 'over-budget' : ''}" onclick="assignCandidateToSlot('${p.name}', ${cost}, ${p.rpcs}, '${p.role || p.archetype || 'Player'}', '${sInfo.label}')">
-                ${isOverBudget ? 'Exceeds Cap (Assign)' : 'Assign to Slot'}
+              <span class="candidate-cost">₹${cost.toFixed(2)} Cr</span>
+              <span class="candidate-rpcs">${p.rpcs} RPCS</span>
+              <button class="btn-assign-slot" onclick="assignCandidateToSlot('${p.name.replace(/'/g, "\\'")}', ${cost}, ${p.rpcs}, '${roleStr.replace(/'/g, "\\'")}', '${sInfo.label.replace(/'/g, "\\'")}', '${p.country}')">
+                Assign
               </button>
             </div>
           </div>
@@ -3918,35 +4790,55 @@ html_template = r"""<!DOCTYPE html>
       }).join('');
     }
 
-    function assignCandidateToSlot(name, cost, rpcs, role, statusLabel) {
-      if (activeSlotIdx < 0 || activeSlotIdx >= currentXI.length) return;
-      currentXI[activeSlotIdx].name = name;
-      currentXI[activeSlotIdx].cost = cost;
-      currentXI[activeSlotIdx].costStr = `₹${cost.toFixed(2)} Cr`;
-      currentXI[activeSlotIdx].rpcs = rpcs;
-      currentXI[activeSlotIdx].role = role;
-      currentXI[activeSlotIdx].status = statusLabel;
-
-      closeSlotModal();
+    function assignCandidateToSlot(name, cost, rpcs, role, status, country = 'India') {
+      if (isModifyingAuctionSlot) {
+        currentAuctionSlots[activeSlotIdx].assignedPlayer = name;
+        currentAuctionSlots[activeSlotIdx].role = role;
+        currentAuctionSlots[activeSlotIdx].estCost = cost;
+        currentAuctionSlots[activeSlotIdx].rpcs = rpcs;
+        currentAuctionSlots[activeSlotIdx].country = country;
+      } else {
+        currentXI[activeSlotIdx].name = name;
+        currentXI[activeSlotIdx].cost = cost;
+        currentXI[activeSlotIdx].costStr = `₹${cost.toFixed(2)} Cr`;
+        currentXI[activeSlotIdx].rpcs = rpcs;
+        currentXI[activeSlotIdx].role = role;
+        currentXI[activeSlotIdx].status = status;
+        currentXI[activeSlotIdx].country = country;
+      }
       renderXI();
+      closeSlotModal();
+      showToast(`Assigned ${name} successfully!`);
     }
 
     function resetXI() {
       currentXI = JSON.parse(JSON.stringify(DEFAULT_XI));
+      currentAuctionSlots = JSON.parse(JSON.stringify(DEFAULT_AUCTION_SLOTS));
       renderXI();
+      showToast('Lineup reset to recommended championship configuration.');
     }
 
-    // Canvas Scatter Plot with Interactive Hover Tooltip
+    // ==========================================
+    // TAB 4: SCATTER PLOT & BENCHMARK REFERENCE
+    // ==========================================
     let scatterRole = 'batters';
     let scatterPoints = [];
 
     function setScatterRole(role) {
       scatterRole = role;
-      document.getElementById('scatter-bat-btn').classList.toggle('active', role === 'batters');
-      document.getElementById('scatter-bowl-btn').classList.toggle('active', role === 'bowlers');
-      document.getElementById('scatterTitle').innerText = role === 'batters'
-        ? 'Batting Pressure Strike Rate vs. Clutch Success Rate (CSR)'
-        : 'Bowling Pressure Economy Rate vs. Clutch Success Rate (CSR)';
+      const btnBat = document.getElementById('scatter-bat-btn');
+      const btnBowl = document.getElementById('scatter-bowl-btn');
+      const btnAR = document.getElementById('scatter-ar-btn');
+      if (btnBat) btnBat.classList.toggle('active', role === 'batters');
+      if (btnBowl) btnBowl.classList.toggle('active', role === 'bowlers');
+      if (btnAR) btnAR.classList.toggle('active', role === 'all_rounders');
+
+      const title = document.getElementById('scatterTitle');
+      if (title) {
+        if (role === 'batters') title.innerText = 'Batting Pressure Strike Rate vs. Clutch Success Rate (CSR)';
+        else if (role === 'bowlers') title.innerText = 'Bowling Pressure Economy vs. Clutch Success Rate (CSR)';
+        else title.innerText = 'All-Rounder Differential Balance vs. Clutch Success Rate (CSR)';
+      }
       drawScatter();
     }
 
@@ -3954,29 +4846,41 @@ html_template = r"""<!DOCTYPE html>
       const canvas = document.getElementById('scatterCanvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
-      const width = canvas.parentElement.clientWidth;
-      const height = canvas.parentElement.clientHeight;
-      canvas.width = width * window.devicePixelRatio;
-      canvas.height = height * window.devicePixelRatio;
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      if (!ctx) return;
+
+      const width = (canvas.parentElement && canvas.parentElement.clientWidth) || canvas.clientWidth || 800;
+      const height = (canvas.parentElement && canvas.parentElement.clientHeight) || canvas.clientHeight || 450;
+      canvas.width = width * (window.devicePixelRatio || 1);
+      canvas.height = height * (window.devicePixelRatio || 1);
+      if (typeof ctx.scale === "function") ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
 
       const isBat = scatterRole === 'batters';
-      const players = DATA[scatterRole];
+      const isAR = scatterRole === 'all_rounders';
+      const players = DATA[scatterRole] || [];
 
       ctx.clearRect(0, 0, width, height);
 
       // Plot margins
-      const pad = { top: 30, right: 30, bottom: 46, left: 54 };
+      const pad = { top: 34, right: 34, bottom: 50, left: 56 };
       const plotW = width - pad.left - pad.right;
       const plotH = height - pad.top - pad.bottom;
 
-      const xMin = isBat ? 110 : 4.5;
-      const xMax = isBat ? 230 : 10.5;
+      let xMin = isBat ? 110 : (isAR ? -30 : 4.5);
+      let xMax = isBat ? 230 : (isAR ? 50 : 10.5);
       const yMin = 40;
       const yMax = 95;
 
       const getX = val => pad.left + ((val - xMin) / (xMax - xMin)) * plotW;
       const getY = val => pad.top + plotH - ((val - yMin) / (yMax - yMin)) * plotH;
+
+      // Quadrant watermark background labels
+      ctx.font = '700 13px Inter, sans-serif';
+      ctx.fillStyle = 'rgba(234, 26, 127, 0.06)';
+      ctx.fillText('ELITE CLUTCH MATCH-WINNERS', pad.left + plotW * 0.55, pad.top + plotH * 0.25);
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.05)';
+      ctx.fillText('CRISIS DEFENSIVE ANCHORS', pad.left + plotW * 0.08, pad.top + plotH * 0.25);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+      ctx.fillText('VOLATILE HYPER-STRIKERS', pad.left + plotW * 0.55, pad.top + plotH * 0.85);
 
       // Grid lines
       ctx.strokeStyle = '#18181d';
@@ -3991,7 +4895,7 @@ html_template = r"""<!DOCTYPE html>
         ctx.fillText(y + '%', pad.left - 34, getY(y) + 3);
       }
 
-      const xStep = isBat ? 20 : 1;
+      const xStep = isBat ? 20 : (isAR ? 15 : 1);
       for (let x = xMin; x <= xMax; x += xStep) {
         ctx.beginPath();
         ctx.moveTo(getX(x), pad.top);
@@ -3999,30 +4903,69 @@ html_template = r"""<!DOCTYPE html>
         ctx.stroke();
         ctx.fillStyle = '#71717a';
         ctx.font = '10px JetBrains Mono, monospace';
-        ctx.fillText(isBat ? x : x.toFixed(1), getX(x) - 10, pad.top + plotH + 18);
+        ctx.fillText(isBat || isAR ? Math.round(x) : x.toFixed(1), getX(x) - 10, pad.top + plotH + 18);
       }
+
+      // REFERENCE BENCHMARK LINES (65% Mean CSR, 75% Elite Clutch, 150 SR / 7.5 Econ)
+      if (typeof ctx.save === "function") ctx.save();
+      ctx.setLineDash([5, 5]);
+
+      // 65% CSR Mean Benchmark Line
+      ctx.strokeStyle = 'rgba(251, 191, 36, 0.45)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(pad.left, getY(65));
+      ctx.lineTo(pad.left + plotW, getY(65));
+      ctx.stroke();
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = '10px Inter, sans-serif';
+      ctx.fillText('IPL Mean CSR: 65%', pad.left + plotW - 110, getY(65) - 5);
+
+      // 75% CSR Elite Benchmark Line
+      ctx.strokeStyle = 'rgba(234, 26, 127, 0.6)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(pad.left, getY(75));
+      ctx.lineTo(pad.left + plotW, getY(75));
+      ctx.stroke();
+      ctx.fillStyle = '#ff2a8d';
+      ctx.fillText('Elite Clutch Benchmark: 75%', pad.left + plotW - 150, getY(75) - 5);
+
+      // Midline Rate Benchmark Line
+      const midXVal = isBat ? 160 : (isAR ? 0 : 7.8);
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+      ctx.beginPath();
+      ctx.moveTo(getX(midXVal), pad.top);
+      ctx.lineTo(getX(midXVal), pad.top + plotH);
+      ctx.stroke();
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText(isBat ? '160 SR Benchmark' : (isAR ? 'Net Par Balance' : '7.8 Econ Midline'), getX(midXVal) + 5, pad.top + 16);
+
+      if (typeof ctx.restore === "function") ctx.restore();
 
       // Axis labels
       ctx.fillStyle = '#cbd5e1';
       ctx.font = '11px Inter, sans-serif';
-      ctx.fillText(isBat ? 'Pressure Strike Rate →' : 'Pressure Economy (Lower is Better) ←', width / 2 - 80, height - 12);
+      const xLabel = isBat ? 'Pressure Strike Rate →' : (isAR ? 'Net BRA/BRS Differential →' : 'Pressure Economy (Lower is Better) ←');
+      ctx.fillText(xLabel, width / 2 - 80, height - 12);
 
-      ctx.save();
-      ctx.translate(16, height / 2 + 50);
-      ctx.rotate(-Math.PI / 2);
+      if (typeof ctx.save === "function") ctx.save();
+      if (typeof ctx.translate === "function") ctx.translate(16, height / 2 + 50);
+      if (typeof ctx.rotate === "function") ctx.rotate(-Math.PI / 2);
       ctx.fillText('Clutch Success Rate (CSR %) →', 0, 0);
-      ctx.restore();
+      if (typeof ctx.restore === "function") ctx.restore();
 
       // Cache scatter points for hit-testing
       scatterPoints = [];
 
       players.forEach(p => {
-        const xVal = isBat ? p.press_sr : p.press_econ;
-        const yVal = p.csr;
+        let xVal = isBat ? p.press_sr : (isAR ? (p.net_bra_brs || (p.bra - (p.brs || 0))) : p.press_econ);
+        if (xVal === undefined) xVal = isBat ? 130 : 8.0;
+        const yVal = p.csr || 50;
         const px = getX(xVal);
         const py = getY(yVal);
         const sInfo = getPlayerStatusInfo(p);
-        const isTop10 = p.rank <= 10;
+        const isTop10 = (p.rank || 999) <= 10;
         const radius = isTop10 ? 5.5 : 3.5;
 
         scatterPoints.push({ player: p, x: px, y: py, r: radius, color: sInfo.color, statusInfo: sInfo });
@@ -4033,7 +4976,7 @@ html_template = r"""<!DOCTYPE html>
         ctx.fill();
 
         // Label Top 5 or Free Agents in Top 20
-        if (isTop10 || (sInfo.type === 'free_agent' && p.rank <= 25)) {
+        if (isTop10 || (sInfo.type === 'free_agent' && (p.rank || 999) <= 25)) {
           ctx.fillStyle = '#e2e8f0';
           ctx.font = '600 10px Inter, sans-serif';
           const lastName = p.name.split(' ').pop();
@@ -4051,44 +4994,37 @@ html_template = r"""<!DOCTYPE html>
       }
     }
 
-    // Attach Scatter Tooltip Events
     function setupScatterHover() {
       const canvas = document.getElementById('scatterCanvas');
       const tooltip = document.getElementById('scatterTooltip');
       if (!canvas || !tooltip) return;
 
-      canvas.addEventListener('mousemove', e => {
+      canvas.addEventListener('mousemove', (e) => {
         const rect = canvas.getBoundingClientRect();
         const mx = e.clientX - rect.left;
         const my = e.clientY - rect.top;
 
-        let nearest = null;
-        let minDist = 14;
+        const hit = scatterPoints.find(pt => {
+          const dx = pt.x - mx;
+          const dy = pt.y - my;
+          return Math.sqrt(dx * dx + dy * dy) <= pt.r + 5;
+        });
 
-        for (let pt of scatterPoints) {
-          const dist = Math.hypot(mx - pt.x, my - pt.y);
-          if (dist < minDist) {
-            minDist = dist;
-            nearest = pt;
-          }
-        }
-
-        if (nearest) {
-          drawScatter(nearest);
-          const p = nearest.player;
-          const s = nearest.statusInfo;
+        if (hit) {
+          drawScatter(hit);
+          const p = hit.player;
           const isBat = scatterRole === 'batters';
+          const isAR = scatterRole === 'all_rounders';
           tooltip.style.display = 'block';
-          tooltip.style.left = (mx + 15) + 'px';
-          tooltip.style.top = Math.max(10, my - 30) + 'px';
+          tooltip.style.left = `${mx + 12}px`;
+          tooltip.style.top = `${my - 20}px`;
           tooltip.innerHTML = `
-            <div style="font-weight:700; color:#ffffff; font-size:12px;">${p.name} (#${p.rank})</div>
-            <div style="color:${s.color}; font-weight:700; font-size:10px; margin:2px 0;">${s.label}</div>
-            <div style="color:var(--slate-400); font-size:11px;">Team: ${p.team_2026}</div>
-            <div style="margin-top:4px; font-family:'JetBrains Mono',monospace; font-size:11px;">
-              <span>RPCS: <strong style="color:#fb7185;">${p.rpcs}</strong></span> • 
-              <span>${isBat ? 'SR' : 'Econ'}: <strong style="color:#34d399;">${isBat ? p.press_sr : p.press_econ}</strong></span> • 
-              <span>CSR: <strong>${p.csr}%</strong></span>
+            <div style="font-weight: 700; color: #ffffff; margin-bottom: 2px;">${p.name} (#${p.rank || '—'})</div>
+            <div style="font-size: 10px; color: ${hit.statusInfo.color}; margin-bottom: 6px;">${hit.statusInfo.label} • ${p.team_2026}</div>
+            <div style="font-size: 11px; color: var(--slate-300);">
+              ${isBat ? 'Press SR' : (isAR ? 'Net Differential' : 'Press Econ')}: <strong>${isBat ? p.press_sr : (isAR ? (p.net_bra_brs || '0.0') : p.press_econ)}</strong><br>
+              Clutch CSR: <strong style="color: #fbbf24;">${p.csr}%</strong><br>
+              RPCS: <strong>${p.rpcs}</strong> • Retention κ: <strong>${p.kappa}</strong>
             </div>
           `;
         } else {
@@ -4103,27 +5039,32 @@ html_template = r"""<!DOCTYPE html>
       });
     }
 
-    // Canvas Radar Chart with all players including All-Rounders
+    // ==========================================
+    // TAB 5: RADAR COMPARATOR & BREAKDOWN TABLE
+    // ==========================================
     function initRadar() {
       const p1 = document.getElementById('radarPlayer1');
       const p2 = document.getElementById('radarPlayer2');
       if (!p1 || !p2) return;
 
-      const optgroups = `
-        <optgroup label="Top All-Rounders (Composite RPCS)">
-          ${(DATA.all_rounders || []).map(p => `<option value="${p.name}">${p.name} (#${p.rank} All-R | ${p.team_2026})</option>`).join('')}
-        </optgroup>
-        <optgroup label="Top Batters (RPCS Rank)">
-          ${DATA.batters.map(p => `<option value="${p.name}">${p.name} (#${p.rank} Bat | ${p.team_2026})</option>`).join('')}
-        </optgroup>
-        <optgroup label="Top Bowlers (RPCS Rank)">
-          ${DATA.bowlers.map(p => `<option value="${p.name}">${p.name} (#${p.rank} Bowl | ${p.team_2026})</option>`).join('')}
-        </optgroup>
-      `;
-      p1.innerHTML = optgroups;
-      p2.innerHTML = optgroups;
-      p1.value = "Sunil Narine";
-      p2.value = "Rashid Khan";
+      // Populate options only once to preserve user selections
+      if (!p1.options || p1.options.length === 0) {
+        const optgroups = `
+          <optgroup label="Top All-Rounders (Composite RPCS)">
+            ${(DATA.all_rounders || []).map(p => `<option value="${p.name}">${p.name} (#${p.rank} All-R | ${p.team_2026})</option>`).join('')}
+          </optgroup>
+          <optgroup label="Top Batters (RPCS Rank)">
+            ${DATA.batters.map(p => `<option value="${p.name}">${p.name} (#${p.rank} Bat | ${p.team_2026})</option>`).join('')}
+          </optgroup>
+          <optgroup label="Top Bowlers (RPCS Rank)">
+            ${DATA.bowlers.map(p => `<option value="${p.name}">${p.name} (#${p.rank} Bowl | ${p.team_2026})</option>`).join('')}
+          </optgroup>
+        `;
+        p1.innerHTML = optgroups;
+        p2.innerHTML = optgroups;
+        p1.value = "Sunil Narine";
+        p2.value = "Rashid Khan";
+      }
       drawRadar();
     }
 
@@ -4131,11 +5072,13 @@ html_template = r"""<!DOCTYPE html>
       const canvas = document.getElementById('radarCanvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
-      const width = canvas.parentElement.clientWidth;
-      const height = canvas.parentElement.clientHeight;
-      canvas.width = width * window.devicePixelRatio;
-      canvas.height = height * window.devicePixelRatio;
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      if (!ctx) return;
+
+      const width = (canvas.parentElement && canvas.parentElement.clientWidth) || canvas.clientWidth || 800;
+      const height = (canvas.parentElement && canvas.parentElement.clientHeight) || canvas.clientHeight || 480;
+      canvas.width = width * (window.devicePixelRatio || 1);
+      canvas.height = height * (window.devicePixelRatio || 1);
+      if (typeof ctx.scale === "function") ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
 
       ctx.clearRect(0, 0, width, height);
 
@@ -4165,7 +5108,7 @@ html_template = r"""<!DOCTYPE html>
           if (i === 0) ctx.moveTo(x, y);
           else ctx.lineTo(x, y);
         }
-        ctx.closePath();
+        if (typeof ctx.closePath === "function") ctx.closePath();
         ctx.strokeStyle = '#18181d';
         ctx.lineWidth = 1;
         ctx.stroke();
@@ -4188,108 +5131,386 @@ html_template = r"""<!DOCTYPE html>
         ctx.fillText(axes[i], lx, ly);
       }
 
-      // Draw Player Polygons
+      // Profile vectors (normalized 0 to 1)
       const getProfile = p => [
-        Math.min(1, p.press_balls / 1400),
-        Math.min(1, Math.max(0, p.wpa / 7)),
-        Math.min(1, Math.max(0, (p.bra || p.brs || 0) / 450)),
-        Math.min(1, Math.max(0, (p.kappa - 0.7) / 0.5)),
-        p.csr / 100,
-        1 - p.scs
+        Math.min(1, Math.max(0.1, (p.press_balls || 100) / 1400)),
+        Math.min(1, Math.max(0.1, ((p.wpa || 0) + 1.5) / 5.5)),
+        Math.min(1, Math.max(0.1, ((p.bra || p.brs || 0) + 40) / 160)),
+        Math.min(1, Math.max(0.1, ((p.kappa || 1) - 0.7) / 0.8)),
+        Math.min(1, Math.max(0.1, ((p.csr || 50) - 35) / 60)),
+        Math.min(1, Math.max(0.1, (1.0 - (p.scs || 0.15)) / 0.9))
       ];
 
-      const drawPoly = (vals, color, fill) => {
+      const prof1 = getProfile(p1);
+      const prof2 = getProfile(p2);
+
+      // Draw Polygon Helper
+      const drawPoly = (prof, strokeColor, fillColor, isP1) => {
         ctx.beginPath();
+        const coords = [];
         for (let i = 0; i < totalAxes; i++) {
           const angle = (Math.PI * 2 / totalAxes) * i - Math.PI / 2;
-          const r = radius * vals[i];
+          const r = radius * prof[i];
           const x = cx + Math.cos(angle) * r;
           const y = cy + Math.sin(angle) * r;
+          coords.push({ x, y, val: (prof[i] * 100).toFixed(0) });
           if (i === 0) ctx.moveTo(x, y);
           else ctx.lineTo(x, y);
         }
-        ctx.closePath();
-        ctx.strokeStyle = color;
+        if (typeof ctx.closePath === "function") ctx.closePath();
+        ctx.fillStyle = fillColor;
+        ctx.fill();
+        ctx.strokeStyle = strokeColor;
         ctx.lineWidth = 2.5;
         ctx.stroke();
-        ctx.fillStyle = fill;
-        ctx.fill();
+
+        // Draw vertex tags
+        coords.forEach(pt => {
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, 3.5, 0, Math.PI * 2);
+          ctx.fillStyle = strokeColor;
+          ctx.fill();
+        });
       };
 
-      drawPoly(getProfile(p1), '#ea1a7f', 'rgba(234, 26, 127, 0.22)');
-      drawPoly(getProfile(p2), '#fbbf24', 'rgba(251, 191, 36, 0.22)');
+      // Fill & Stroke Player 2 then Player 1
+      drawPoly(prof2, '#38bdf8', 'rgba(56, 189, 248, 0.22)', false);
+      drawPoly(prof1, '#ea1a7f', 'rgba(234, 26, 127, 0.28)', true);
 
-      // Legend
-      ctx.textAlign = 'left';
-      ctx.font = '700 12px Inter, sans-serif';
-      ctx.fillStyle = '#ea1a7f';
-      ctx.fillText(`■ ${p1.name} (RPCS ${p1.rpcs})`, 24, 24);
-      ctx.fillStyle = '#fbbf24';
-      ctx.fillText(`■ ${p2.name} (RPCS ${p2.rpcs})`, 24, 44);
+      // Render Head-to-Head Comparison Breakdown Table
+      renderRadarComparisonTable(p1, p2);
     }
 
-    // Init
-    
-    // ==========================================
-    // React Bits Interactive Ecosystem Additions
-    // ==========================================
+    function renderRadarComparisonTable(p1, p2) {
+      const container = document.getElementById('radarComparisonTable');
+      if (!container) return;
 
-    
-    // React Bits: Ambient Stadium Atmosphere Particle Canvas
-    (function initAmbientAtmosphere() {
-      if (typeof window === 'undefined' || typeof document === 'undefined' || !document.body) return;
-      const canvas = document.createElement('canvas');
-      canvas.id = 'ambientAtmosphereCanvas';
-      canvas.style.position = 'fixed';
-      canvas.style.top = '0';
-      canvas.style.left = '0';
-      canvas.style.width = '100vw';
-      canvas.style.height = '100vh';
-      canvas.style.pointerEvents = 'none';
-      canvas.style.zIndex = '-1';
-      document.body.appendChild(canvas);
-      const ctx = canvas.getContext ? canvas.getContext('2d') : null;
+      const metrics = [
+        { name: 'Overall RPCS Rating', v1: p1.rpcs || 0, v2: p2.rpcs || 0, higherBetter: true, fmt: v => v.toFixed(1) },
+        { name: 'Pressure Deliveries Handled', v1: p1.press_balls || 0, v2: p2.press_balls || 0, higherBetter: true, fmt: v => `${v} balls` },
+        { name: 'Win Probability Added (WPA)', v1: p1.wpa || 0, v2: p2.wpa || 0, higherBetter: true, fmt: v => (v > 0 ? `+${v.toFixed(2)}` : v.toFixed(2)) },
+        { name: 'Clutch Retention Ratio (κ)', v1: p1.kappa || 0, v2: p2.kappa || 0, higherBetter: true, fmt: v => v.toFixed(3) },
+        { name: 'Clutch Success Rate (CSR)', v1: p1.csr || 0, v2: p2.csr || 0, higherBetter: true, fmt: v => `${v}%` },
+        { name: 'Sample Consistency (SCS)', v1: p1.scs || 0, v2: p2.scs || 0, higherBetter: false, fmt: v => v.toFixed(3) },
+        { name: 'Leverage Concentration (Gini)', v1: p1.gini || 0, v2: p2.gini || 0, higherBetter: true, fmt: v => v.toFixed(3) }
+      ];
+
+      container.innerHTML = `
+        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--slate-800); border-radius: 10px; padding: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+            <h4 style="font-size: 14px; font-weight: 700; color: #ffffff;">Head-to-Head Metrics Breakdown & Delta Analysis</h4>
+            <div style="display: flex; gap: 12px; font-size: 11px;">
+              <span style="color: #ff2a8d; font-weight: 700;">● ${p1.name} (Player 1)</span>
+              <span style="color: #38bdf8; font-weight: 700;">● ${p2.name} (Player 2)</span>
+            </div>
+          </div>
+          <table class="radar-compare-table">
+            <thead>
+              <tr>
+                <th>Evaluated Dimension</th>
+                <th style="color: #ff2a8d;">${p1.name}</th>
+                <th style="color: #38bdf8;">${p2.name}</th>
+                <th>Advantage / Delta</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${metrics.map(m => {
+                const diff = m.v1 - m.v2;
+                const p1Wins = m.higherBetter ? diff > 0.001 : diff < -0.001;
+                const p2Wins = m.higherBetter ? diff < -0.001 : diff > 0.001;
+                let badgeClass = 'delta-tie';
+                let badgeText = 'Equal (Tie)';
+                if (p1Wins) {
+                  badgeClass = 'delta-p1';
+                  badgeText = `+${Math.abs(diff).toFixed(2)} ${p1.name.split(' ').pop()} Adv`;
+                } else if (p2Wins) {
+                  badgeClass = 'delta-p2';
+                  badgeText = `+${Math.abs(diff).toFixed(2)} ${p2.name.split(' ').pop()} Adv`;
+                }
+
+                return `
+                  <tr>
+                    <td style="font-weight: 600; color: #cbd5e1;">${m.name}</td>
+                    <td class="num-tabular" style="font-weight: 700; color: #ffffff;">${m.fmt(m.v1)}</td>
+                    <td class="num-tabular" style="font-weight: 700; color: #ffffff;">${m.fmt(m.v2)}</td>
+                    <td><span class="radar-delta-badge ${badgeClass}">${badgeText}</span></td>
+                  </tr>
+                `;
+              }).join('')}
+              <tr>
+                <td style="font-weight: 600; color: #cbd5e1;">2026/27 Contract Status</td>
+                <td><span class="badge" style="background:rgba(234,26,127,0.15); color:#ff2a8d;">${p1.team_2026}</span></td>
+                <td><span class="badge" style="background:rgba(56,189,248,0.15); color:#38bdf8;">${p2.team_2026}</span></td>
+                <td><span style="font-size: 11px; color: var(--slate-400);">Contractual State</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    // ==========================================
+    // TAB 7: MATCH CASE STUDIES & WPA WORM CHARTS
+    // ==========================================
+    const MATCH_CASE_STUDIES = [
+      {
+        id: 31250,
+        title: "Jos Buttler's Impossible Chase",
+        meta: "Match 31250 • KKR vs RR (Eden Gardens, 2024)",
+        impact: "ΔWPA: +1.069 • 107* (65b) • Won by 2 wickets",
+        takeaway: "Demonstrates non-linear leverage dynamics: batting with severe muscle cramps and #10/11 tailenders, Buttler preserved wicket equity until Over 17, then accelerated with 100% boundary conversion across the final 12 balls.",
+        tags: ["Crisis Chase", "Tail Management", "Severe Cramps", "+1.069 WPA"],
+        curve: [50, 48, 52, 45, 40, 36, 32, 28, 22, 18, 14, 8, 4, 11, 19, 28, 42, 65, 88, 100],
+        telemetry: [
+          { ball: "12.2", matchup: "Rovman Powell c Shreyas b Narine", event: "Wicket (121/6)", li: 3.8, swing: "14% → 4%", dwpa: "-0.10" },
+          { ball: "14.6", matchup: "Jos Buttler to Varun Chakaravarthy", event: "SIX (Over mid-wicket)", li: 4.2, swing: "11% → 19%", dwpa: "+0.08" },
+          { ball: "17.3", matchup: "Jos Buttler to Harshit Rana", event: "SIX (Flat pull)", li: 5.1, swing: "42% → 58%", dwpa: "+0.16" },
+          { ball: "18.1", matchup: "Jos Buttler to Varun Chakaravarthy", event: "SIX (Straight long-on)", li: 6.4, swing: "65% → 79%", dwpa: "+0.14" },
+          { ball: "19.5", matchup: "Jos Buttler to Varun Chakaravarthy", event: "SIX (Scores Tied)", li: 8.5, swing: "88% → 99%", dwpa: "+0.11" }
+        ]
+      },
+      {
+        id: 31251,
+        title: "Jasprit Bumrah's Mullanpur Masterclass",
+        meta: "Match 31251 • PBKS vs MI (Mullanpur, 2024)",
+        impact: "ΔWPA: +0.521 • 3/19 in 24 balls (Econ 4.75) • Won by 9 runs",
+        takeaway: "Defending 192 under heavy dew, Bumrah was held back for high-leverage defensive choke points. Dismissing Rossouw and Curran in consecutive overs depressed Punjab's win probability from 64% down to 22%.",
+        tags: ["Defensive Chokehold", "Yorker Clinic", "Death Suppression", "+0.521 WPA"],
+        curve: [50, 22, 18, 15, 20, 24, 28, 35, 42, 51, 58, 64, 48, 54, 42, 35, 22, 14, 8, 0],
+        telemetry: [
+          { ball: "1.4", matchup: "Jasprit Bumrah to Rilee Rossouw", event: "Bowled (147 kph Yorker)", li: 3.4, swing: "38% → 22%", dwpa: "+0.16" },
+          { ball: "2.1", matchup: "Jasprit Bumrah to Sam Curran", event: "Caught behind (Bouncer)", li: 4.8, swing: "22% → 15%", dwpa: "+0.07" },
+          { ball: "12.4", matchup: "Jasprit Bumrah to Shashank Singh", event: "Dot ball (Toe crusher)", li: 4.1, swing: "64% → 48%", dwpa: "+0.16" },
+          { ball: "16.5", matchup: "Jasprit Bumrah to Ashutosh Sharma", event: "Dot ball (Outside off)", li: 5.2, swing: "35% → 22%", dwpa: "+0.13" },
+          { ball: "17.0", matchup: "Jasprit Bumrah to Harpreet Brar", event: "Wicket (Clean bowled)", li: 6.0, swing: "22% → 14%", dwpa: "+0.08" }
+        ]
+      },
+      {
+        id: 40720,
+        title: "Abhishek Sharma's Blitzkrieg Decimation",
+        meta: "Match 40720 • SRH vs PBKS (Hyderabad, 2025)",
+        impact: "ΔWPA: +0.662 • 128 (53b) • 8-Wicket Runaway Victory",
+        takeaway: "Proves modern T20 powerplay hyper-acceleration strategy: attacking balls 1 through 36 with 240+ SR breaks required rate equations early, converting a 215 chase into a trivial 99% probability victory by Over 12.",
+        tags: ["Powerplay Hyper-Striking", "Boundary Frequency", "Runaway Chase", "+0.662 WPA"],
+        curve: [50, 58, 67, 76, 84, 91, 93, 95, 96, 98, 99, 99.5, 100, 100, 100, 100, 100, 100, 100, 100],
+        telemetry: [
+          { ball: "1.2", matchup: "Abhishek Sharma to Arshdeep Singh", event: "SIX (Over point)", li: 1.8, swing: "50% → 55%", dwpa: "+0.05" },
+          { ball: "3.5", matchup: "Abhishek Sharma to Sam Curran", event: "FOUR (Cover drive)", li: 2.4, swing: "67% → 74%", dwpa: "+0.07" },
+          { ball: "5.6", matchup: "Abhishek Sharma to Kagiso Rabada", event: "SIX (Pulled over square leg)", li: 3.1, swing: "84% → 91%", dwpa: "+0.07" },
+          { ball: "9.3", matchup: "Abhishek Sharma to Harpreet Brar", event: "SIX (Down the ground)", li: 2.0, swing: "95% → 97%", dwpa: "+0.02" },
+          { ball: "14.2", matchup: "Abhishek Sharma to Rahul Chahar", event: "SIX (Reaches century)", li: 1.5, swing: "99% → 100%", dwpa: "+0.01" }
+        ]
+      },
+      {
+        id: 50138,
+        title: "Rashid Khan's 1-Run Defence",
+        meta: "Match 50138 • DC vs GT (Delhi, 2026)",
+        impact: "ΔWPA: +0.544 • 3/17 in 24 balls (Econ 4.25) • Won by 1 run",
+        takeaway: "Defending 158 with Delhi at 95/2 in 11 overs (WP 82%), Rashid strangled the scoring rate in overs 11, 13, and 15, taking 3 crucial wickets and triggering a fatal batting collapse.",
+        tags: ["Spin Squeeze", "Collapse Trigger", "1-Run Defence", "+0.544 WPA"],
+        curve: [50, 52, 55, 60, 65, 72, 78, 80, 82, 74, 62, 51, 44, 38, 29, 21, 15, 8, 4, 0],
+        telemetry: [
+          { ball: "11.1", matchup: "Rashid Khan to Rishabh Pant", event: "LBW (Googly)", li: 4.5, swing: "82% → 74%", dwpa: "+0.08" },
+          { ball: "13.3", matchup: "Rashid Khan to Tristan Stubbs", event: "Bowled (Slider)", li: 5.2, swing: "62% → 51%", dwpa: "+0.11" },
+          { ball: "15.4", matchup: "Rashid Khan to Axar Patel", event: "Caught slip (Leg-break)", li: 5.8, swing: "44% → 29%", dwpa: "+0.15" },
+          { ball: "17.0", matchup: "Rashid Khan to Kuldeep Yadav", event: "Dot ball (Defensive googly)", li: 6.2, swing: "21% → 15%", dwpa: "+0.06" },
+          { ball: "19.6", matchup: "Mohit Sharma to Mukesh Kumar", event: "Run Out (Won by 1 run)", li: 9.8, swing: "4% → 0%", dwpa: "+0.04" }
+        ]
+      },
+      {
+        id: 48921,
+        title: "Yashasvi Jaiswal's Target Demolition",
+        meta: "Match 48921 • RR vs RCB (Jaipur, 2025)",
+        impact: "ΔWPA: +0.485 • 98* (47b) • Won by 9 wickets",
+        takeaway: "Rajasthan Royals' retained cornerstone displayed perfect tempo control: 42 runs in powerplay, followed by disciplined strike rotation against spinners, and a blistering finish at 208 SR.",
+        tags: ["RR Pillar", "Tempo Control", "Spin Mastery", "+0.485 WPA"],
+        curve: [50, 55, 63, 72, 80, 88, 92, 95, 97, 98, 99, 99.5, 100, 100, 100, 100, 100, 100, 100, 100],
+        telemetry: [
+          { ball: "0.4", matchup: "Yashasvi Jaiswal to Mohammed Siraj", event: "FOUR (Cover drive)", li: 1.5, swing: "50% → 55%", dwpa: "+0.05" },
+          { ball: "2.1", matchup: "Yashasvi Jaiswal to Yash Dayal", event: "SIX (Upper cut)", li: 2.1, swing: "55% → 63%", dwpa: "+0.08" },
+          { ball: "5.5", matchup: "Yashasvi Jaiswal to Lockie Ferguson", event: "SIX (Over mid-on)", li: 2.8, swing: "72% → 80%", dwpa: "+0.08" },
+          { ball: "11.2", matchup: "Yashasvi Jaiswal to Karn Sharma", event: "FOUR (Reverse sweep)", li: 2.0, swing: "95% → 97%", dwpa: "+0.02" },
+          { ball: "16.4", matchup: "Yashasvi Jaiswal to Cameron Green", event: "FOUR (Winning shot)", li: 1.2, swing: "99% → 100%", dwpa: "+0.01" }
+        ]
+      },
+      {
+        id: 51204,
+        title: "Sandeep Sharma's Final-Over Yorker Clinic",
+        meta: "Match 51204 • CSK vs RR (Chepauk, 2026)",
+        impact: "ΔWPA: +0.412 • Defending 7 runs in 20th Over vs Dhoni & Jadeja",
+        takeaway: "The benchmark for high-pressure death bowling: executing 3 consecutive wide yorkers outside off-stump against MS Dhoni under 50,000 screaming hostile fans at Chepauk.",
+        tags: ["Chepauk Defense", "Wide Yorker", "Dhoni Matchup", "+0.412 WPA"],
+        curve: [50, 48, 52, 50, 46, 42, 45, 48, 52, 55, 60, 64, 68, 72, 75, 70, 78, 82, 65, 0],
+        telemetry: [
+          { ball: "19.1", matchup: "Sandeep Sharma to Ravindra Jadeja", event: "1 Run (Wide yorker)", li: 7.2, swing: "65% → 52%", dwpa: "+0.13" },
+          { ball: "19.2", matchup: "Sandeep Sharma to MS Dhoni", event: "Dot ball (Searing yorker)", li: 8.4, swing: "52% → 34%", dwpa: "+0.18" },
+          { ball: "19.3", matchup: "Sandeep Sharma to MS Dhoni", event: "Wide (Re-bowled)", li: 8.0, swing: "34% → 42%", dwpa: "-0.08" },
+          { ball: "19.4", matchup: "Sandeep Sharma to MS Dhoni", event: "Dot ball (Outside off pin)", li: 9.1, swing: "42% → 18%", dwpa: "+0.24" },
+          { ball: "19.6", matchup: "Sandeep Sharma to MS Dhoni", event: "1 Run (RR win by 3 runs)", li: 9.9, swing: "18% → 0%", dwpa: "+0.18" }
+        ]
+      }
+    ];
+
+    let activeCaseIdx = 0;
+
+    function initCaseStudies() {
+      const pillsContainer = document.getElementById('caseStudyPills');
+      if (!pillsContainer) return;
+
+      pillsContainer.innerHTML = MATCH_CASE_STUDIES.map((m, idx) => `
+        <button class="case-pill ${idx === activeCaseIdx ? 'active' : ''}" onclick="selectCaseMatch(${idx})">
+          ${m.title} (${m.meta.split('•')[1].trim()})
+        </button>
+      `).join('');
+
+      renderCaseTelemetry();
+      drawCaseWpaChart();
+    }
+
+    function selectCaseMatch(idx) {
+      activeCaseIdx = idx;
+      document.querySelectorAll('.case-pill').forEach((btn, i) => {
+        btn.classList.toggle('active', i === idx);
+      });
+      renderCaseTelemetry();
+      drawCaseWpaChart();
+    }
+
+    function renderCaseTelemetry() {
+      const m = MATCH_CASE_STUDIES[activeCaseIdx];
+      if (!m) return;
+
+      const titleEl = document.getElementById('caseMatchTitle');
+      const metaEl = document.getElementById('caseMatchMeta');
+      const impactEl = document.getElementById('caseMatchImpact');
+      const takeawayEl = document.getElementById('caseTacticalTakeaway');
+      const tagsEl = document.getElementById('caseMetricTags');
+      const tbody = document.getElementById('caseTelemetryBody');
+
+      if (titleEl) titleEl.innerText = m.title;
+      if (metaEl) metaEl.innerText = m.meta;
+      if (impactEl) impactEl.innerText = m.impact;
+      if (takeawayEl) takeawayEl.innerText = m.takeaway;
+
+      if (tagsEl) {
+        tagsEl.innerHTML = m.tags.map(t => `<span class="badge" style="background:rgba(234,26,127,0.15); color:#ff2a8d; border:1px solid rgba(234,26,127,0.3); font-size:10px;">${t}</span>`).join('');
+      }
+
+      if (tbody) {
+        tbody.innerHTML = m.telemetry.map(d => `
+          <tr>
+            <td style="color:#ff2a8d; font-weight:700;">${d.ball}</td>
+            <td style="color:#ffffff;">${d.matchup}</td>
+            <td><span class="badge" style="background:rgba(255,255,255,0.06); color:#cbd5e1; font-size:9px;">${d.event}</span></td>
+            <td style="color:#fbbf24; font-weight:700;">${d.li}</td>
+            <td style="color:#38bdf8;">${d.swing}</td>
+            <td style="color:${d.dwpa.startsWith('+') ? '#34d399' : '#f87171'}; font-weight:700;">${d.dwpa}</td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    function drawCaseWpaChart() {
+      const canvas = document.getElementById('caseWpaCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
-      let w = window.innerWidth || 1200;
-      let h = window.innerHeight || 800;
-      canvas.width = w;
-      canvas.height = h;
+      const width = (canvas.parentElement && canvas.parentElement.clientWidth) || canvas.clientWidth || 800;
+      const height = (canvas.parentElement && canvas.parentElement.clientHeight) || canvas.clientHeight || 260;
+      canvas.width = width * (window.devicePixelRatio || 1);
+      canvas.height = height * (window.devicePixelRatio || 1);
+      if (typeof ctx.scale === "function") ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
 
-      const particles = [];
-      const particleColors = ['rgba(234, 26, 127, 0.35)', 'rgba(251, 191, 36, 0.25)', 'rgba(56, 189, 248, 0.2)'];
-      for (let i = 0; i < 30; i++) {
-        particles.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          r: 1 + Math.random() * 2,
-          color: particleColors[i % particleColors.length],
-          vx: (Math.random() - 0.5) * 0.3,
-          vy: -0.2 - Math.random() * 0.3
-        });
+      ctx.clearRect(0, 0, width, height);
+
+      const m = MATCH_CASE_STUDIES[activeCaseIdx];
+      if (!m || !m.curve) return;
+
+      const pad = { top: 20, right: 20, bottom: 30, left: 45 };
+      const plotW = width - pad.left - pad.right;
+      const plotH = height - pad.top - pad.bottom;
+
+      // Draw Grid
+      ctx.strokeStyle = '#18181d';
+      ctx.lineWidth = 1;
+      for (let p = 0; p <= 100; p += 25) {
+        const y = pad.top + plotH - (p / 100) * plotH;
+        ctx.beginPath();
+        ctx.moveTo(pad.left, y);
+        ctx.lineTo(pad.left + plotW, y);
+        ctx.stroke();
+        ctx.fillStyle = '#64748b';
+        ctx.font = '10px JetBrains Mono, monospace';
+        ctx.fillText(`${p}%`, pad.left - 30, y + 3);
       }
 
-      function render() {
-        if (typeof ctx.clearRect === 'function') {
-          ctx.clearRect(0, 0, w, h);
-          particles.forEach(p => {
-            p.x += p.vx;
-            p.y += p.vy;
-            if (p.y < 0) p.y = h;
-            if (p.x < 0) p.x = w;
-            if (p.x > w) p.x = 0;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.fill();
-          });
+      // Draw 50% Win Probability Line
+      const y50 = pad.top + plotH * 0.5;
+      if (typeof ctx.save === "function") ctx.save();
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+      ctx.beginPath();
+      ctx.moveTo(pad.left, y50);
+      ctx.lineTo(pad.left + plotW, y50);
+      ctx.stroke();
+      if (typeof ctx.restore === "function") ctx.restore();
+
+      // Plot WPA Curve
+      const step = plotW / (m.curve.length - 1);
+      const points = m.curve.map((val, idx) => ({
+        x: pad.left + idx * step,
+        y: pad.top + plotH - (val / 100) * plotH,
+        val: val,
+        over: idx + 1
+      }));
+
+      // Area Fill Gradient
+      let grad = 'rgba(234, 26, 127, 0.2)';
+      if (typeof ctx.createLinearGradient === 'function') {
+        const g = ctx.createLinearGradient(0, pad.top, 0, pad.top + plotH);
+        if (g && typeof g.addColorStop === 'function') {
+          g.addColorStop(0, 'rgba(234, 26, 127, 0.35)');
+          g.addColorStop(1, 'rgba(234, 26, 127, 0.02)');
+          grad = g;
         }
-        if (typeof requestAnimationFrame === 'function') requestAnimationFrame(render);
       }
-      if (typeof requestAnimationFrame === 'function') requestAnimationFrame(render);
-    })();
 
-    // 1. React Bits: ClickSpark Interactive Canvas
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, pad.top + plotH);
+      points.forEach(pt => ctx.lineTo(pt.x, pt.y));
+      ctx.lineTo(points[points.length - 1].x, pad.top + plotH);
+      if (typeof ctx.closePath === "function") ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Stroke Curve Line
+      ctx.beginPath();
+      points.forEach((pt, idx) => {
+        if (idx === 0) ctx.moveTo(pt.x, pt.y);
+        else ctx.lineTo(pt.x, pt.y);
+      });
+      ctx.strokeStyle = '#ea1a7f';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Dots on milestone points
+      points.forEach((pt, idx) => {
+        if (idx % 2 === 0 || idx === points.length - 1) {
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, 4, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff';
+          ctx.fill();
+          ctx.strokeStyle = '#ea1a7f';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+      });
+    }
+
+    // ==========================================
+    // TECHNICAL SAFEGUARDS & REACT BITS INTERACTION
+    // ==========================================
     (function initClickSpark() {
       if (typeof window === 'undefined' || typeof document === 'undefined' || !document.body) return;
       const canvas = document.createElement('canvas');
@@ -4303,17 +5524,21 @@ html_template = r"""<!DOCTYPE html>
       canvas.style.zIndex = '9999';
       document.body.appendChild(canvas);
       const ctx = canvas.getContext('2d');
+      if (!ctx) return; // Strict null context guard preventing TypeError
+
       let sparks = [];
 
       function resize() {
+        if (!ctx || !canvas) return;
         canvas.width = window.innerWidth * (window.devicePixelRatio || 1);
         canvas.height = window.innerHeight * (window.devicePixelRatio || 1);
-        ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+        if (typeof ctx.scale === "function") ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
       }
       window.addEventListener('resize', resize);
       resize();
 
       window.addEventListener('click', (e) => {
+        if (!ctx) return;
         const colors = ['#ea1a7f', '#fbbf24', '#ffffff', '#ff2a8d', '#38bdf8'];
         const count = 12;
         for (let i = 0; i < count; i++) {
@@ -4333,6 +5558,7 @@ html_template = r"""<!DOCTYPE html>
       });
 
       function loop() {
+        if (!ctx) return;
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         for (let i = sparks.length - 1; i >= 0; i--) {
           const s = sparks[i];
@@ -4352,7 +5578,7 @@ html_template = r"""<!DOCTYPE html>
           }
         }
         ctx.globalAlpha = 1;
-        requestAnimationFrame(loop);
+        if (typeof requestAnimationFrame === 'function') requestAnimationFrame(loop);
       }
       if (typeof requestAnimationFrame === 'function') loop();
     })();
@@ -4394,7 +5620,7 @@ html_template = r"""<!DOCTYPE html>
       });
     }
 
-    // 4. React Bits: DecryptedText Scramble Animation
+    // 4. React Bits: DecryptedText Scramble Animation (Defensive hoisted declaration)
     function runDecryptedText() {
       const glyphs = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ#@$%&*';
       document.querySelectorAll('[data-decrypted]').forEach(el => {
@@ -4472,6 +5698,7 @@ html_template = r"""<!DOCTYPE html>
       alert(msg);
     }
 
+    // INITIALIZATION ON PAGE LOAD
     window.onload = function() {
       runDecryptedText();
       runCountUp();
@@ -4481,12 +5708,18 @@ html_template = r"""<!DOCTYPE html>
       renderAuctionBoard('all');
       renderXI();
       setupScatterHover();
+
+      // Immediate load rendering for canvases and dropdowns
+      drawScatter();
+      initRadar();
+      initCaseStudies();
     };
+
     window.onresize = function() {
-      if (document.getElementById('tab-scatter').classList.contains('active')) drawScatter();
-      if (document.getElementById('tab-radar').classList.contains('active')) drawRadar();
-    };
-  </script>
+      if (document.getElementById('tab-scatter') && document.getElementById('tab-scatter').classList.contains('active')) drawScatter();
+      if (document.getElementById('tab-radar') && document.getElementById('tab-radar').classList.contains('active')) drawRadar();
+      if (document.getElementById('tab-cases') && document.getElementById('tab-cases').classList.contains('active')) drawCaseWpaChart();
+    };</script>
 </body>
 </html>
 """

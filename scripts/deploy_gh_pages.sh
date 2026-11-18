@@ -20,7 +20,7 @@ if git diff --quiet index.html dashboard/ data.json; then
 else
   echo "Committing updated dashboard..."
   git add index.html dashboard/ data.json
-  git commit -m "feat(dashboard): update compiled interactive war room dashboard"
+  git commit -m "feat(dashboard): update compiled interactive auction analytics dashboard"
   echo "Pushing to origin main..."
   git push origin main
   echo "Successfully pushed to GitHub repository!"

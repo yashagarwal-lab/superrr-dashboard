@@ -276,7 +276,7 @@ if "/* React Bits: Spotlight Card" not in code:
     code = code.replace("/* Container */", card_hover_addon + "\n    /* Container */")
 
 # 3. Add ShinyText class to HTML header
-code = code.replace('<h1>SupeRR Selector <span>War Room</span></h1>', '<h1 class="shiny-text">SupeRR Selector <span>War Room</span></h1>')
+code = code.replace('<h1>SupeRR Selector <span>Command Center</span></h1>', '<h1 class="shiny-text">SupeRR Selector <span>Command Center</span></h1>')
 
 with open("build_dashboard.py", "w", encoding="utf-8") as f:
     f.write(code)

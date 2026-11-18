@@ -267,9 +267,9 @@ def update_build_dashboard():
     content = content.replace(old_filter_auction, new_filter_auction, 1)
 
     # 6. Tab 6 Whoop remnants removal
-    content = content.replace("<!-- TAB 6: WHOOP-INSPIRED XI BUILDER & SELECTION PANEL -->", "<!-- TAB 6: RAJASTHAN ROYALS CHAMPIONSHIP WAR ROOM: XI BUILDER & SALARY CAP TRACKER -->")
+    content = content.replace("<!-- TAB 6: WHOOP-INSPIRED XI BUILDER & SELECTION PANEL -->", "<!-- TAB 6: RAJASTHAN ROYALS CHAMPIONSHIP COMMAND CENTER: XI BUILDER & SALARY CAP TRACKER -->")
     content = content.replace("Whoop-inspired Starting XI lineup simulator", "Interactive Starting XI lineup simulator")
-    content = content.replace("<!-- 1-CLICK SLOT ASSIGNMENT MODAL (Whoop Redesign) -->", "<!-- 1-CLICK SLOT ASSIGNMENT MODAL (Rajasthan Royals War Room) -->")
+    content = content.replace("<!-- 1-CLICK SLOT ASSIGNMENT MODAL (Whoop Redesign) -->", "<!-- 1-CLICK SLOT ASSIGNMENT MODAL (Rajasthan Royals Command Center) -->")
 
     # Replace Tab 6 reset button inline dark style with star-border-btn
     old_reset_btn = """<button onclick="resetXI()" style="background: #111116; border: 1px solid #272733; color: #a1a1aa; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 7px 14px; border-radius: 6px; cursor: pointer; transition: all 0.12s;" onmouseover="this.style.color='#ffffff'; this.style.borderColor='#3f3f50';" onmouseout="this.style.color='#a1a1aa'; this.style.borderColor='#272733';">
